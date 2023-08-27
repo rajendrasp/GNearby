@@ -26,6 +26,7 @@
 #include "absl/container/flat_hash_set.h"
 #include "absl/strings/string_view.h"
 #include "absl/types/optional.h"
+#include "internal/base/observer_list.h"
 #include "internal/platform/borrowable.h"
 #include "internal/platform/implementation/ble.h"
 #include "internal/platform/implementation/ble_v2.h"
@@ -352,7 +353,7 @@ class MediumEnvironment {
                           Borrowable<api::ble_v2::GattServer*> gatt_server);
   void UnregisterGattServer(api::ble_v2::BleMedium& medium);
 
-  Borrowable<api::ble_v2::GattServer*>* GetGattServer(
+  Borrowable<api::ble_v2::GattServer*> GetGattServer(
       api::ble_v2::BlePeripheral& peripheral);
 
   // Configures the BluetoothPairingContext for remote BluetoothDevice.
@@ -383,6 +384,9 @@ class MediumEnvironment {
 
   // Clears the map `devices_pairing_contexts_`.
   void ClearBluetoothDevicesForPairing();
+
+  void AddObserver(api::BluetoothClassicMedium::Observer* observer);
+  void RemoveObserver(api::BluetoothClassicMedium::Observer* observer);
 
  private:
   struct BluetoothMediumContext {
@@ -514,6 +518,7 @@ class MediumEnvironment {
   bool use_valid_peer_connection_ = true;
   absl::Duration peer_connection_latency_ = absl::ZeroDuration();
   std::unique_ptr<FakeClock> simulated_clock_ ABSL_GUARDED_BY(mutex_);
+  ObserverList<api::BluetoothClassicMedium::Observer> observers_;
 };
 
 }  // namespace nearby

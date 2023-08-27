@@ -89,7 +89,7 @@ bool BleV2Medium::StartScanning(const Uuid& service_uuid,
                 MutexLock lock(&mutex_);
                 if (!peripherals_.contains(&peripheral)) {
                   NEARBY_LOGS(INFO) << "Peripheral impl=" << &peripheral
-                                    << " is not existed; adds it to the map.";
+                                    << " does not exist; add it to the map.";
                   peripherals_.insert(&peripheral);
                 }
 
@@ -116,6 +116,8 @@ bool BleV2Medium::StartScanning(const Uuid& service_uuid,
   return success;
 }
 
+BleV2Medium::~BleV2Medium() { StopScanning(); }
+
 bool BleV2Medium::StopScanning() {
   MutexLock lock(&mutex_);
   if (!scanning_enabled_) {
@@ -132,25 +134,24 @@ std::unique_ptr<api::ble_v2::BleMedium::ScanningSession>
 BleV2Medium::StartScanningTmp(
     const Uuid& service_uuid, api::ble_v2::TxPowerLevel tx_power_level,
     api::ble_v2::BleMedium::ScanningCallback callback) {
-  //    auto scan_callback = std::move(callback.advertisement_found_cb);
   MutexLock lock(&mutex_);
 
   if (impl_->StartScanning(
           service_uuid, tx_power_level,
           api::ble_v2::BleMedium::ScanCallback{
               .advertisement_found_cb =
-                  [this, &callback](api::ble_v2::BlePeripheral& peripheral,
-                                    BleAdvertisementData advertisement_data) {
+                  [this,
+                   found_callback = std::move(callback.advertisement_found_cb)](
+                      api::ble_v2::BlePeripheral& peripheral,
+                      BleAdvertisementData advertisement_data) mutable {
                     MutexLock lock(&mutex_);
                     if (!peripherals_.contains(&peripheral)) {
                       NEARBY_LOGS(INFO)
-                          << "There is no need to callback due to peripheral "
-                             "impl="
-                          << &peripheral << ", which already exists.";
+                          << "Peripheral impl=" << &peripheral
+                          << " does not exist; add it to the map.";
                       peripherals_.insert(&peripheral);
                     }
-                    callback.advertisement_found_cb(peripheral,
-                                                    advertisement_data);
+                    found_callback(peripheral, advertisement_data);
                   },
           })) {
     callback.start_scanning_result(absl::OkStatus());
@@ -247,20 +248,14 @@ std::unique_ptr<GattServer> BleV2Medium::StartGattServer(
 std::unique_ptr<GattClient> BleV2Medium::ConnectToGattServer(
     BleV2Peripheral peripheral, TxPowerLevel tx_power_level,
     ClientGattConnectionCallback callback) {
-  {
-    MutexLock lock(&mutex_);
-    client_gatt_connection_callback_ = std::move(callback);
-  }
-
   std::unique_ptr<api::ble_v2::GattClient> api_gatt_client;
   peripheral.GetImpl([&](api::ble_v2::BlePeripheral& device) {
     api_gatt_client = impl_->ConnectToGattServer(
         device, tx_power_level,
         {
             .disconnected_cb =
-                [this]() {
-                  MutexLock lock(&mutex_);
-                  client_gatt_connection_callback_.disconnected_cb();
+                [callback = std::move(callback)]() mutable {
+                  callback.disconnected_cb();
                 },
         });
   });

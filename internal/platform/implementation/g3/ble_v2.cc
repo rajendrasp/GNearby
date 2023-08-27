@@ -15,7 +15,6 @@
 #include "internal/platform/implementation/g3/ble_v2.h"
 
 #include <algorithm>
-#include <cstdint>
 #include <iostream>
 #include <memory>
 #include <optional>
@@ -23,15 +22,26 @@
 #include <utility>
 #include <vector>
 
+#include "absl/functional/any_invocable.h"
+#include "absl/log/check.h"
 #include "absl/status/status.h"
+#include "absl/status/statusor.h"
 #include "absl/strings/escaping.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/string_view.h"
 #include "absl/synchronization/mutex.h"
+#include "internal/platform/borrowable.h"
+#include "internal/platform/byte_array.h"
 #include "internal/platform/cancellation_flag_listener.h"
 #include "internal/platform/count_down_latch.h"
+#include "internal/platform/exception.h"
 #include "internal/platform/implementation/ble_v2.h"
+#include "internal/platform/implementation/bluetooth_adapter.h"
 #include "internal/platform/implementation/g3/bluetooth_adapter.h"
 #include "internal/platform/logging.h"
 #include "internal/platform/medium_environment.h"
+#include "internal/platform/prng.h"
+#include "internal/platform/uuid.h"
 
 namespace nearby {
 namespace g3 {
@@ -69,82 +79,14 @@ api::ble_v2::BlePeripheral::UniqueId BleV2Peripheral::GetUniqueId() const {
   return adapter_.GetUniqueId();
 }
 
-BleV2Socket::~BleV2Socket() {
-  absl::MutexLock lock(&mutex_);
-  DoClose();
-}
-
-void BleV2Socket::Connect(BleV2Socket& other) {
-  absl::MutexLock lock(&mutex_);
-  remote_socket_ = &other;
-  input_ = other.output_;
-}
-
-InputStream& BleV2Socket::GetInputStream() {
-  auto* remote_socket = GetRemoteSocket();
-  CHECK(remote_socket != nullptr);
-  return remote_socket->GetLocalInputStream();
-}
-
-OutputStream& BleV2Socket::GetOutputStream() { return GetLocalOutputStream(); }
-
-BleV2Socket* BleV2Socket::GetRemoteSocket() {
-  absl::MutexLock lock(&mutex_);
-  return remote_socket_;
-}
-
-bool BleV2Socket::IsConnected() const {
-  absl::MutexLock lock(&mutex_);
-  return IsConnectedLocked();
-}
-
-bool BleV2Socket::IsClosed() const {
-  absl::MutexLock lock(&mutex_);
-  return closed_;
-}
-
-Exception BleV2Socket::Close() {
-  absl::MutexLock lock(&mutex_);
-  DoClose();
-  return {Exception::kSuccess};
-}
-
 BleV2Peripheral* BleV2Socket::GetRemotePeripheral() {
-  BluetoothAdapter* remote_adapter = nullptr;
-  {
-    absl::MutexLock lock(&mutex_);
-    if (remote_socket_ == nullptr || remote_socket_->adapter_ == nullptr) {
-      return nullptr;
-    }
-    remote_adapter = remote_socket_->adapter_;
-  }
-  if (remote_adapter == nullptr || remote_adapter->GetBleV2Medium() == nullptr)
+  BleV2Socket* remote_socket = GetRemoteSocket();
+  if (remote_socket == nullptr || remote_socket->adapter_ == nullptr ||
+      remote_socket->adapter_->GetBleV2Medium() == nullptr) {
     return nullptr;
-  return &(static_cast<BleV2Medium*>(remote_adapter->GetBleV2Medium())
-               ->GetPeripheral());
-}
-
-void BleV2Socket::DoClose() {
-  if (!closed_) {
-    remote_socket_ = nullptr;
-    output_->GetOutputStream().Close();
-    output_->GetInputStream().Close();
-    input_->GetOutputStream().Close();
-    input_->GetInputStream().Close();
-    closed_ = true;
   }
-}
-
-bool BleV2Socket::IsConnectedLocked() const { return input_ != nullptr; }
-
-InputStream& BleV2Socket::GetLocalInputStream() {
-  absl::MutexLock lock(&mutex_);
-  return output_->GetInputStream();
-}
-
-OutputStream& BleV2Socket::GetLocalOutputStream() {
-  absl::MutexLock lock(&mutex_);
-  return output_->GetOutputStream();
+  return &(static_cast<BleV2Medium*>(remote_socket->adapter_->GetBleV2Medium())
+               ->GetPeripheral());
 }
 
 std::unique_ptr<api::ble_v2::BleSocket> BleV2ServerSocket::Accept() {
@@ -361,17 +303,26 @@ std::unique_ptr<api::ble_v2::GattServer> BleV2Medium::StartGattServer(
   return std::make_unique<GattServer>(*this, std::move(callback));
 }
 
+bool BleV2Medium::IsStopped(Borrowable<api::ble_v2::GattServer*> server) {
+  auto borrowed = server.Borrow();
+  if (!borrowed) {
+    return true;
+  }
+  BleV2Medium::GattServer* gatt_server = static_cast<GattServer*>(*borrowed);
+  return gatt_server->IsStopped();
+}
+
 std::unique_ptr<api::ble_v2::GattClient> BleV2Medium::ConnectToGattServer(
     api::ble_v2::BlePeripheral& peripheral, TxPowerLevel tx_power_level,
     api::ble_v2::ClientGattConnectionCallback callback) {
-  Borrowable<api::ble_v2::GattServer*>* server =
+  Borrowable<api::ble_v2::GattServer*> server =
       MediumEnvironment::Instance().GetGattServer(peripheral);
-  if (server == nullptr) {
+  if (IsStopped(server)) {
     NEARBY_LOGS(WARNING) << "No GATT server found for "
                          << peripheral.GetAddress();
     return nullptr;
   }
-  return std::make_unique<GattClient>(peripheral, *server, std::move(callback));
+  return std::make_unique<GattClient>(peripheral, server, std::move(callback));
 }
 
 bool BleV2Medium::IsExtendedAdvertisementsAvailable() {
@@ -432,6 +383,7 @@ BleV2Medium::GattServer::GattServer(
 }
 
 BleV2Medium::GattServer::~GattServer() {
+  Stop();
   lender_.Release();
   MediumEnvironment::Instance().UnregisterGattServer(medium_);
 }
@@ -440,6 +392,7 @@ BleV2Medium::GattServer::CreateCharacteristic(
     const Uuid& service_uuid, const Uuid& characteristic_uuid,
     api::ble_v2::GattCharacteristic::Permission permission,
     api::ble_v2::GattCharacteristic::Property property) {
+  absl::MutexLock lock(&mutex_);
   api::ble_v2::GattCharacteristic characteristic = {
       .uuid = characteristic_uuid, .service_uuid = service_uuid};
   characteristics_[characteristic] = absl::NotFoundError("value not set");
@@ -448,6 +401,7 @@ BleV2Medium::GattServer::CreateCharacteristic(
 
 bool BleV2Medium::GattServer::DiscoverBleV2MediumGattCharacteristics(
     const Uuid& service_uuid, const std::vector<Uuid>& characteristic_uuids) {
+  absl::MutexLock lock(&mutex_);
   auto contains = [&](const Uuid& characteristic_uuid) {
     return std::find(characteristic_uuids.begin(), characteristic_uuids.end(),
                      characteristic_uuid) != characteristic_uuids.end();
@@ -465,6 +419,7 @@ bool BleV2Medium::GattServer::DiscoverBleV2MediumGattCharacteristics(
 bool BleV2Medium::GattServer::UpdateCharacteristic(
     const api::ble_v2::GattCharacteristic& characteristic,
     const nearby::ByteArray& value) {
+  absl::MutexLock lock(&mutex_);
   NEARBY_LOGS(INFO)
       << "G3 Ble GattServer UpdateCharacteristic, characteristic=("
       << characteristic.service_uuid.Get16BitAsString() << ","
@@ -477,6 +432,7 @@ bool BleV2Medium::GattServer::UpdateCharacteristic(
 absl::Status BleV2Medium::GattServer::NotifyCharacteristicChanged(
     const api::ble_v2::GattCharacteristic& characteristic, bool confirm,
     const ByteArray& new_value) {
+  absl::MutexLock lock(&mutex_);
   NEARBY_LOGS(INFO)
       << "G3 Ble GattServer NotifyCharacteristicChanged, characteristic=("
       << characteristic.service_uuid.Get16BitAsString() << ","
@@ -497,36 +453,37 @@ absl::Status BleV2Medium::GattServer::NotifyCharacteristicChanged(
 absl::StatusOr<ByteArray> BleV2Medium::GattServer::ReadCharacteristic(
     const BleV2Peripheral& remote_device,
     const api::ble_v2::GattCharacteristic& characteristic, int offset) {
-  const auto it = characteristics_.find(characteristic);
-  if (it != characteristics_.end()) {
-    if (it->second.ok()) {
+  {
+    absl::MutexLock lock(&mutex_);
+    const auto it = characteristics_.find(characteristic);
+    if (it == characteristics_.end()) {
+      return absl::FailedPreconditionError(
+          absl::StrCat(characteristic, " not found"));
+    } else if (it->second.ok()) {
       return it->second;
     }
-    absl::StatusOr<ByteArray> result;
-    CountDownLatch latch(1);
-    callback_.on_characteristic_read_cb(
-        remote_device, characteristic, offset,
-        [&](absl::StatusOr<absl::string_view> data) {
-          if (data.ok()) {
-            result = ByteArray(std::string(*data));
-          } else {
-            result = data.status();
-          }
-          latch.CountDown();
-        });
-    latch.Await();
-    return result;
   }
-  return absl::FailedPreconditionError(
-      absl::StrCat(characteristic, " not found"));
+  absl::StatusOr<ByteArray> result;
+  CountDownLatch latch(1);
+  callback_.on_characteristic_read_cb(
+      remote_device, characteristic, offset,
+      [&](absl::StatusOr<absl::string_view> data) {
+        if (data.ok()) {
+          result = ByteArray(std::string(*data));
+        } else {
+          result = data.status();
+        }
+        latch.CountDown();
+      });
+  latch.Await();
+  return result;
 }
 
 absl::Status BleV2Medium::GattServer::WriteCharacteristic(
     const BleV2Peripheral& remote_device,
     const api::ble_v2::GattCharacteristic& characteristic, int offset,
     absl::string_view data) {
-  const auto it = characteristics_.find(characteristic);
-  if (it != characteristics_.end()) {
+  if (HasCharacteristic(characteristic)) {
     absl::Status result;
     CountDownLatch latch(1);
     callback_.on_characteristic_write_cb(remote_device, characteristic, offset,
@@ -545,6 +502,7 @@ bool BleV2Medium::GattServer::AddCharacteristicSubscription(
     const BleV2Peripheral& remote_device,
     const api::ble_v2::GattCharacteristic& characteristic,
     absl::AnyInvocable<void(absl::string_view value)> callback) {
+  absl::MutexLock lock(&mutex_);
   const auto it = characteristics_.find(characteristic);
   if (it != characteristics_.end()) {
     subscribers_[SubscriberKey(&remote_device, characteristic)] =
@@ -557,6 +515,7 @@ bool BleV2Medium::GattServer::AddCharacteristicSubscription(
 bool BleV2Medium::GattServer::RemoveCharacteristicSubscription(
     const BleV2Peripheral& remote_device,
     const api::ble_v2::GattCharacteristic& characteristic) {
+  absl::MutexLock lock(&mutex_);
   const auto it = characteristics_.find(characteristic);
   if (it != characteristics_.end()) {
     subscribers_.erase(SubscriberKey(&remote_device, characteristic));
@@ -567,12 +526,54 @@ bool BleV2Medium::GattServer::RemoveCharacteristicSubscription(
 
 bool BleV2Medium::GattServer::HasCharacteristic(
     const api::ble_v2::GattCharacteristic& characteristic) {
+  absl::MutexLock lock(&mutex_);
   return characteristics_.find(characteristic) != characteristics_.end();
 }
 
+void BleV2Medium::GattServer::Connect(GattClient* client) {
+  absl::MutexLock lock(&mutex_);
+  connected_clients_.push_back(client);
+}
+
+void BleV2Medium::GattServer::Disconnect(GattClient* client) {
+  absl::MutexLock lock(&mutex_);
+  connected_clients_.erase(
+      std::remove(connected_clients_.begin(), connected_clients_.end(), client),
+      connected_clients_.end());
+}
+
 void BleV2Medium::GattServer::Stop() {
-  NEARBY_LOGS(INFO) << "G3 Ble GattServer Stop";
+  if (stopped_) return;
+  absl::MutexLock lock(&mutex_);
+  stopped_ = true;
+  for (auto& client : connected_clients_) {
+    client->OnServerDisconnected();
+  }
   characteristics_.clear();
+}
+
+BleV2Medium::GattClient::GattClient(
+    api::ble_v2::BlePeripheral& peripheral,
+    Borrowable<api::ble_v2::GattServer*> gatt_server,
+    api::ble_v2::ClientGattConnectionCallback callback)
+    : peripheral_(static_cast<BleV2Peripheral&>(peripheral)),
+      gatt_server_(gatt_server),
+      callback_(std::move(callback)) {
+  Borrowed<api::ble_v2::GattServer*> borrowed = gatt_server_.Borrow();
+  if (borrowed) {
+    BleV2Medium::GattServer* gatt_server =
+        static_cast<BleV2Medium::GattServer*>(*borrowed);
+    gatt_server->Connect(this);
+  }
+}
+
+BleV2Medium::GattClient::~GattClient() {
+  Borrowed<api::ble_v2::GattServer*> borrowed = gatt_server_.Borrow();
+  if (borrowed) {
+    BleV2Medium::GattServer* gatt_server =
+        static_cast<BleV2Medium::GattServer*>(*borrowed);
+    gatt_server->Disconnect(this);
+  }
 }
 
 bool BleV2Medium::GattClient::DiscoverServiceAndCharacteristics(
@@ -715,9 +716,24 @@ bool BleV2Medium::GattClient::SetCharacteristicSubscription(
 }
 
 void BleV2Medium::GattClient::Disconnect() {
-  absl::MutexLock lock(&mutex_);
+  bool was_alive = is_connection_alive_.exchange(false);
+  if (!was_alive) return;
   NEARBY_LOGS(INFO) << "G3 Ble GattClient Disconnect";
-  is_connection_alive_ = false;
+  Borrowed<api::ble_v2::GattServer*> borrowed = gatt_server_.Borrow();
+  if (borrowed) {
+    BleV2Medium::GattServer* gatt_server =
+        static_cast<BleV2Medium::GattServer*>(*borrowed);
+    gatt_server->Disconnect(this);
+  }
+}
+
+void BleV2Medium::GattClient::OnServerDisconnected() {
+  bool was_alive = is_connection_alive_.exchange(false);
+  if (!was_alive) return;
+  NEARBY_LOGS(INFO) << "G3 Ble GattServer disconnected";
+  if (callback_.disconnected_cb != nullptr) {
+    callback_.disconnected_cb();
+  }
 }
 
 std::unique_ptr<api::ble_v2::BleServerSocket> BleV2Medium::OpenServerSocket(

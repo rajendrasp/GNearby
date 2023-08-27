@@ -18,12 +18,16 @@
 #include <optional>
 #include <string>
 
-#include "gmock/gmock.h"
-#include "protobuf-matchers/protocol-buffer-matchers.h"
 #include "gtest/gtest.h"
+#include "absl/strings/string_view.h"
 #include "absl/time/time.h"
 #include "internal/platform/bluetooth_adapter.h"
+#include "internal/platform/byte_array.h"
+#include "internal/platform/cancellation_flag.h"
 #include "internal/platform/count_down_latch.h"
+#include "internal/platform/exception.h"
+#include "internal/platform/feature_flags.h"
+#include "internal/platform/implementation/bluetooth_adapter.h"
 #include "internal/platform/implementation/bluetooth_classic.h"
 #include "internal/platform/logging.h"
 #include "internal/platform/medium_environment.h"
@@ -43,6 +47,39 @@ constexpr FeatureFlags kTestCases[] = {
     FeatureFlags{
         .enable_cancellation_flag = false,
     },
+};
+
+class BluetoothClassicMediumObserver
+    : public BluetoothClassicMedium ::Observer {
+ public:
+  explicit BluetoothClassicMediumObserver(
+      CountDownLatch* device_added_latch, CountDownLatch* device_removed_latch,
+      CountDownLatch* device_paired_changed_latch)
+      : device_added_latch_(device_added_latch),
+        device_removed_latch_(device_removed_latch),
+        device_paired_changed_latch_(device_paired_changed_latch) {}
+
+  void DeviceAdded(BluetoothDevice& device) override {
+    if (!device_added_latch_) return;
+    device_added_latch_->CountDown();
+  }
+
+  void DeviceRemoved(BluetoothDevice& device) override {
+    if (!device_removed_latch_) return;
+    device_removed_latch_->CountDown();
+  }
+
+  void DevicePairedChanged(BluetoothDevice& device,
+                           bool new_paired_status) override {
+    if (!device_paired_changed_latch_) return;
+    paired_status_ = new_paired_status;
+    device_paired_changed_latch_->CountDown();
+  }
+
+  CountDownLatch* device_added_latch_;
+  CountDownLatch* device_removed_latch_;
+  CountDownLatch* device_paired_changed_latch_;
+  bool paired_status_ = false;
 };
 
 class BluetoothClassicMediumTest
@@ -237,7 +274,7 @@ TEST_F(BluetoothClassicMediumTest, SendData) {
   server_socket.Close();
 }
 
-TEST_F(BluetoothClassicMediumTest, IoOnClosedSocketReturnsError) {
+TEST_F(BluetoothClassicMediumTest, IoOnClosedSocketReturnsEmpty) {
   adapter_a_->SetScanMode(BluetoothAdapter::ScanMode::kConnectable);
   CountDownLatch found_latch(1);
   BluetoothDevice* discovered_device = nullptr;
@@ -275,7 +312,7 @@ TEST_F(BluetoothClassicMediumTest, IoOnClosedSocketReturnsError) {
       BluetoothSocket socket_b = server_socket.Accept();
       ASSERT_TRUE(socket_b.IsValid());
       socket_b.Close();
-      EXPECT_FALSE(socket_b.GetInputStream().Read(data.size()).ok());
+      EXPECT_TRUE(socket_b.GetInputStream().Read(data.size()).result().Empty());
     });
   }
   server_socket.Close();
@@ -304,6 +341,12 @@ TEST_F(BluetoothClassicMediumTest, CanStartDiscovery) {
   adapter_a_->SetScanMode(BluetoothAdapter::ScanMode::kConnectable);
   CountDownLatch found_latch(1);
   CountDownLatch lost_latch(1);
+  CountDownLatch device_added_latch(1);
+  CountDownLatch device_removed_latch(1);
+  BluetoothClassicMediumObserver observer(&device_added_latch,
+                                          &device_removed_latch, nullptr);
+  bt_a_->AddObserver(&observer);
+
   bt_a_->StartDiscovery(DiscoveryCallback{
       .device_discovered_cb =
           [this, &found_latch](BluetoothDevice& device) {
@@ -322,9 +365,11 @@ TEST_F(BluetoothClassicMediumTest, CanStartDiscovery) {
   EXPECT_EQ(adapter_b_->GetScanMode(),
             BluetoothAdapter::ScanMode::kConnectableDiscoverable);
   EXPECT_TRUE(found_latch.Await(absl::Milliseconds(1000)).result());
+  EXPECT_TRUE(device_added_latch.Await(absl::Milliseconds(1000)).result());
   adapter_b_->SetStatus(BluetoothAdapter::Status::kDisabled);
   EXPECT_FALSE(adapter_b_->IsEnabled());
   EXPECT_TRUE(lost_latch.Await(absl::Milliseconds(1000)).result());
+  EXPECT_TRUE(device_removed_latch.Await(absl::Milliseconds(1000)).result());
 }
 
 TEST_F(BluetoothClassicMediumTest, CanStopDiscovery) {
@@ -417,6 +462,10 @@ TEST_F(BluetoothClassicMediumTest, BluetoothPairingSuccess) {
   CountDownLatch paired_latch(1);
   CountDownLatch initiated_latch(1);
   CountDownLatch error_latch(1);
+  CountDownLatch device_paired_latch(1);
+  BluetoothClassicMediumObserver observer(nullptr, nullptr,
+                                          &device_paired_latch);
+  bt_a_->AddObserver(&observer);
   EXPECT_TRUE(bluetooth_pairing->InitiatePairing({
       .on_paired_cb = [&]() { paired_latch.CountDown(); },
       .on_pairing_error_cb =
@@ -442,6 +491,8 @@ TEST_F(BluetoothClassicMediumTest, BluetoothPairingSuccess) {
   // Finishes pairing with remote device.
   EXPECT_TRUE(bluetooth_pairing->FinishPairing(received_passkey));
   paired_latch.Await();
+  device_paired_latch.Await();
+  EXPECT_TRUE(observer.paired_status_);
   EXPECT_TRUE(bluetooth_pairing->IsPaired());
 
   // Unpairs with remote device.

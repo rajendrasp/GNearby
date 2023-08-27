@@ -31,7 +31,7 @@ constexpr absl::string_view kAddress = "74:74:46:01:6C:21";
 
 class UIBrokerImplTest : public ::testing::Test, public UIBroker::Observer {
  protected:
-  UIBrokerImplTest() {
+  void SetUp() override {
     presenter_factory_ = std::make_unique<FakeFastPairPresenterFactory>();
     FastPairPresenterImpl::Factory::SetFactoryForTesting(
         presenter_factory_.get());
@@ -39,7 +39,7 @@ class UIBrokerImplTest : public ::testing::Test, public UIBroker::Observer {
     ui_broker_->AddObserver(this);
   }
 
-  void OnDiscoveryAction(const FastPairDevice& device,
+  void OnDiscoveryAction(FastPairDevice& device,
                          DiscoveryAction action) override {
     on_discovery_action_notified_ = true;
     discovery_action_ = action;
@@ -66,6 +66,13 @@ TEST_F(UIBrokerImplTest, ShowDiscoveryWithoutObserver) {
   ui_broker_->ShowDiscovery(device, notification_controller_);
   EXPECT_TRUE(presenter_factory_->fake_fast_pair_presenter()->show_discovery());
   EXPECT_FALSE(on_discovery_action_notified_);
+}
+
+TEST_F(UIBrokerImplTest, ShowPairingResult) {
+  FastPairDevice device(kModelId, kAddress, Protocol::kFastPairInitialPairing);
+  ui_broker_->ShowPairingResult(device, notification_controller_, true);
+  EXPECT_TRUE(
+      presenter_factory_->fake_fast_pair_presenter()->pairing_result_changed());
 }
 
 }  // namespace

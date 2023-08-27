@@ -26,16 +26,18 @@
 #include "fastpair/handshake/fast_pair_gatt_service_client_impl.h"
 #include "internal/base/bluetooth_address.h"
 #include "internal/platform/logging.h"
+#include "internal/platform/single_thread_executor.h"
 
 namespace nearby {
 namespace fastpair {
 
 FastPairHandshakeImpl::FastPairHandshakeImpl(FastPairDevice& device,
                                              Mediums& mediums,
-                                             OnCompleteCallback on_complete)
+                                             OnCompleteCallback on_complete,
+                                             SingleThreadExecutor* executor)
     : FastPairHandshake(std::move(on_complete), nullptr, nullptr) {
   fast_pair_gatt_service_client_ =
-      FastPairGattServiceClientImpl::Factory::Create(device, mediums);
+      FastPairGattServiceClientImpl::Factory::Create(device, mediums, executor);
   fast_pair_gatt_service_client_->InitializeGattConnection(
       [&](std::optional<PairFailure> failure) {
         OnGattClientInitializedCallback(device, failure);
@@ -129,7 +131,7 @@ void FastPairHandshakeImpl::OnParseDecryptedResponse(
   device.SetPublicAddress(
       device::CanonicalizeBluetoothAddress(response->address_bytes));
   completed_successfully_ = true;
-  std::move(on_complete_callback_)(device, absl::nullopt);
+  std::move(on_complete_callback_)(device, std::nullopt);
 }
 
 }  // namespace fastpair

@@ -21,7 +21,7 @@ licenses(["notice"])
 # When not set, LDT encryption will not be available. We won't be able to advertise encrypted BLE4.2 advertisements nor scan for them.
 bool_flag(
     name = "enable_rust_ldt",
-    build_setting_default = True,
+    build_setting_default = False,
 )
 
 config_setting(
@@ -55,6 +55,7 @@ cc_library(
         "advertisement_factory.cc",
         "base_broadcast_request.cc",
         "broadcast_manager.cc",
+        "connection_authenticator.cc",
         "credential_manager_impl.cc",
         "ldt.cc",
         "scan_manager.cc",
@@ -66,6 +67,7 @@ cc_library(
         "advertisement_factory.h",
         "base_broadcast_request.h",
         "broadcast_manager.h",
+        "connection_authenticator.h",
         "credential_manager.h",
         "credential_manager_impl.h",
         "ldt.h",
@@ -82,9 +84,9 @@ cc_library(
     ],
     deps = [
         "//internal/crypto",
+        "//internal/crypto_cros",
         "//internal/platform:base",
         "//internal/platform:comm",
-        "//internal/platform:logging",
         "//internal/platform:types",
         "//internal/platform:uuid",
         "//internal/platform/implementation:comm",
@@ -111,7 +113,7 @@ cc_library(
         "@com_google_absl//absl/types:variant",
     ] + select({
         ":norust_or_windows_or_android": [":ldt_stub"],
-        "//conditions:default": ["//third_party/nearby_rust/presence/ldt_np_adv_ffi"],
+        "//conditions:default": ["//third_party/beto_core/nearby/presence/ldt_np_adv_ffi"],
     }),
 )
 
@@ -123,7 +125,8 @@ cc_library(
     ],
     deps = [
         "//presence:types",
-        "@com_google_absl//absl/types:optional",
+        "@com_google_absl//absl/functional:any_invocable",
+        "@com_google_absl//absl/status",
     ],
 )
 
@@ -277,6 +280,29 @@ cc_test(
 )
 
 cc_test(
+    name = "connection_authenticator_test",
+    size = "small",
+    srcs = ["connection_authenticator_test.cc"],
+    deps = [
+        ":internal",
+        "//internal/crypto",
+        "//internal/crypto_cros",
+        "//internal/proto:credential_cc_proto",
+        "//internal/proto:local_credential_cc_proto",
+        "//presence/proto:presence_frame_cc_proto",
+        "@com_github_protobuf_matchers//protobuf-matchers",
+        "@com_google_googletest//:gtest_main",
+    ] + select({
+        "@platforms//os:windows": [
+            "//internal/platform/implementation/windows",
+        ],
+        "//conditions:default": [
+            "//internal/platform/implementation/g3",
+        ],
+    }),
+)
+
+cc_test(
     name = "credential_manager_impl_test",
     size = "small",
     srcs = ["credential_manager_impl_test.cc"],
@@ -285,6 +311,7 @@ cc_test(
         "//internal/platform:comm",
         "//internal/platform:test_util",
         "//internal/platform:types",
+        "//internal/platform/implementation:comm",
         "//internal/platform/implementation:types",
         "//internal/proto:credential_cc_proto",
         "//net/proto2/contrib/parse_proto:testing",

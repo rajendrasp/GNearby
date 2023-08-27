@@ -12,9 +12,12 @@ cc_library(
     ],
     visibility = [
         "//fastpair:__subpackages__",
+        "//internal/account:__subpackages__",
         "//internal/interop:__pkg__",
         "//internal/platform:__pkg__",
+        "//location/nearby/cpp/experiments:__subpackages__",
         "//location/nearby/cpp/sharing:__subpackages__",
+        "//third_party/nearby/sharing:__subpackages__",
     ],
     deps = [
         "//internal/platform:types",
@@ -38,6 +41,7 @@ cc_library(
         "//fastpair:__subpackages__",
         "//internal:__subpackages__",
         "//location/nearby/cpp/sharing:__subpackages__",
+        "//third_party/nearby/sharing:__subpackages__",
     ],
     deps = [
         "@com_google_absl//absl/strings",

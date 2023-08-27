@@ -57,6 +57,14 @@ class PcpManager {
                         DiscoveryListener listener);
   void StopDiscovery(ClientProxy* client);
 
+  std::pair<Status, std::vector<ConnectionInfoVariant>>
+  StartListeningForIncomingConnections(
+      ClientProxy* client, absl::string_view service_id,
+      v3::ConnectionListener listener,
+      const v3::ConnectionListeningOptions& options);
+
+  void StopListeningForIncomingConnections(ClientProxy* client);
+
   void InjectEndpoint(ClientProxy* client, const std::string& service_id,
                       const OutOfBandConnectionMetadata& metadata);
 
@@ -66,6 +74,14 @@ class PcpManager {
   Status AcceptConnection(ClientProxy* client, const string& endpoint_id,
                           PayloadListener payload_listener);
   Status RejectConnection(ClientProxy* client, const string& endpoint_id);
+
+  Status UpdateAdvertisingOptions(
+      ClientProxy* client, absl::string_view service_id,
+      const AdvertisingOptions& advertising_options);
+
+  Status UpdateDiscoveryOptions(ClientProxy* client,
+                                absl::string_view service_id,
+                                const DiscoveryOptions& discovery_options);
 
   location::nearby::proto::connections::Medium GetBandwidthUpgradeMedium();
   void DisconnectFromEndpointManager();

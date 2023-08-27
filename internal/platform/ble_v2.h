@@ -280,7 +280,7 @@ class GattClient final {
 
   // NOLINTNEXTLINE(google3-legacy-absl-backports)
   absl::optional<std::string> ReadCharacteristic(
-      api::ble_v2::GattCharacteristic& characteristic) {
+      const api::ble_v2::GattCharacteristic& characteristic) {
     return impl_->ReadCharacteristic(characteristic);
   }
 
@@ -371,6 +371,7 @@ class BleV2Medium final {
             api::ImplementationPlatform::CreateBleV2Medium(adapter.GetImpl())),
         adapter_(adapter) {}
 
+  ~BleV2Medium();
   // Returns true once the BLE advertising has been initiated.
   // This interface will be deprecated soon.
   // TODO(b/271305977) remove this function.
@@ -454,8 +455,6 @@ class BleV2Medium final {
   std::unique_ptr<api::ble_v2::BleMedium> impl_;
   BluetoothAdapter& adapter_;
   ServerGattConnectionCallback server_gatt_connection_callback_
-      ABSL_GUARDED_BY(mutex_);
-  ClientGattConnectionCallback client_gatt_connection_callback_
       ABSL_GUARDED_BY(mutex_);
   absl::flat_hash_set<api::ble_v2::BlePeripheral*> peripherals_
       ABSL_GUARDED_BY(mutex_);

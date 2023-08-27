@@ -28,6 +28,7 @@
 #include "absl/strings/string_view.h"
 #include "absl/time/time.h"
 #include "internal/analytics/event_logger.h"
+#include "internal/platform/count_down_latch.h"
 #include "internal/platform/error_code_params.h"
 #include "internal/platform/implementation/system_clock.h"
 #include "internal/platform/logging.h"
@@ -104,7 +105,8 @@ AnalyticsRecorder::AnalyticsRecorder(EventLogger *event_logger)
 
 AnalyticsRecorder::~AnalyticsRecorder() {
   serial_executor_.Shutdown();
-  ResetClientSessionLoggingResouces();
+  MutexLock lock(&mutex_);
+  ResetClientSessionLoggingResoucesLocked();
 }
 
 bool AnalyticsRecorder::IsSessionLogged() {
@@ -112,8 +114,7 @@ bool AnalyticsRecorder::IsSessionLogged() {
   return session_was_logged_;
 }
 
-void AnalyticsRecorder::ResetClientSessionLoggingResouces() {
-  MutexLock lock(&mutex_);
+void AnalyticsRecorder::ResetClientSessionLoggingResoucesLocked() {
   NEARBY_LOGS(INFO) << "Reset AnalyticsRecorder ctor event_logger_="
                     << event_logger_;
 
@@ -212,6 +213,26 @@ void AnalyticsRecorder::OnStopDiscovery() {
   RecordDiscoveryPhaseDurationLocked();
 }
 
+void AnalyticsRecorder::OnStartedIncomingConnectionListening(
+    connections::Strategy strategy) {
+  MutexLock lock(&mutex_);
+  if (!CanRecordAnalyticsLocked("OnStartedIncomingConnectionListening")) {
+    return;
+  }
+  UpdateStrategySessionLocked(strategy, ADVERTISER);
+  if (started_advertising_phase_time_ == absl::InfinitePast()) {
+    started_advertising_phase_time_ = SystemClock::ElapsedRealtime();
+  }
+}
+
+void AnalyticsRecorder::OnStoppedIncomingConnectionListening() {
+  MutexLock lock(&mutex_);
+  if (!CanRecordAnalyticsLocked("OnStoppedIncomingConnectionListening")) {
+    return;
+  }
+  RecordAdvertisingPhaseDurationLocked();
+}
+
 void AnalyticsRecorder::OnEndpointFound(Medium medium) {
   MutexLock lock(&mutex_);
   if (!CanRecordAnalyticsLocked("OnEndpointFound")) {
@@ -227,6 +248,19 @@ void AnalyticsRecorder::OnEndpointFound(Medium medium) {
   discovered_endpoint->set_medium(medium);
   discovered_endpoint->set_latency_millis(absl::ToInt64Milliseconds(
       SystemClock::ElapsedRealtime() - started_discovery_phase_time_));
+}
+
+void AnalyticsRecorder::OnRequestConnection(
+    const connections::Strategy &strategy, const std::string &endpoint_id) {
+  MutexLock lock(&mutex_);
+  if (!CanRecordAnalyticsLocked("onRequestConnection")) {
+    return;
+  }
+
+  UpdateStrategySessionLocked(strategy, DISCOVERER);
+  if (started_discovery_phase_time_ == absl::InfinitePast()) {
+    started_discovery_phase_time_ = SystemClock::ElapsedRealtime();
+  }
 }
 
 void AnalyticsRecorder::OnConnectionRequestReceived(
@@ -704,7 +738,7 @@ void AnalyticsRecorder::LogSession() {
   FinishStrategySessionLocked();
   client_session_->set_duration_millis(absl::ToInt64Milliseconds(
       SystemClock::ElapsedRealtime() - started_client_session_time_));
-  LogClientSession();
+  LogClientSessionLocked();
   LogEvent(STOP_CLIENT_SESSION);
   session_was_logged_ = true;
 }
@@ -749,12 +783,13 @@ bool AnalyticsRecorder::CanRecordAnalyticsLocked(
   return true;
 }
 
-void AnalyticsRecorder::LogClientSession() {
+void AnalyticsRecorder::LogClientSessionLocked() {
   serial_executor_.Execute(
-      "analytics-recorder", [this]() {
+      "analytics-recorder",
+      [this, client_session = std::move(client_session_)]() mutable {
         ConnectionsLog connections_log;
         connections_log.set_event_type(CLIENT_SESSION);
-        connections_log.set_allocated_client_session(client_session_.release());
+        connections_log.set_allocated_client_session(client_session.release());
         connections_log.set_version(kVersion);
 
         NEARBY_LOGS(VERBOSE)
@@ -762,8 +797,8 @@ void AnalyticsRecorder::LogClientSession() {
             << connections_log.DebugString();
 
         event_logger_->Log(connections_log);
-        ResetClientSessionLoggingResouces();
       });
+  ResetClientSessionLoggingResoucesLocked();
 }
 
 void AnalyticsRecorder::LogEvent(EventType event_type) {
@@ -1012,10 +1047,15 @@ void AnalyticsRecorder::FinishStrategySessionLocked() {
     bandwidth_upgrade_attempts_.clear();
 
     // Add the StrategySession in ClientSession
-    current_strategy_session_->set_duration_millis(absl::ToInt64Milliseconds(
-        started_strategy_session_time_ - SystemClock::ElapsedRealtime()));
-    *client_session_->add_strategy_session() =
-        *std::move(current_strategy_session_);
+    if (current_strategy_session_ != nullptr) {
+      current_strategy_session_->set_duration_millis(absl::ToInt64Milliseconds(
+          SystemClock::ElapsedRealtime() - started_strategy_session_time_));
+      *client_session_->add_strategy_session() =
+          *std::move(current_strategy_session_);
+    }
+
+    current_strategy_session_ = nullptr;
+    current_strategy_ = connections::Strategy::kNone;
     LogEvent(STOP_STRATEGY_SESSION);
   }
 }
@@ -1280,6 +1320,12 @@ AnalyticsRecorder::LogicalConnection::ResolvePendingPayloads(
   // Return the list of completed payloads to be added to the current
   // EstablishedConnection.
   return completed_payloads;
+}
+
+void AnalyticsRecorder::Sync() {
+  CountDownLatch latch(1);
+  serial_executor_.Execute([&]() { latch.CountDown(); });
+  latch.Await();
 }
 
 }  // namespace analytics

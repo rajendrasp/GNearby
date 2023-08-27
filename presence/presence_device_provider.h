@@ -28,6 +28,19 @@ class PresenceDeviceProvider : public NearbyDeviceProvider {
       : device_{metadata} {}
 
   const NearbyDevice* GetLocalDevice() override { return &device_; }
+  AuthenticationStatus AuthenticateAsInitiator(
+      const NearbyDevice& remote_device, absl::string_view shared_secret,
+      const AuthenticationTransport& authentication_transport) const override {
+    // TODO(b/282027237): Implement.
+    return AuthenticationStatus::kUnknown;
+  }
+
+  AuthenticationStatus AuthenticateAsResponder(
+      absl::string_view shared_secret,
+      const AuthenticationTransport& authentication_transport) const override {
+    // TODO(b/282027237): Implement.
+    return AuthenticationStatus::kUnknown;
+  }
 
   void UpdateMetadata(const ::nearby::internal::Metadata& metadata) {
     device_.SetMetadata(metadata);

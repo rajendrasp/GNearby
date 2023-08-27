@@ -15,6 +15,7 @@
 #ifndef CORE_INTERNAL_PCP_HANDLER_H_
 #define CORE_INTERNAL_PCP_HANDLER_H_
 
+#include <utility>
 #include <vector>
 
 #include "connections/implementation/client_proxy.h"
@@ -87,6 +88,14 @@ class PcpHandler {
   // otherwise do nothing.
   virtual void StopDiscovery(ClientProxy* client) = 0;
 
+  virtual std::pair<Status, std::vector<ConnectionInfoVariant>>
+  StartListeningForIncomingConnections(
+      ClientProxy* client, absl::string_view service_id,
+      v3::ConnectionListeningOptions options,
+      v3::ConnectionListener connection_listener) = 0;
+
+  virtual void StopListeningForIncomingConnections(ClientProxy* client) = 0;
+
   // If Discovery is active with is_out_of_band_connection == true, invoke the
   // callback with the provided endpoint info.
   virtual void InjectEndpoint(ClientProxy* client,
@@ -112,6 +121,14 @@ class PcpHandler {
   // will terminate. Update state in ClientProxy.
   virtual Status RejectConnection(ClientProxy* client,
                                   const std::string& endpoint_id) = 0;
+
+  virtual Status UpdateAdvertisingOptions(
+      ClientProxy* client, absl::string_view service_id,
+      const AdvertisingOptions& advertising_options) = 0;
+
+  virtual Status UpdateDiscoveryOptions(
+      ClientProxy* client, absl::string_view service_id,
+      const DiscoveryOptions& discovery_options) = 0;
 };
 
 }  // namespace connections

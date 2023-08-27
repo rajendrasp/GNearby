@@ -99,6 +99,8 @@ bool BluetoothPairing::InitiatePairing(
                        << ": Failed to initiate pairing. WinRT exception: "
                        << error.code() << ": "
                        << winrt::to_string(error.message());
+  } catch (...) {
+    NEARBY_LOGS(ERROR) << __func__ << ": Unknown exception.";
   }
   return false;
 }
@@ -137,13 +139,15 @@ bool BluetoothPairing::FinishPairing(
                        << ": Failed to finish pairing. WinRT exception: "
                        << error.code() << ": "
                        << winrt::to_string(error.message());
+  } catch (...) {
+    NEARBY_LOGS(ERROR) << __func__ << ": Unknown exception.";
   }
   return false;
 }
 
 bool BluetoothPairing::CancelPairing() {
   NEARBY_LOGS(VERBOSE) << __func__
-                       << "Start to cancel ongoing pairing process.";
+                       << " Start to cancel ongoing pairing process.";
   try {
     if (!pairing_deferral_) {
       NEARBY_LOGS(VERBOSE) << __func__ << "No ongoing pairing process.";
@@ -156,7 +160,7 @@ bool BluetoothPairing::CancelPairing() {
     // |was_cancelled_| is set so that OnPair(), which is called when the
     // deferral is completed, will know that cancellation was the actual result.
     was_cancelled_ = true;
-    pairing_deferral_.Complete();
+    pairing_deferral_.Close();
     NEARBY_LOGS(VERBOSE) << __func__ << "Canceled ongoing pairing process.";
     return true;
   } catch (std::exception exception) {
@@ -167,6 +171,8 @@ bool BluetoothPairing::CancelPairing() {
                        << ": Failed to cancel ongoing pairing process. "
                        << "WinRT exception: " << error.code() << ": "
                        << winrt::to_string(error.message());
+  } catch (...) {
+    NEARBY_LOGS(ERROR) << __func__ << ": Unknown exception.";
   }
   return false;
 }
@@ -195,6 +201,8 @@ bool BluetoothPairing::Unpair() {
                        << ": Failed to unpaired with device. WinRT exception: "
                        << error.code() << ": "
                        << winrt::to_string(error.message());
+  } catch (...) {
+    NEARBY_LOGS(ERROR) << __func__ << ": Unknown exception.";
   }
   return false;
 }
@@ -202,7 +210,7 @@ bool BluetoothPairing::Unpair() {
 bool BluetoothPairing::IsPaired() {
   try {
     bool is_paired = bluetooth_device_.DeviceInformation().Pairing().IsPaired();
-    NEARBY_LOGS(INFO) << __func__ << (is_paired ? "True" : "False");
+    NEARBY_LOGS(INFO) << __func__ << (is_paired ? " True" : " False");
     return is_paired;
   } catch (std::exception exception) {
     NEARBY_LOGS(ERROR) << __func__ << ": Failed to get IsPaired.  exception: "
@@ -212,6 +220,8 @@ bool BluetoothPairing::IsPaired() {
                        << ": Failed to get IsPaired. WinRT exception: "
                        << error.code() << ": "
                        << winrt::to_string(error.message());
+  } catch (...) {
+    NEARBY_LOGS(ERROR) << __func__ << ": Unknown exception.";
   }
   return false;
 }
@@ -259,6 +269,8 @@ void BluetoothPairing::OnPairingRequested(
         << __func__
         << ": Failed to request to pair with device. WinRT exception: "
         << error.code() << ": " << winrt::to_string(error.message());
+  } catch (...) {
+    NEARBY_LOGS(ERROR) << __func__ << ": Unknown exception.";
   }
   pairing_callback_.on_pairing_error_cb(PairingError::kFailed);
 }
@@ -322,6 +334,8 @@ void BluetoothPairing::OnPair(DevicePairingResult& pairing_result) {
     NEARBY_LOGS(ERROR) << __func__ << ": Failed to get Pairing Result Status."
                        << " WinRT exception: " << error.code() << ": "
                        << winrt::to_string(error.message());
+  } catch (...) {
+    NEARBY_LOGS(ERROR) << __func__ << ": Unknown exception.";
   }
   pairing_callback_.on_pairing_error_cb(PairingError::kFailed);
 }

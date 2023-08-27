@@ -31,7 +31,7 @@ class UIBroker {
   class Observer {
    public:
     virtual ~Observer() = default;
-    virtual void OnDiscoveryAction(const FastPairDevice& device,
+    virtual void OnDiscoveryAction(FastPairDevice& device,
                                    DiscoveryAction action) = 0;
   };
 
@@ -43,6 +43,11 @@ class UIBroker {
   virtual void ShowDiscovery(
       FastPairDevice& device,
       FastPairNotificationController& notification_controller) = 0;
+
+  virtual void ShowPairingResult(
+      FastPairDevice& device,
+      FastPairNotificationController& notification_controller,
+      bool success) = 0;
 };
 
 }  // namespace fastpair

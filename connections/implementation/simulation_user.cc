@@ -76,7 +76,7 @@ void SimulationUser::OnPayloadProgress(absl::string_view endpoint_id,
 }
 
 bool SimulationUser::WaitForProgress(
-    std::function<bool(const PayloadProgressInfo&)> predicate,
+    absl::AnyInvocable<bool(const PayloadProgressInfo&)> predicate,
     absl::Duration timeout) {
   Future<bool> future;
   {
@@ -129,6 +129,12 @@ void SimulationUser::StartDiscovery(const std::string& service_id,
           .Ok());
 }
 
+void SimulationUser::StopDiscovery() { mgr_.StopDiscovery(&client_); }
+
+Status SimulationUser::UpdateDiscoveryOptions(absl::string_view service_id) {
+  return mgr_.UpdateDiscoveryOptions(&client_, service_id, discovery_options_);
+}
+
 void SimulationUser::InjectEndpoint(
     const std::string& service_id,
     const OutOfBandConnectionMetadata& metadata) {
@@ -172,6 +178,16 @@ void SimulationUser::AcceptConnection(CountDownLatch* latch) {
 void SimulationUser::RejectConnection(CountDownLatch* latch) {
   reject_latch_ = latch;
   EXPECT_TRUE(mgr_.RejectConnection(&client_, discovered_.endpoint_id).Ok());
+}
+
+void SimulationUser::StartListeningForIncomingConnections(
+    CountDownLatch* latch, absl::string_view service_id,
+    const v3::ConnectionListeningOptions& options, Status expected_status) {
+  auto result = mgr_.StartListeningForIncomingConnections(
+      &client_, service_id, /*listener=*/{}, options);
+  latch->CountDown();
+  NEARBY_LOGS(INFO) << "status: " << result.first.ToString();
+  EXPECT_EQ(expected_status, result.first);
 }
 
 }  // namespace connections

@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Placeholder: load py_test
+
 licenses(["notice"])
 
 cc_library(
@@ -47,13 +49,13 @@ cc_library(
         "//connections:__subpackages__",
         "//fastpair:__subpackages__",
         "//internal/auth:__subpackages__",
-        "//internal/interop:__pkg__",
         "//internal/platform:__subpackages__",
         "//internal/platform/implementation:__subpackages__",
         "//internal/preferences:__subpackages__",
-        "//internal/weave:__pkg__",
+        "//internal/weave:__subpackages__",
         "//location/nearby/cpp:__subpackages__",
         "//presence:__subpackages__",
+        "//third_party/nearby/sharing:__subpackages__",
     ],
     deps = [
         "//proto:connections_enums_cc_proto",
@@ -71,13 +73,11 @@ cc_library(
     name = "util",
     srcs = [
         "base_input_stream.cc",
-        "base_pipe.cc",
         "byte_utils.cc",
     ],
     hdrs = [
         "base_input_stream.h",
         "base_mutex_lock.h",
-        "base_pipe.h",
         "byte_utils.h",
     ],
     visibility = [
@@ -89,29 +89,6 @@ cc_library(
         "//internal/platform/implementation:types",
         "@com_google_absl//absl/base:core_headers",
         "@com_google_absl//absl/strings:str_format",
-    ],
-)
-
-cc_library(
-    name = "logging",
-    hdrs = [
-        "logging.h",
-    ],
-    copts = ["-DCORE_ADAPTER_DLL"],
-    visibility = [
-        "//connections:__subpackages__",
-        "//fastpair:__subpackages__",
-        "//internal/interop:__pkg__",
-        "//internal/network:__subpackages__",
-        "//internal/platform:__subpackages__",
-        "//internal/proto/analytics:__subpackages__",
-        "//location/nearby/analytics/cpp:__subpackages__",
-        "//presence:__subpackages__",
-    ],
-    deps = [
-        "//internal/platform/implementation:platform",
-        "//internal/platform/implementation:types",
-        "@com_google_glog//:glog",
     ],
 )
 
@@ -151,12 +128,13 @@ cc_library(
         "wifi_lan_connection_info.h",
     ],
     visibility = [
+        "//connections/implementation:__pkg__",
         "//connections/v3:__pkg__",
         "//internal/interop:__pkg__",
         "//presence:__subpackages__",
     ],
     deps = [
-        ":logging",
+        ":types",
         "//proto:connections_enums_cc_proto",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/status:statusor",
@@ -177,7 +155,7 @@ cc_library(
     ],
     visibility = ["//connections/implementation:__subpackages__"],
     deps = [
-        ":logging",
+        ":types",
         "//proto:connections_enums_cc_proto",
         "//proto/errorcode:error_code_enums_cc_proto",
         "@com_google_absl//absl/functional:any_invocable",
@@ -218,12 +196,13 @@ cc_library(
         "//fastpair:__subpackages__",
         "//internal/platform/implementation:__subpackages__",
         "//presence:__subpackages__",
+        "//third_party/nearby/sharing:__subpackages__",
     ],
     deps = [
         ":base",
-        ":logging",
         ":types",
         ":uuid",
+        "//internal/base",
         "//internal/platform/implementation:comm",
         "//internal/test",
         "@com_google_absl//absl/container:flat_hash_map",
@@ -347,24 +326,33 @@ cc_library(
     visibility = [
         "//connections:__subpackages__",
         "//fastpair:__subpackages__",
+        "//internal/account:__subpackages__",
+        "//internal/auth:__subpackages__",
+        "//internal/auth/credential_store:__subpackages__",
         "//internal/base:__subpackages__",
+        "//internal/data:__subpackages__",
         "//internal/flags:__subpackages__",
         "//internal/interop:__pkg__",
         "//internal/network:__subpackages__",
+        "//internal/platform:__subpackages__",
         "//internal/platform/implementation/g3:__pkg__",
+        "//internal/platform/implementation/linux:__subpackages__",
         "//internal/platform/implementation/windows:__subpackages__",
         "//internal/preferences:__subpackages__",
+        "//internal/proto/analytics:__subpackages__",
         "//internal/test:__subpackages__",
-        "//internal/weave:__pkg__",
+        "//internal/weave:__subpackages__",
+        "//location/nearby/analytics/cpp:__subpackages__",
+        "//location/nearby/apps:__subpackages__",
         "//location/nearby/cpp:__subpackages__",
         "//location/nearby/testing/nearby_native:__subpackages__",
         "//presence:__subpackages__",
+        "//third_party/nearby/sharing:__subpackages__",
     ],
     deps = [
         ":base",
-        ":logging",
         ":util",
-        "//internal/crypto",
+        "//internal/crypto_cros",
         "//internal/platform/implementation:platform",
         "//internal/platform/implementation:types",
         "@com_google_absl//absl/base:core_headers",
@@ -412,13 +400,12 @@ cc_library(
         "//connections:__subpackages__",
         "//fastpair:__subpackages__",
         "//internal/platform/implementation:__subpackages__",
-        "//location/nearby/cpp:__subpackages__",
+        "//internal/test:__subpackages__",
         "//presence:__subpackages__",
     ],
     deps = [
         ":base",
         ":cancellation_flag",
-        ":logging",
         ":types",
         ":uuid",
         "//internal/base",
@@ -430,6 +417,7 @@ cc_library(
         "@com_google_absl//absl/functional:any_invocable",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/strings:str_format",
         "@com_google_absl//absl/types:optional",
     ],
 )
@@ -476,9 +464,9 @@ cc_test(
     shard_count = 16,
     deps = [
         ":base",
+        ":cancellation_flag",
         ":comm",
         ":connection_info",
-        ":logging",
         ":test_util",
         ":types",
         ":uuid",

@@ -21,6 +21,9 @@ namespace fastpair {
 
 std::ostream& operator<<(std::ostream& stream, PairFailure failure) {
   switch (failure) {
+    case PairFailure::kUnknown:
+      stream << "[Failed with unknown reason]";
+      break;
     case PairFailure::kCreateGattConnection:
       stream << "[Failed to create a GATT connection to the device]";
       break;
@@ -65,6 +68,9 @@ std::ostream& operator<<(std::ostream& stream, PairFailure failure) {
     case PairFailure::kPasskeyPairingCharacteristicWrite:
       stream << "[Failed to write to the Passkey GATT characteristic]";
       break;
+    case PairFailure::kAccountKeyCharacteristicWrite:
+      stream << "[Failed to write to the Account Key GATT characteristic]";
+      break;
     case PairFailure::kKeyBasedPairingResponseTimeout:
       stream << "[Timed out while waiting for the Key-based Pairing response]";
       break;
@@ -98,6 +104,9 @@ std::ostream& operator<<(std::ostream& stream, PairFailure failure) {
       break;
     case PairFailure::kPairingTimeout:
       stream << "[Potential pairing failed with timeout.]";
+      break;
+    case PairFailure::kWriteAccountKeyToFootprints:
+      stream << "[Failed to write Account Key to Footprints.]";
       break;
   }
 

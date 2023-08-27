@@ -63,6 +63,9 @@ bool BluetoothClassicMedium::StartDiscovery(DiscoveryCallback callback) {
       .device_name_changed_cb =
           [this](api::BluetoothDevice& device) {
             MutexLock lock(&mutex_);
+            // If the device is not already in devices_, we should not be able
+            // to change its name.
+            if (devices_.find(&device) == devices_.end()) return;
             auto& context = *devices_[&device];
             NEARBY_LOG(INFO, "Renaming device=%p, impl=%p", &context.device,
                        &device);
@@ -73,6 +76,11 @@ bool BluetoothClassicMedium::StartDiscovery(DiscoveryCallback callback) {
           [this](api::BluetoothDevice& device) {
             MutexLock lock(&mutex_);
             auto item = devices_.extract(&device);
+            if (!item) {
+              NEARBY_LOGS(WARNING)
+                  << "Removing unknown device: " << device.GetMacAddress();
+              return;
+            }
             auto& context = *item.mapped();
             NEARBY_LOG(INFO, "Removing device=%p, impl=%p", &context.device,
                        &device);

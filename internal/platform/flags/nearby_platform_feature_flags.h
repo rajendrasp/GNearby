@@ -15,6 +15,8 @@
 #ifndef THIRD_PARTY_NEARBY_INTERNAL_PLATFORM_FLAGS_NEARBY_PLATFORM_FEATURE_FLAGS_H_
 #define THIRD_PARTY_NEARBY_INTERNAL_PLATFORM_FLAGS_NEARBY_PLATFORM_FEATURE_FLAGS_H_
 
+#include <cstdint>
+
 #include "absl/strings/string_view.h"
 #include "internal/flags/flag.h"
 
@@ -31,9 +33,37 @@ namespace nearby_platform_feature {
 constexpr auto kEnableHotspotWin32Socket =
     flags::Flag<bool>(kConfigPackage, "45401992", true);
 
-// Apply platform thread to network library.
-constexpr auto kEnablePlatformThreadToNetwork =
-    flags::Flag<bool>(kConfigPackage, "45412711", true);
+// Disable/Enable GATT feature in BLE V2.
+constexpr auto kEnableBleV2Gatt =
+    flags::Flag<bool>(kConfigPackage, "45415180", false);
+
+// Disable/Enable GATT feature in BLE V2.
+constexpr auto kEnableBleV2GattOnNonExtendedDevice =
+    flags::Flag<bool>(kConfigPackage, "45415267", false);
+
+// The maximum scanning times for available hotspots.
+constexpr auto kWifiHotspotScanMaxRetries =
+    flags::Flag<int64_t>(kConfigPackage, "45415883", 3);
+
+// The maximum IP check times during Wi-Fi hotspot connection.
+constexpr auto kWifiHotspotCheckIpMaxRetries =
+    flags::Flag<int64_t>(kConfigPackage, "45415884", 10);
+
+// The interval between 2 IP check attempts.
+constexpr auto kWifiHotspotCheckIpIntervalMillis =
+    flags::Flag<int64_t>(kConfigPackage, "45415885", 500);
+
+// The maximum connection times to remote Wi-Fi hotspot.
+constexpr auto kWifiHotspotConnectionMaxRetries =
+    flags::Flag<int64_t>(kConfigPackage, "45415886", 3);
+
+// The interval between 2 connectin attempts.
+constexpr auto kWifiHotspotConnectionIntervalMillis =
+    flags::Flag<int64_t>(kConfigPackage, "45415887", 2000);
+
+// The connection timeout to remote Wi-Fi hotspot.
+constexpr auto kWifiHotspotConnectionTimeoutMillis =
+    flags::Flag<int64_t>(kConfigPackage, "45415888", 10000);
 
 }  // namespace nearby_platform_feature
 }  // namespace config_package_nearby
