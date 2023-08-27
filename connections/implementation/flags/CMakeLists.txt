@@ -12,23 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-# target offline_wire_formats_cc_proto
-add_library(offline_wire_formats_cc_proto
-  OBJECT
-    "${CMAKE_CURRENT_LIST_DIR}/offline_wire_formats.proto"
+# target connections_implementation_flags_connections_flags
+add_library(connections_implementation_flags_connections_flags
+  INTERFACE
+    "nearby_connections_feature_flags.h"
 )
 
-protobuf_generate(
-  LANGUAGE
-    cpp
-  TARGET
-    offline_wire_formats_cc_proto
-  PROTOC_OUT_DIR
-    ${CMAKE_BINARY_DIR}
-  IMPORT_DIRS
-    ${CMAKE_SOURCE_DIR}
+target_link_libraries(connections_implementation_flags_connections_flags
+  INTERFACE
+    internal_flags_flag_reader
+    absl::strings
 )
 
-target_include_directories(offline_wire_formats_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
-target_link_libraries(offline_wire_formats_cc_proto PUBLIC protobuf::libprotobuf)
+target_include_directories(connections_implementation_flags_connections_flags INTERFACE ${CMAKE_SOURCE_DIR})

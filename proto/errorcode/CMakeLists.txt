@@ -12,23 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-# target offline_wire_formats_cc_proto
-add_library(offline_wire_formats_cc_proto
+# target error_code_enums_cc_proto
+add_library(error_code_enums_cc_proto
   OBJECT
-    "${CMAKE_CURRENT_LIST_DIR}/offline_wire_formats.proto"
+    "${CMAKE_CURRENT_LIST_DIR}/error_code_enums.proto"
 )
 
 protobuf_generate(
   LANGUAGE
     cpp
   TARGET
-    offline_wire_formats_cc_proto
+    error_code_enums_cc_proto
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
 )
 
-target_include_directories(offline_wire_formats_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
-target_link_libraries(offline_wire_formats_cc_proto PUBLIC protobuf::libprotobuf)
+target_include_directories(error_code_enums_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
+target_link_libraries(error_code_enums_cc_proto PUBLIC protobuf::libprotobuf)
