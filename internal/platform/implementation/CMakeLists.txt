@@ -109,3 +109,7 @@ target_link_libraries(internal_platform_implementation_platform
 target_include_directories(internal_platform_implementation_platform INTERFACE ${CMAKE_SOURCE_DIR})
 
 add_subdirectory("shared")
+
+IF (UNIX AND NOT APPLE)
+    # add_subdirectory("linux")
+endif()
