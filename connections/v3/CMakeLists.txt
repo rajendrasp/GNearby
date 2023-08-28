@@ -29,7 +29,7 @@ target_link_libraries(connections_v3_v3_types
     internal_crypto
     internal_interop_device
     internal_platform_connection_info
-    connection_enums_cc_proto
+    connections_enums_cc_proto
     absl::any_invocable
 )
 

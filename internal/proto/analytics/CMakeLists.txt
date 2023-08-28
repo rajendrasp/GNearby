@@ -23,14 +23,13 @@ protobuf_generate(
     cpp
   TARGET
     connections_log_cc_proto
-  PROTOC_OUT_DIR
-    ${CMAKE_BINARY_DIR}
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
 )
 
 target_include_directories(connections_log_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(connections_log_cc_proto PUBLIC protobuf::libprotobuf)
+set_property(TARGET connections_log_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # target fast_pair_log_cc_proto
 add_library(fast_pair_log_cc_proto
@@ -43,11 +42,10 @@ protobuf_generate(
     cpp
   TARGET
     fast_pair_log_cc_proto
-  PROTOC_OUT_DIR
-    ${CMAKE_BINARY_DIR}
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
 )
 
 target_include_directories(fast_pair_log_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(fast_pair_log_cc_proto PUBLIC protobuf::libprotobuf)
+set_property(TARGET fast_pair_log_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)

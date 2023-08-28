@@ -16,7 +16,7 @@
 # target offline_wire_formats_cc_proto
 add_library(offline_wire_formats_cc_proto
   OBJECT
-    "${CMAKE_CURRENT_LIST_DIR}/offline_wire_formats.proto"
+    "offline_wire_formats.proto"
 )
 
 protobuf_generate(
@@ -24,11 +24,10 @@ protobuf_generate(
     cpp
   TARGET
     offline_wire_formats_cc_proto
-  PROTOC_OUT_DIR
-    ${CMAKE_BINARY_DIR}
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
 )
 
 target_include_directories(offline_wire_formats_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(offline_wire_formats_cc_proto PUBLIC protobuf::libprotobuf)
+set_property(TARGET offline_wire_formats_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)

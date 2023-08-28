@@ -31,7 +31,7 @@ target_link_libraries(connections_implementation_analytics_analytics
     internal_platform_types
     internal_platform_implementation_types
     connections_log_cc_proto
-    connections_enum_cc_proto
+    connections_enums_cc_proto
     absl::algorithm_container
     absl::core_headers
     absl::btree

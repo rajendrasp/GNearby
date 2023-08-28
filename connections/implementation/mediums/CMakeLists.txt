@@ -41,9 +41,9 @@ target_link_libraries(connections_implementation_mediums_mediums
   PUBLIC
     connections_implementation_mediums_utils
     connections_core_types
-    connections_implementation_flags_connection_flags
-    connections_implementation_mediums_ble_v2
-    connections_implementation_mediums_webrtc
+    connections_implementation_flags_connections_flags
+    connections_implementation_mediums_ble_v2_ble_v2
+    connections_implementation_mediums_webrtc_webrtc
     offline_wire_formats_cc_proto
     internal_flags_nearby_flags
     internal_platform_base

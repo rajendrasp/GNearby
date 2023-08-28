@@ -13,30 +13,36 @@
 # limitations under the License.
 
 # target internal_weave_weave
-add_library(internal_weave_weave
+add_library(internal_weave
+    "base_socket.cc"
     "message_write_request.cc"
     "packet.cc"
     "packet_sequence_number_generator.cc"
     "packetizer.cc"
+    "base_socket.h"
+    "connection.h"
     "control_packet_write_request.h"
     "message_write_request.h"
     "packet.h"
     "packet_sequence_number_generator.h"
     "packetizer.h"
+    "socket_callback.h"
 )
 
-target_link_libraries(internal_weave_weave
+target_link_libraries(internal_weave
   PUBLIC
     internal_platform_base
-    internal_platform_headers
+    internal_platform_types
     absl::core_headers
+    absl::any_invocable
+    absl::check
     absl::status
     absl::statusor
     absl::strings
     absl::str_format
 )
 
-target_include_directories(internal_weave_weave PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(internal_weave PRIVATE ${CMAKE_SOURCE_DIR})
 
 # target internal_weave_packet_test
 

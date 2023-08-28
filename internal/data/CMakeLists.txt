@@ -12,22 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# target internal_crypto
-add_library(internal_crypto
-  "ed25519.cc"
-  "ed25519.h"
+# target internal_data_data_manager
+
+add_library(internal_data_data_manager
+  INTERFACE
+    "data_manager.h"
+    "data_set.h"
+    "leveldb_data_set.h"
+    "memory_data_set.h"
 )
 
-target_link_libraries(internal_crypto PUBLIC
-  internal_crypto_cros
-  boringssl::crypto
-  absl::status
-  absl::statusor
-  absl::str_format
-  absl::optional
-  absl::span
+target_link_libraries(internal_data_data_manager
+  INTERFACE
+    internal_platform_types
+    leveldb::leveldb
+    protobuf::protobuf_lite
+    absl::flat_hash_map
+    absl::strings
+    absl::synchronization
 )
 
-target_include_directories(internal_crypto PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(internal_data_data_manager INTERFACE ${CMAKE_SOURCE_DIR})
 
-# target internal_crypto_unittests
+# target leveldb_data_set_test_cc_proto
+
+# target internal_data_data_manager_test

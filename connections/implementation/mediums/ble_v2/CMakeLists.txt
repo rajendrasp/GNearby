@@ -34,7 +34,7 @@ add_library(connections_implementation_mediums_ble_v2_ble_v2
 target_link_libraries(connections_implementation_mediums_ble_v2_ble_v2
   PUBLIC
     connections_core_types
-    connections_implementation_flags_connection_flags
+    connections_implementation_flags_connections_flags
     connections_implementation_mediums_utils
     internal_flags_nearby_flags
     internal_platform_base
@@ -43,7 +43,7 @@ target_link_libraries(connections_implementation_mediums_ble_v2_ble_v2
     internal_platform_types
     internal_platform_util
     internal_platform_uuid
-    ble_cc_frames_proto
+    ble_frames_cc_proto
     smhasher::SMHasherSupport
     absl::flat_hash_map
     absl::flat_hash_set

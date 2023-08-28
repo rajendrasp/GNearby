@@ -97,13 +97,13 @@ add_library(connections_implementation_internal
 target_link_libraries(connections_implementation_internal
   PUBLIC
     connections_core_types
-    connections_implementation_analytics
-    connections_implementation_flags_connection_flags
-    connections_implementation_mediums
-    connections_implementation_mediums_util
+    connections_implementation_analytics_analytics
+    connections_implementation_flags_connections_flags
+    connections_implementation_mediums_mediums
+    connections_implementation_mediums_utils
     offline_wire_formats_cc_proto
     connections_v3_v3_types
-    internal_anayltics_event_logger
+    internal_analytics_event_logger
     internal_flags_nearby_flags
     internal_interop_device
     internal_platform_base
@@ -116,7 +116,7 @@ target_link_libraries(connections_implementation_internal
     internal_platform_implementation_comm
     internal_platform_implementation_platform
     internal_platform_implementation_shared_file
-    connections_enum_cc_proto
+    connections_enums_cc_proto
     absl::core_headers
     absl::btree
     absl::flat_hash_map

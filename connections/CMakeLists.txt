@@ -14,7 +14,6 @@
 
 # target connections_core
 add_library(connections_core
-  STATIC
     "core.cc"
     "core.h"
 )
@@ -39,7 +38,6 @@ target_include_directories(connections_core PRIVATE ${CMAKE_SOURCE_DIR})
 
 # target connections_core_types
 add_library(connections_core_types
-  STATIC
     "advertising_options.cc"
     "connection_options.cc"
     "discovery_options.cc"
@@ -66,7 +64,7 @@ target_link_libraries(connections_core_types
     internal_platform_base
     internal_platform_types
     internal_platform_util
-    connections_enum_cc_proto
+    connections_enums_cc_proto
     absl::any_invocable
     absl::variant
 )

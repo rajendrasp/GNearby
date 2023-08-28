@@ -15,7 +15,7 @@
 # target error_code_enums_cc_proto
 add_library(error_code_enums_cc_proto
   OBJECT
-    "${CMAKE_CURRENT_LIST_DIR}/error_code_enums.proto"
+    "error_code_enums.proto"
 )
 
 protobuf_generate(
@@ -23,11 +23,10 @@ protobuf_generate(
     cpp
   TARGET
     error_code_enums_cc_proto
-  PROTOC_OUT_DIR
-    ${CMAKE_BINARY_DIR}
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
 )
 
 target_include_directories(error_code_enums_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(error_code_enums_cc_proto PUBLIC protobuf::libprotobuf)
+set_property(TARGET error_code_enums_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)

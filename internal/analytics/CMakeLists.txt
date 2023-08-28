@@ -12,8 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-add_library(event_logger INTERFACE)
+# target internal_analytics_event_logger
+add_library(internal_analytics_event_logger
+  INTERFACE
+    "event_logger.h"
+)
 
-target_link_libraries(event_logger INTERFACE com_google_protobuf)
+target_link_libraries(internal_analytics_event_logger INTERFACE protobuf::libprotobuf)
 
-target_include_directories(event_logger INTERFACE "event_logger.h")
+target_include_directories(internal_analytics_event_logger INTERFACE ${CMAKE_SOURCE_DIR})

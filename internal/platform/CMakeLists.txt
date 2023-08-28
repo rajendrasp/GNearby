@@ -56,11 +56,9 @@ target_compile_definitions(internal_platform_base PRIVATE "CORE_ADAPTER_DLL")
 # target internal_platform_util
 add_library(internal_platform_util
     "base_input_stream.cc"
-    "base_pipe.cc"
     "byte_utils.cc"
     "base_input_stream.h"
     "base_mutex_lock.h"
-    "base_pipe.h"
     "byte_utils.h"
 )
 
@@ -76,12 +74,12 @@ target_include_directories(internal_platform_util PRIVATE ${CMAKE_SOURCE_DIR})
 
 # target internal_platform_logging
 add_library(internal_platform_logging
-    INTERFACE
+  INTERFACE
     "logging.h"
 )
 
 target_link_libraries(internal_platform_logging
-    INTERFACE
+  INTERFACE
     internal_platform_implementation_platform
     internal_platform_implementation_types
     glog::glog
@@ -120,7 +118,8 @@ add_library(internal_platform_connection_info
 
 target_link_libraries(internal_platform_connection_info
   PUBLIC
-    internal_platform_logging
+    internal_platform_types
+    connections_enums_cc_proto
     absl::status
     absl::statusor
     absl::strings
@@ -220,9 +219,9 @@ add_library(internal_platform_types
 target_link_libraries(internal_platform_types
   PUBLIC
     internal_platform_base
-    internal_platform_logging
     internal_platform_util
-    internal_crypto
+    internal_crypto_cros
+    internal_platform_implementation_platform
     internal_platform_implementation_types
     absl::core_headers
     absl::flat_hash_map
@@ -264,7 +263,6 @@ target_link_libraries(internal_platform_comm
   PUBLIC
     internal_platform_base
     internal_platform_cancellation_flag
-    internal_platform_logging
     internal_platform_types
     internal_platform_uuid
     internal_base
