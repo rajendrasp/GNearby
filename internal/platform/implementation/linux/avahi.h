@@ -8,6 +8,7 @@
 #include "internal/platform/implementation/linux/avahi_entrygroup_client_glue.h"
 #include "internal/platform/implementation/linux/avahi_server_client_glue.h"
 #include "internal/platform/implementation/linux/avahi_servicebrowser_client_glue.h"
+#include "internal/platform/implementation/linux/dbus.h"
 #include "internal/platform/implementation/wifi_lan.h"
 
 namespace nearby {
@@ -36,7 +37,18 @@ public:
                         entry_group_object_path) {
     registerProxy();
   }
-  ~EntryGroup() { unregisterProxy(); }
+  ~EntryGroup() {
+    NEARBY_LOGS(VERBOSE) << __func__ << ": Freeing entry group "
+                         << getObjectPath();
+
+    try {
+      Free();
+    } catch (const sdbus::Error &e) {
+      DBUS_LOG_METHOD_CALL_ERROR(this, "Free", e);
+    }
+
+    unregisterProxy();
+  }
 
 protected:
   void onStateChanged(const int32_t &state, const std::string &error) override {
@@ -48,13 +60,24 @@ class ServiceBrowser : public sdbus::ProxyInterfaces<
 public:
   ServiceBrowser(sdbus::IConnection &system_bus,
                  const sdbus::ObjectPath &service_browser_object_path,
-                 api::WifiLanMedium::DiscoveredServiceCallback callback)
+                 api::WifiLanMedium::DiscoveredServiceCallback callback,
+                 std::shared_ptr<Server> avahi_server)
       : ProxyInterfaces(system_bus, "org.freedesktop.Avahi",
                         service_browser_object_path),
-        discovery_cb_(std::move(callback)) {
+        discovery_cb_(std::move(callback)), server_(avahi_server) {
     registerProxy();
   }
-  ~ServiceBrowser() { unregisterProxy(); }
+  ~ServiceBrowser() {
+    NEARBY_LOGS(VERBOSE) << __func__ << ": Freeing service browser "
+                         << getObjectPath();
+
+    try {
+      Free();
+    } catch (const sdbus::Error &e) {
+      DBUS_LOG_METHOD_CALL_ERROR(this, "Free", e);
+    }
+    unregisterProxy();
+  }
 
 protected:
   void onItemNew(const int32_t &interface, const int32_t &protocol,
@@ -68,6 +91,15 @@ protected:
   void onCacheExhausted() override;
 
 private:
+  enum LookupResultFlags {
+    kAvahiLookupResultFlagCached = 1,
+    kAvahiLookupResultFlagWideArea = 2,
+    kAvahiLookupResultFlagMulticast = 4,
+    kAvahiLookupResultLocal = 8,
+    kAvahiLookupResultOurOwn = 16,
+    kAvahiLookupResultStatic = 32,
+  };
+
   api::WifiLanMedium::DiscoveredServiceCallback discovery_cb_;
   std::shared_ptr<Server> server_;
 };
