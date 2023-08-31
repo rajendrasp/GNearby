@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <sdbus-c++/IObject.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <systemd/sd-bus.h>
@@ -5,15 +19,26 @@
 #include "absl/strings/string_view.h"
 #include "internal/platform/implementation/linux/bluetooth_classic_device.h"
 #include "internal/platform/implementation/linux/bluez.h"
+#include "internal/platform/implementation/linux/dbus.h"
 #include "internal/platform/logging.h"
 
 namespace nearby {
 namespace linux {
 BluetoothDevice::BluetoothDevice(sdbus::IConnection &system_bus,
-                                 const sdbus::ObjectPath &device_object_path)
+                                 sdbus::ObjectPath device_object_path)
     : ProxyInterfaces(system_bus, bluez::SERVICE_DEST,
-                      std::string(device_object_path)) {
+                      std::move(device_object_path)) {
   registerProxy();
+  try {
+    last_known_name_ = Alias();
+  } catch (const sdbus::Error &e) {
+    DBUS_LOG_PROPERTY_GET_ERROR(this, "Alias", e);
+  }
+  try {
+    last_known_address_ = Address();
+  } catch (const sdbus::Error &e) {
+    DBUS_LOG_PROPERTY_GET_ERROR(this, "Address", e);
+  }
 }
 
 std::string BluetoothDevice::GetName() const {
@@ -24,8 +49,19 @@ std::string BluetoothDevice::GetName() const {
   try {
     std::string alias =
         bluez_device->getProperty("Alias").onInterface(bluez::DEVICE_INTERFACE);
+    {
+      absl::MutexLock l(&properties_mutex_);
+      last_known_name_ = alias;
+    }
     return alias;
   } catch (const sdbus::Error &e) {
+    if (e.getName() == "org.freedesktop.DBus.Error.UnknownObject") {
+      NEARBY_LOGS(VERBOSE)
+          << __func__ << ": " << getObjectPath()
+          << ": device is no longer known, returning last known name";
+      absl::ReaderMutexLock l(&properties_mutex_);
+      return last_known_name_;
+    }
     NEARBY_LOGS(ERROR) << __func__ << ": Got error '" << e.getName()
                        << "' with message '" << e.getMessage()
                        << "' while trying to get Alias for device "
@@ -42,8 +78,20 @@ std::string BluetoothDevice::GetMacAddress() const {
   try {
     std::string addr = bluez_device->getProperty("Address").onInterface(
         bluez::DEVICE_INTERFACE);
+    {
+      absl::MutexLock l(&properties_mutex_);
+      last_known_address_ = addr;
+    }
     return addr;
   } catch (const sdbus::Error &e) {
+    if (e.getName() == "org.freedesktop.DBus.Error.UnknownObject") {
+      NEARBY_LOGS(VERBOSE)
+          << __func__ << ": " << getObjectPath()
+          << ": device is no longer known, returning last known address";
+      absl::ReaderMutexLock l(&properties_mutex_);
+      return last_known_address_;
+    }
+
     NEARBY_LOGS(ERROR) << __func__ << "Got error '" << e.getName()
                        << "' with message '" << e.getMessage()
                        << "' while trying to get Address for device "
@@ -91,10 +139,6 @@ void MonitoredBluetoothDevice::onPropertiesChanged(
     return;
   }
 
-  NEARBY_LOGS(VERBOSE) << __func__ << ": " << getObjectPath()
-                       << ": Received PropertiesChanged signal for interface "
-                       << interfaceName;
-
   for (auto it = changedProperties.begin(); it != changedProperties.end();
        it++) {
     if (it->first == bluez::DEVICE_PROP_ADDRESS) {
@@ -121,5 +165,5 @@ void MonitoredBluetoothDevice::onPropertiesChanged(
   }
 }
 
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby

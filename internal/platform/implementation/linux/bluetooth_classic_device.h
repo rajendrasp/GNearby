@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef PLATFORM_IMPL_LINUX_BLUETOOTH_CLASSIC_DEVICE_H_
 #define PLATFORM_IMPL_LINUX_BLUETOOTH_CLASSIC_DEVICE_H_
 
@@ -11,7 +25,7 @@
 #include "absl/strings/string_view.h"
 #include "internal/base/observer_list.h"
 #include "internal/platform/implementation/bluetooth_classic.h"
-#include "internal/platform/implementation/linux/bluez_device_client_glue.h"
+#include "internal/platform/implementation/linux/generated/dbus/bluez/device_client.h"
 
 #ifdef linux
 #undef linux
@@ -23,9 +37,14 @@ namespace linux {
 class BluetoothDevice
     : public api::BluetoothDevice,
       public sdbus::ProxyInterfaces<org::bluez::Device1_proxy> {
-public:
-  BluetoothDevice(sdbus::IConnection &system_bus, const sdbus::ObjectPath &);
-  ~BluetoothDevice() = default;
+ public:
+  BluetoothDevice(const BluetoothDevice &) = delete;
+  BluetoothDevice(BluetoothDevice &&) = delete;
+  BluetoothDevice &operator=(const BluetoothDevice &) = delete;
+  BluetoothDevice &operator=(BluetoothDevice &&) = delete;
+  BluetoothDevice(sdbus::IConnection &system_bus,
+                  sdbus::ObjectPath device_object_path);
+  ~BluetoothDevice() override { unregisterProxy(); }
 
   // https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#getName()
   std::string GetName() const override;
@@ -35,8 +54,8 @@ public:
 
   bool ConnectToProfile(absl::string_view service_uuid);
 
-  void
-  set_pair_reply_callback(absl::AnyInvocable<void(const sdbus::Error *)> cb) {
+  void set_pair_reply_callback(
+      absl::AnyInvocable<void(const sdbus::Error *)> cb) {
     absl::MutexLock l(&pair_callback_lock_);
     on_pair_reply_cb_ = std::move(cb);
   }
@@ -46,43 +65,52 @@ public:
     on_pair_reply_cb_ = DefaultCallback<const sdbus::Error *>();
   }
 
-protected:
+ protected:
   void onConnectProfileReply(const sdbus::Error *error) override;
   void onPairReply(const sdbus::Error *error) override {
     absl::ReaderMutexLock l(&pair_callback_lock_);
     on_pair_reply_cb_(error);
   };
 
-private:
+ private:
   absl::Mutex pair_callback_lock_;
   absl::AnyInvocable<void(const sdbus::Error *)> on_pair_reply_cb_ =
       DefaultCallback<const sdbus::Error *>();
+
+  mutable absl::Mutex properties_mutex_;
+  mutable std::string last_known_name_ ABSL_GUARDED_BY(properties_mutex_);
+  mutable std::string last_known_address_ ABSL_GUARDED_BY(properties_mutex_);
 };
 
-class MonitoredBluetoothDevice
+class MonitoredBluetoothDevice final
     : public BluetoothDevice,
       public sdbus::ProxyInterfaces<sdbus::Properties_proxy> {
-public:
+ public:
   using sdbus::ProxyInterfaces<sdbus::Properties_proxy>::registerProxy;
   using sdbus::ProxyInterfaces<sdbus::Properties_proxy>::unregisterProxy;
   using sdbus::ProxyInterfaces<sdbus::Properties_proxy>::getObjectPath;
 
+  MonitoredBluetoothDevice(const MonitoredBluetoothDevice &) = delete;
+  MonitoredBluetoothDevice(MonitoredBluetoothDevice &&) = delete;
+  MonitoredBluetoothDevice &operator=(const MonitoredBluetoothDevice &) =
+      delete;
+  MonitoredBluetoothDevice &operator=(MonitoredBluetoothDevice &&) = delete;
   MonitoredBluetoothDevice(
       sdbus::IConnection &system_bus, const sdbus::ObjectPath &,
       ObserverList<api::BluetoothClassicMedium::Observer> &observers);
-  ~MonitoredBluetoothDevice() { unregisterProxy(); }
+  ~MonitoredBluetoothDevice() override { unregisterProxy(); }
 
-protected:
+ protected:
   void onPropertiesChanged(
       const std::string &interfaceName,
       const std::map<std::string, sdbus::Variant> &changedProperties,
       const std::vector<std::string> &invalidatedProperties) override;
 
-private:
+ private:
   ObserverList<api::BluetoothClassicMedium::Observer> &observers_;
 };
 
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby
 
 #endif

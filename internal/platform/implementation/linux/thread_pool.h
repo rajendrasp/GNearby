@@ -34,8 +34,12 @@ namespace nearby {
 namespace linux {
 
 class ThreadPool {
-public:
-  ThreadPool(size_t max_pool_size);
+ public:
+  ThreadPool(const ThreadPool &) = delete;
+  ThreadPool(ThreadPool &&) = delete;
+  ThreadPool &operator=(const ThreadPool &) = delete;
+  ThreadPool &operator=(ThreadPool &&) = delete;
+  explicit ThreadPool(size_t max_pool_size);
   ~ThreadPool();
 
   bool Start() ABSL_LOCKS_EXCLUDED(mutex_);
@@ -46,10 +50,9 @@ public:
 
   void ShutDown() ABSL_LOCKS_EXCLUDED(mutex_);
 
-private:
+ private:
   Runnable NextTask() ABSL_LOCKS_EXCLUDED(mutex_);
 
-private:
   size_t max_pool_size_;
   std::atomic_bool shut_down_;
 
@@ -57,7 +60,7 @@ private:
   std::vector<std::thread> threads_ ABSL_GUARDED_BY(mutex_);
   std::queue<Runnable> tasks_ ABSL_GUARDED_BY(mutex_);
 };
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby
 
-#endif //  PLATFORM_IMPL_LINUX_THREAD_POOL_H_
+#endif  //  PLATFORM_IMPL_LINUX_THREAD_POOL_H_

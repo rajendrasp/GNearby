@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef PLATFORM_IMPL_LINUX_WIFI_HOTSPOT_H_
 #define PLATFORM_IMPL_LINUX_WIFI_HOTSPOT_H_
 
@@ -10,29 +24,30 @@
 namespace nearby {
 namespace linux {
 class NetworkManagerWifiHotspotMedium : public api::WifiHotspotMedium {
-public:
+ public:
   NetworkManagerWifiHotspotMedium(
       sdbus::IConnection &system_bus,
       std::shared_ptr<NetworkManager> network_manager,
-      const sdbus::ObjectPath &wireless_device_object_path)
+      sdbus::ObjectPath wireless_device_object_path)
       : system_bus_(system_bus),
         wireless_device_(std::make_unique<NetworkManagerWifiMedium>(
-            network_manager, system_bus, wireless_device_object_path)),
-        network_manager_(network_manager) {}
+            network_manager, system_bus,
+            std::move(wireless_device_object_path))),
+        network_manager_(std::move(network_manager)) {}
   NetworkManagerWifiHotspotMedium(
       sdbus::IConnection &system_bus,
       std::shared_ptr<NetworkManager> network_manager,
       std::unique_ptr<NetworkManagerWifiMedium> wireless_device)
-      : system_bus_(system_bus), wireless_device_(std::move(wireless_device)),
-        network_manager_(network_manager) {}
-  ~NetworkManagerWifiHotspotMedium() {}
+      : system_bus_(system_bus),
+        wireless_device_(std::move(wireless_device)),
+        network_manager_(std::move(network_manager)) {}
 
   bool IsInterfaceValid() const override { return true; }
-  std::unique_ptr<api::WifiHotspotSocket>
-  ConnectToService(absl::string_view ip_address, int port,
-                   CancellationFlag *cancellation_flag) override;
-  std::unique_ptr<api::WifiHotspotServerSocket>
-  ListenForService(int port) override;
+  std::unique_ptr<api::WifiHotspotSocket> ConnectToService(
+      absl::string_view ip_address, int port,
+      CancellationFlag *cancellation_flag) override;
+  std::unique_ptr<api::WifiHotspotServerSocket> ListenForService(
+      int port) override;
 
   bool StartWifiHotspot(HotspotCredentials *hotspot_credentials) override;
   bool StopWifiHotspot() override;
@@ -40,12 +55,12 @@ public:
   bool ConnectWifiHotspot(HotspotCredentials *hotspot_credentials) override;
   bool DisconnectWifiHotspot() override;
 
-  absl::optional<std::pair<std::int32_t, std::int32_t>>
-  GetDynamicPortRange() override {
+  absl::optional<std::pair<std::int32_t, std::int32_t>> GetDynamicPortRange()
+      override {
     return absl::nullopt;
   }
 
-private:
+ private:
   bool WifiHotspotActive();
   bool ConnectedToWifi();
 
@@ -53,7 +68,7 @@ private:
   std::unique_ptr<NetworkManagerWifiMedium> wireless_device_;
   std::shared_ptr<NetworkManager> network_manager_;
 };
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby
 
 #endif

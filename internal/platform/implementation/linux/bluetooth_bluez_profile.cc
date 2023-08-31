@@ -1,12 +1,26 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <functional>
 #include <map>
 #include <memory>
 #include <optional>
-#include <sdbus-c++/Error.h>
 #include <string>
 #include <tuple>
 
 #include <sdbus-c++/AdaptorInterfaces.h>
+#include <sdbus-c++/Error.h>
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/IObject.h>
 #include <sdbus-c++/IProxy.h>
@@ -23,9 +37,9 @@ namespace nearby {
 namespace linux {
 
 bool ProfileManager::ProfileRegistered(absl::string_view service_uuid) {
-  registered_service_uuids_lock_.ReaderLock();
+  registered_service_uuids_mutex_.ReaderLock();
   bool registered = registered_services_.count(std::string(service_uuid)) == 1;
-  registered_service_uuids_lock_.ReaderUnlock();
+  registered_service_uuids_mutex_.ReaderUnlock();
   return registered;
 }
 
@@ -64,9 +78,9 @@ void Profile::NewConnection(
 
   absl::MutexLock l(&connections_lock_);
   if (connections_.count(mac_addr) != 0) {
-    connections_[mac_addr].push_back(std::pair(fd, std::move(props)));
+    connections_[mac_addr].push_back(std::pair(fd, props));
   } else {
-    connections_[mac_addr] = std::vector{std::pair(fd, std::move(props))};
+    connections_[mac_addr] = std::vector{std::pair(fd, props)};
   }
 }
 
@@ -121,7 +135,7 @@ bool ProfileManager::Register(std::optional<absl::string_view> name,
   }
 
   {
-    absl::MutexLock l(&registered_service_uuids_lock_);
+    absl::MutexLock l(&registered_service_uuids_mutex_);
     registered_services_.emplace(service_uuid, profile);
   }
 
@@ -151,17 +165,16 @@ void ProfileManager::Unregister(absl::string_view service_uuid) {
   }
 
   {
-    absl::MutexLock l(&registered_service_uuids_lock_);
+    absl::MutexLock l(&registered_service_uuids_mutex_);
     registered_services_.erase(std::string(service_uuid));
   }
 }
 
 // Get a service record FD for a connected profile (identified by service_uuid)
 // to the given device.
-std::optional<sdbus::UnixFd>
-ProfileManager::GetServiceRecordFD(api::BluetoothDevice &remote_device,
-                                   absl::string_view service_uuid,
-                                   CancellationFlag *cancellation_flag) {
+std::optional<sdbus::UnixFd> ProfileManager::GetServiceRecordFD(
+    api::BluetoothDevice &remote_device, absl::string_view service_uuid,
+    CancellationFlag *cancellation_flag) {
   if (!ProfileRegistered(service_uuid)) {
     NEARBY_LOGS(ERROR) << __func__ << ": Service " << service_uuid
                        << " is not registered";
@@ -170,9 +183,9 @@ ProfileManager::GetServiceRecordFD(api::BluetoothDevice &remote_device,
 
   auto mac_addr = remote_device.GetMacAddress();
 
-  registered_service_uuids_lock_.ReaderLock();
+  registered_service_uuids_mutex_.ReaderLock();
   auto profile = registered_services_[std::string(service_uuid)];
-  registered_service_uuids_lock_.ReaderUnlock();
+  registered_service_uuids_mutex_.ReaderUnlock();
 
   NEARBY_LOGS(VERBOSE) << __func__ << ": " << profile->getObjectPath()
                        << ": Attempting to get a FD for service "
@@ -212,28 +225,37 @@ ProfileManager::GetServiceRecordFD(absl::string_view service_uuid) {
     return std::nullopt;
   }
 
-  registered_service_uuids_lock_.ReaderLock();
+  registered_service_uuids_mutex_.ReaderLock();
   auto profile = registered_services_[std::string(service_uuid)];
-  registered_service_uuids_lock_.ReaderUnlock();
+  registered_service_uuids_mutex_.ReaderUnlock();
 
   NEARBY_LOGS(VERBOSE) << __func__ << ": " << profile->getObjectPath()
                        << ": Attempting to get a FD for service "
-                       << profile->getObjectPath();
+                       << service_uuid;
 
   profile->connections_lock_.Lock();
-  auto cond = [profile]() { return !profile->connections_.empty(); };
+  auto cond = [profile]() {
+    profile->connections_lock_.AssertReaderHeld();
+    return !profile->connections_.empty();
+  };
   profile->connections_lock_.Await(absl::Condition(&cond));
 
   auto it = profile->connections_.begin();
   auto mac_addr = it->first;
   auto [fd, properties] = it->second.back();
   it->second.pop_back();
-  if (it->second.empty())
-    profile->connections_.erase(it);
+  if (it->second.empty()) profile->connections_.erase(it);
   profile->connections_lock_.Unlock();
 
-  return std::pair(devices_.get_device_by_address(mac_addr).value(), fd);
+  auto maybe_device = devices_.get_device_by_address(mac_addr);
+  if (!maybe_device.has_value()) {
+    NEARBY_LOGS(ERROR) << __func__ << ": Device " << mac_addr
+                       << " is no longer available";
+    return std::nullopt;
+  }
+
+  return std::pair(*maybe_device, fd);
 }
 
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby

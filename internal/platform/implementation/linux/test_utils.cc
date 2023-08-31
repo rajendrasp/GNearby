@@ -17,11 +17,13 @@
 #include "internal/platform/implementation/linux/dbus.h"
 
 #include <algorithm>
-#include <sstream>
 #include <codecvt>
+#include <sstream>
 
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_replace.h"
+#include "internal/platform/implementation/linux/device_info.h"
+#include "internal/platform/implementation/linux/test_utils.h"
 
 namespace test_utils {
 std::wstring StringToWideString(const std::string& s) {

@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef PLATFORM_IMPL_LINUX_BLUEZ_H_
 #define PLATFORM_IMPL_LINUX_BLUEZ_H_
 
@@ -34,35 +48,34 @@ static constexpr const char *DEVICE_PROP_ALIAS = "Alias";
 static constexpr const char *DEVICE_PROP_PAIRED = "Paired";
 static constexpr const char *DEVICE_PROP_CONNECTED = "Connected";
 
- std::string
-device_object_path(const sdbus::ObjectPath &adapter_object_path,
-                   absl::string_view mac_address);
+std::string device_object_path(const sdbus::ObjectPath &adapter_object_path,
+                               absl::string_view mac_address);
 
- sdbus::ObjectPath profile_object_path(absl::string_view service_uuid);
+sdbus::ObjectPath profile_object_path(absl::string_view service_uuid);
 
- sdbus::ObjectPath adapter_object_path(absl::string_view name);
+sdbus::ObjectPath adapter_object_path(absl::string_view name);
 
 class BluezObjectManager
     : public sdbus::ProxyInterfaces<sdbus::ObjectManager_proxy> {
-public:
+ public:
   BluezObjectManager(sdbus::IConnection &system_bus)
       : ProxyInterfaces(system_bus, "org.bluez", "/") {
     registerProxy();
   }
   ~BluezObjectManager() { unregisterProxy(); }
 
-protected:
+ protected:
   void onInterfacesAdded(
       const sdbus::ObjectPath &objectPath,
       const std::map<std::string, std::map<std::string, sdbus::Variant>>
           &interfacesAndProperties) override {}
-  void
-  onInterfacesRemoved(const sdbus::ObjectPath &objectPath,
-                      const std::vector<std::string> &interfaces) override {}
+  void onInterfacesRemoved(
+      const sdbus::ObjectPath &objectPath,
+      const std::vector<std::string> &interfaces) override {}
 };
 
-} // namespace bluez
-} // namespace linux
-} // namespace nearby
+}  // namespace bluez
+}  // namespace linux
+}  // namespace nearby
 
 #endif

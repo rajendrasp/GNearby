@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef PLATFORM_IMPL_LINUX_CONDITION_VARIABLE_H_
 #define PLATFORM_IMPL_LINUX_CONDITION_VARIABLE_H_
 
@@ -9,9 +23,9 @@
 namespace nearby {
 namespace linux {
 class ConditionVariable : public api::ConditionVariable {
-public:
+ public:
   explicit ConditionVariable(api::Mutex *mutex)
-      : mutex_(static_cast<Mutex *>(mutex)->GetRegularMutex()) {}
+      : mutex_(&(static_cast<linux::Mutex*>(mutex)->GetMutex())) {}
   ~ConditionVariable() = default;
 
   Exception Wait() override {
@@ -26,11 +40,11 @@ public:
 
   void Notify() override { cond_var_.SignalAll(); }
 
-private:
+ private:
   absl::Mutex *mutex_;
   absl::CondVar cond_var_;
 };
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby
 
-#endif // PLATFORM_IMPL_LINUX_CONDITION_VARIABLE_H_
+#endif  // PLATFORM_IMPL_LINUX_CONDITION_VARIABLE_H_

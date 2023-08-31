@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <utility>
 
 #include <sdbus-c++/Error.h>
@@ -15,8 +29,9 @@ namespace linux {
 
 void BluetoothPairing::pairing_reply_handler(const sdbus::Error *error) {
   if (error != nullptr && error->isValid()) {
-    auto name = error->getName();
-    api::BluetoothPairingCallback::PairingError err;
+    const auto &name = error->getName();
+    api::BluetoothPairingCallback::PairingError err =
+        api::BluetoothPairingCallback::PairingError::kAuthFailed;
 
     NEARBY_LOGS(ERROR) << __func__ << ": "
                        << "Got error '" << error->getName()
@@ -32,8 +47,6 @@ void BluetoothPairing::pairing_reply_handler(const sdbus::Error *error) {
       err = api::BluetoothPairingCallback::PairingError::kAuthRejected;
     } else if (name == "org.bluez.Error.AuthenticationTimeout") {
       err = api::BluetoothPairingCallback::PairingError::kAuthTimeout;
-    } else {
-      err = api::BluetoothPairingCallback::PairingError::kAuthFailed;
     }
 
     if (pairing_cb_.on_pairing_error_cb != nullptr) {
@@ -45,11 +58,10 @@ void BluetoothPairing::pairing_reply_handler(const sdbus::Error *error) {
   if (pairing_cb_.on_paired_cb != nullptr) {
     pairing_cb_.on_paired_cb();
   }
-  return;
 }
 
 BluetoothPairing::BluetoothPairing(BluetoothAdapter &adapter,
-				   BluetoothDevice &remote_device)
+                                   BluetoothDevice &remote_device)
     : device_(remote_device), adapter_(adapter) {}
 
 bool BluetoothPairing::InitiatePairing(
@@ -100,7 +112,7 @@ bool BluetoothPairing::CancelPairing() {
 }
 
 bool BluetoothPairing::Unpair() {
-  try {    
+  try {
     adapter_.RemoveDeviceByObjectPath(device_.getObjectPath());
     return true;
   } catch (const sdbus::Error &e) {
@@ -125,5 +137,5 @@ bool BluetoothPairing::IsPaired() {
     return false;
   }
 }
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby

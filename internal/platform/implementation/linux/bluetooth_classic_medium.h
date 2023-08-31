@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef PLATFORM_IMPL_LINUX_BLUETOOTH_CLASSIC_MEDIUM_H_
 #define PLATFORM_IMPL_LINUX_BLUETOOTH_CLASSIC_MEDIUM_H_
 
@@ -25,13 +39,17 @@ namespace nearby {
 namespace linux {
 // Container of operations that can be performed over the Bluetooth Classic
 // medium.
-class BluetoothClassicMedium
+class BluetoothClassicMedium final
     : public api::BluetoothClassicMedium,
       sdbus::ProxyInterfaces<sdbus::ObjectManager_proxy> {
-public:
+ public:
+  BluetoothClassicMedium(const BluetoothClassicMedium &) = delete;
+  BluetoothClassicMedium(BluetoothClassicMedium &&) = delete;
+  BluetoothClassicMedium &operator=(const BluetoothClassicMedium &) = delete;
+  BluetoothClassicMedium &operator=(BluetoothClassicMedium &&) = delete;
   BluetoothClassicMedium(sdbus::IConnection &system_bus,
                          const sdbus::ObjectPath &adapter_object_path);
-  ~BluetoothClassicMedium() override;
+  ~BluetoothClassicMedium() override { unregisterProxy(); };
 
   // https://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#startDiscovery()
   //
@@ -57,10 +75,9 @@ public:
   //
   // On success, returns a new BluetoothSocket.
   // On error, returns nullptr.
-  std::unique_ptr<api::BluetoothSocket>
-  ConnectToService(api::BluetoothDevice &remote_device,
-                   const std::string &service_uuid,
-                   CancellationFlag *cancellation_flag) override;
+  std::unique_ptr<api::BluetoothSocket> ConnectToService(
+      api::BluetoothDevice &remote_device, const std::string &service_uuid,
+      CancellationFlag *cancellation_flag) override;
 
   // https://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#listenUsingInsecureRfcommWithServiceRecord
   //
@@ -71,20 +88,20 @@ public:
   // UUID.
   //
   //  Returns nullptr error.
-  std::unique_ptr<api::BluetoothServerSocket>
-  ListenForService(const std::string &service_name,
-                   const std::string &service_uuid) override;
+  std::unique_ptr<api::BluetoothServerSocket> ListenForService(
+      const std::string &service_name,
+      const std::string &service_uuid) override;
 
   // https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#createBond()
   //
   // Start the bonding (pairing) process with the remote device.
   // Return a Bluetooth pairing instance to handle the pairing process with the
   // remote device.
-  std::unique_ptr<api::BluetoothPairing>
-  CreatePairing(api::BluetoothDevice &remote_device) override;
+  std::unique_ptr<api::BluetoothPairing> CreatePairing(
+      api::BluetoothDevice &remote_device) override;
 
-  api::BluetoothDevice *
-  GetRemoteDevice(const std::string &mac_address) override;
+  api::BluetoothDevice *GetRemoteDevice(
+      const std::string &mac_address) override;
 
   void AddObserver(Observer *observer) override {
     observers_.AddObserver(observer);
@@ -93,7 +110,7 @@ public:
     observers_.RemoveObserver(observer);
   };
 
-protected:
+ protected:
   void onInterfacesAdded(
       const sdbus::ObjectPath &objectPath,
       const std::map<std::string, std::map<std::string, sdbus::Variant>>
@@ -101,7 +118,7 @@ protected:
   void onInterfacesRemoved(const sdbus::ObjectPath &objectPath,
                            const std::vector<std::string> &interfaces) override;
 
-private:
+ private:
   std::unique_ptr<BluetoothAdapter> adapter_;
   std::unique_ptr<BluetoothDevices> devices_;
 
@@ -111,7 +128,7 @@ private:
   ObserverList<Observer> observers_;
 };
 
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby
 
 #endif

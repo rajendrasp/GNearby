@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef PLATFORM_IMPL_LINUX_BLUETOOTH_ADAPTER_H_
 #define PLATFORM_IMPL_LINUX_BLUETOOTH_ADAPTER_H_
 #include <sdbus-c++/IConnection.h>
@@ -6,13 +20,13 @@
 #include "absl/strings/string_view.h"
 #include "internal/platform/implementation/bluetooth_adapter.h"
 #include "internal/platform/implementation/linux/bluez.h"
-#include "internal/platform/implementation/linux/bluez_adapter_client_glue.h"
 #include "internal/platform/implementation/linux/dbus.h"
+#include "internal/platform/implementation/linux/generated/dbus/bluez/adapter_client.h"
 
 namespace nearby {
 namespace linux {
 class BluezAdapter : public sdbus::ProxyInterfaces<org::bluez::Adapter1_proxy> {
-public:
+ public:
   BluezAdapter(sdbus::IConnection &system_bus,
                const sdbus::ObjectPath &adapter_object_path)
       : ProxyInterfaces(system_bus, bluez::SERVICE_DEST, adapter_object_path) {
@@ -22,7 +36,7 @@ public:
 };
 
 class BluetoothAdapter : public api::BluetoothAdapter {
-public:
+ public:
   BluetoothAdapter(sdbus::IConnection &system_bus,
                    const sdbus::ObjectPath &adapter_object_path)
       : bluez_adapter_(
@@ -67,11 +81,11 @@ public:
 
   BluezAdapter &GetBluezAdapterObject() { return *bluez_adapter_; }
 
-private:
+ private:
   std::unique_ptr<BluezAdapter> bluez_adapter_;
   bool persist_name_;
 };
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby
 
-#endif // PLATFORM_IMPL_LINUX_BLUETOOTH_ADAPTER_H_
+#endif  // PLATFORM_IMPL_LINUX_BLUETOOTH_ADAPTER_H_

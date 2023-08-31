@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef PLATFORM_IMPL_LINUX_API_BLE_MEDIUM_H_
 #define PLATFORM_IMPL_LINUX_API_BLE_MEDIUM_H_
 
@@ -7,7 +21,7 @@ namespace nearby {
 namespace linux {
 // Container of operations that can be performed over the BLE medium.
 class BleMedium : public api::BleMedium {
-public:
+ public:
   BleMedium() {}
   ~BleMedium() = default;
 
@@ -47,13 +61,13 @@ public:
   // Connects to a BLE peripheral.
   // On success, returns a new BleSocket.
   // On error, returns nullptr.
-  std::unique_ptr<api::BleSocket>
-  Connect(api::BlePeripheral &peripheral, const std::string &service_id,
-          CancellationFlag *cancellation_flag) override {
+  std::unique_ptr<api::BleSocket> Connect(
+      api::BlePeripheral &peripheral, const std::string &service_id,
+      CancellationFlag *cancellation_flag) override {
     return nullptr;
   }
 };
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby
 
 #endif

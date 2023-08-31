@@ -1,3 +1,17 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 licenses(["notice"])
 
 cc_library(
@@ -19,10 +33,6 @@ cc_library(
         "timer.h",
         "thread_pool.h",
         "log_message.h",
-        "org_freedesktop_logcontrol_server_glue.h",
-        "hostname_client_glue.h",
-        "login_manager_client_glue.h",
-        "login_session_client_glue.h",
         "utils.h",
     ],
     srcs = [
@@ -45,9 +55,6 @@ cc_library(
     name = "comm",
     hdrs = [
         "avahi.h",
-        "avahi_entrygroup_client_glue.h",
-        "avahi_server_client_glue.h",
-        "avahi_servicebrowser_client_glue.h",
         "ble_medium.h",
         "ble_v2_medium.h",
         "bluetooth_adapter.h",
@@ -59,17 +66,10 @@ cc_library(
         "bluetooth_devices.h",
         "bluetooth_pairing.h",
         "bluez.h",
-        "bluez_adapter_client_glue.h",
-        "bluez_device_client_glue.h",
-        "bluez_profile_glue.h",
-        "bluez_profile_manager_client_glue.h",
         "dbus.h",
-        "networkmanager_accesspoint_client_glue.h",
-        "networkmanager_client_glue.h",
-        "networkmanager_connection_active_client_glue.h",
-        "networkmanager_device_wifip2p_client_glue.h",
-        "networkmanager_device_wireless_client_glue.h",
-        "networkmanager_ip4config_client_glue.h",
+        "network_manager.h",
+        "network_manager_active_connection.h",
+        "network_manager_access_point.h",
         "stream.h",
         "wifi_direct.h",
         "wifi_direct_server_socket.h",
@@ -90,6 +90,7 @@ cc_library(
         "//internal/platform:uuid",
         "//internal/platform/implementation:comm",
         "//internal/platform/implementation:types",
+        "//internal/platform/implementation/linux/generated:types",
         "@com_google_absl//absl/base:core_headers",
         "@com_google_absl//absl/container:flat_hash_map",
         "@com_google_absl//absl/container:flat_hash_set",
@@ -135,6 +136,8 @@ cc_library(
         "bluez.cc",
         "dbus.cc",
         "executor.cc",
+        "network_manager.cc",
+        "network_manager_active_connection.cc",
         "platform.cc",
         "preferences_manager.cc",
         "preferences_repository.cc",
@@ -174,6 +177,7 @@ cc_library(
         "//internal/platform/implementation:types",
         "//internal/platform/implementation/shared:count_down_latch",
         "//internal/platform/implementation/shared:file",
+        "//internal/platform/implementation/linux/generated:types",
         "@com_google_absl//absl/base:core_headers",
         "@com_google_absl//absl/container:flat_hash_map",
         "@com_google_absl//absl/functional:any_invocable",

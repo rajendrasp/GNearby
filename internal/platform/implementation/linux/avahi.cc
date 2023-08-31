@@ -1,3 +1,17 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "internal/platform/implementation/linux/avahi.h"
 #include "internal/platform/implementation/linux/dbus.h"
 #include "internal/platform/logging.h"
@@ -27,7 +41,7 @@ void ServiceBrowser::onItemNew(const int32_t &interface,
     auto [r_iface, r_protocol, r_name, r_type, r_domain, r_host, r_aprotocol,
           r_address, r_port, r_txt, r_flags] =
         server_->ResolveService(interface, protocol, name, type, domain,
-                                0, // AVAHI_PROTO_INET
+                                0,  // AVAHI_PROTO_INET
                                 0);
     info.SetServiceName(r_name);
     info.SetIPAddress(r_address);
@@ -69,7 +83,7 @@ void ServiceBrowser::onItemRemove(
     auto [r_iface, r_protocol, r_name, r_type, r_domain, r_host, r_aprotocol,
           r_address, r_port, r_txt, r_flags] =
         server_->ResolveService(interface, protocol, name, type, domain,
-                                0, // AVAHI_PROTO_INET
+                                0,  // AVAHI_PROTO_INET
                                 flags);
     info.SetServiceName(r_name);
     info.SetIPAddress(r_address);
@@ -107,6 +121,6 @@ void ServiceBrowser::onCacheExhausted() {
                        << ": notified via ServiceBrowser of cache exhaustion";
 }
 
-} // namespace avahi
-} // namespace linux
-} // namespace nearby
+}  // namespace avahi
+}  // namespace linux
+}  // namespace nearby

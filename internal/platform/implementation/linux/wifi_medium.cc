@@ -1,7 +1,22 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <arpa/inet.h>
+#include <netinet/in.h>
+#include <climits>
 #include <cstdint>
 #include <memory>
-#include <netinet/in.h>
 #include <type_traits>
 
 #include <sdbus-c++/Error.h>
@@ -11,129 +26,19 @@
 
 #include "absl/synchronization/mutex.h"
 #include "internal/platform/implementation/linux/dbus.h"
-#include "internal/platform/implementation/linux/networkmanager_connection_active_client_glue.h"
-#include "internal/platform/implementation/linux/networkmanager_device_wireless_client_glue.h"
+#include "internal/platform/implementation/linux/generated/dbus/networkmanager/connection_active_client.h"
+#include "internal/platform/implementation/linux/generated/dbus/networkmanager/device_wireless_client.h"
+#include "internal/platform/implementation/linux/network_manager_active_connection.h"
 #include "internal/platform/implementation/linux/wifi_medium.h"
 #include "internal/platform/implementation/wifi.h"
 
 namespace nearby {
 namespace linux {
-
-std::ostream &operator<<(std::ostream &s,
-                         const ActiveConnectionStateReason &reason) {
-  switch (reason) {
-  case kStateReasonUnknown:
-    return s << "The reason for the active connection state change is unknown.";
-  case kStateReasonNone:
-    return s << "No reason was given for the active connection state change.";
-  case kStateReasonUserDisconnected:
-    return s << "The active connection changed state because the user "
-                "disconnected it.";
-  case kStateReasonDeviceDisconnected:
-    return s << "The active connection changed state because the device it was "
-                "using was disconnected.";
-  case kStateReasonServiceStopped:
-    return s << "The service providing the VPN connection was stopped.";
-  case kStateReasonIPConfigInvalid:
-    return s << "The IP config of the active connection was invalid.";
-  case kStateReasonConnectTimeout:
-    return s << "The connection attempt to the VPN service timed out.";
-  case kStateReasonServiceStartTimeout:
-    return s << "A timeout occurred while starting the service providing the "
-                "VPN connection.";
-  case kStateReasonServiceStartFailed:
-    return s << "Starting the service providing the VPN connection failed.";
-  case kStateReasonNoSecrets:
-    return s << "Necessary secrets for the connection were not provided.";
-  case kStateReasonLoginFailed:
-    return s << "Authentication to the server failed.";
-  case kStateReasonConnectionRemoved:
-    return s << "The connection was deleted from settings.";
-  case kStateReasonDependencyFailed:
-    return s << "Master connection of this connection failed to activate.";
-  case kStateReasonDeviceRealizeFailed:
-    return s << "Could not create the software device link.";
-  case kStateReasonDeviceRemoved:
-    return s << "The device this connection depended on disappeared.";
-  }
-}
-
-std::unique_ptr<NetworkManagerIP4Config>
-NetworkManagerObjectManager::GetIp4Config(
-    const sdbus::ObjectPath &active_connection) {
-  std::map<sdbus::ObjectPath,
-           std::map<std::string, std::map<std::string, sdbus::Variant>>>
-      objects;
-  try {
-    objects = GetManagedObjects();
-  } catch (const sdbus::Error &e) {
-    DBUS_LOG_METHOD_CALL_ERROR(this, "GetManagedObjects", e);
-    return nullptr;
-  }
-
-  for (auto &[object_path, interfaces] : objects) {
-    if (object_path.find("/org/freedesktop/NetworkManager/ActiveConnection/",
-                         0) == 0) {
-      if (interfaces.count(org::freedesktop::NetworkManager::Connection::
-                               Active_proxy::INTERFACE_NAME) == 1) {
-        auto props = interfaces[org::freedesktop::NetworkManager::Connection::
-                                    Active_proxy::INTERFACE_NAME];
-        sdbus::ObjectPath specific_object = props["SpecificObject"];
-        sdbus::ObjectPath ip4config = props["Ip4Config"];
-
-        if (specific_object == active_connection)
-          return std::make_unique<NetworkManagerIP4Config>(
-              getProxy().getConnection(), ip4config);
-      }
-    }
-  }
-
-  return nullptr;
-}
-
-std::unique_ptr<NetworkManagerActiveConnection>
-NetworkManagerObjectManager::GetActiveConnectionForAccessPoint(
-    const sdbus::ObjectPath &access_point,
-    const sdbus::ObjectPath &device_path) {
-  std::map<sdbus::ObjectPath,
-           std::map<std::string, std::map<std::string, sdbus::Variant>>>
-      objects;
-  try {
-    objects = GetManagedObjects();
-  } catch (const sdbus::Error &e) {
-    DBUS_LOG_METHOD_CALL_ERROR(this, "GetManagedObjects", e);
-    return nullptr;
-  }
-
-  for (auto &[object_path, interfaces] : objects) {
-    if (object_path.find("/org/freedesktop/NetworkManager/ActiveConnection/") ==
-        0) {
-      if (interfaces.count(org::freedesktop::NetworkManager::Connection::
-                               Active_proxy::INTERFACE_NAME) == 1) {
-        auto props = interfaces[org::freedesktop::NetworkManager::Connection::
-                                    Active_proxy::INTERFACE_NAME];
-        sdbus::ObjectPath specific_object = props["SpecificObject"];
-        if (specific_object == access_point) {
-          std::vector<sdbus::ObjectPath> devices = props["Devices"];
-          for (auto &path : devices) {
-            if (path == device_path) {
-              return std::make_unique<NetworkManagerActiveConnection>(
-                  getProxy().getConnection(), object_path);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  return nullptr;
-}
-
 api::WifiCapability &NetworkManagerWifiMedium::GetCapability() {
   try {
     auto cap_mask = WirelessCapabilities();
     // https://networkmanager.dev/docs/api/latest/nm-dbus-types.html#NMDeviceWifiCapabilities
-    capability_.supports_5_ghz = (cap_mask & 0x00000400);
+    capability_.supports_5_ghz = (cap_mask & 0x00000400) != 0;
     capability_.supports_6_ghz = false;
     capability_.support_wifi_direct = true;
   } catch (const sdbus::Error &e) {
@@ -141,6 +46,13 @@ api::WifiCapability &NetworkManagerWifiMedium::GetCapability() {
   }
 
   return capability_;
+}
+
+inline std::int32_t to_signed(std::uint32_t v) {
+  if (v <= INT_MAX) return static_cast<std::int32_t>(v);
+  if (v >= INT_MIN) return static_cast<std::int32_t>(v - INT_MIN) + INT_MIN;
+
+  return INT_MAX;
 }
 
 api::WifiInformation &NetworkManagerWifiMedium::GetInformation() {
@@ -164,17 +76,17 @@ api::WifiInformation &NetworkManagerWifiMedium::GetInformation() {
 
     information_ =
         api::WifiInformation{true, ssid, active_access_point->HwAddress(),
-                             (int32_t)(active_access_point->Frequency())};
+                             to_signed(active_access_point->Frequency())};
     NetworkManagerObjectManager manager(getProxy().getConnection());
     auto ip4config = manager.GetIp4Config(active_access_point->getObjectPath());
 
     if (ip4config != nullptr) {
       auto address_data = ip4config->AddressData();
-      if (address_data.size() > 0) {
+      if (!address_data.empty()) {
         std::string address = address_data[0]["address"];
         information_.ip_address_dot_decimal = address;
 
-        struct in_addr addr;
+        struct in_addr addr {};
         inet_aton(address.c_str(), &addr);
 
         char addr_bytes[4];
@@ -206,16 +118,9 @@ void NetworkManagerWifiMedium::onPropertiesChanged(
     return;
   }
 
-  for (auto &[property, val] : changedProperties) {
-    if (property == "LastScan") {
-      {
-        absl::MutexLock l(&last_scan_lock_);
-        last_scan_ = val;
-      }
-      // absl::ReaderMutexLock l(&scan_result_callback_lock_);
-      // if (scan_result_callback_.has_value()) {
-      // }
-    }
+  if (changedProperties.count("LastScan") == 1) {
+    absl::MutexLock l(&last_scan_lock_);
+    last_scan_ = changedProperties.at("LastScan");
   }
 }
 
@@ -224,13 +129,13 @@ bool NetworkManagerWifiMedium::Scan(
   // absl::MutexLock l(&scan_result_callback_lock_);
   // scan_result_callback_ = scan_result_callback;
 
-  // try {
-  //   RequestScan(std::map<std::string, sdbus::Variant>());
-  // } catch (const sdbus::Error &e) {
-  //   scan_result_callback_ = std::nullopt;
-  //   DBUS_LOG_METHOD_CALL_ERROR(&getProxy(), "RequestScan", e);
-  //   return false;
-  // }
+  try {
+    RequestScan({});
+  } catch (const sdbus::Error &e) {
+    scan_result_callback_ = std::nullopt;
+    DBUS_LOG_METHOD_CALL_ERROR(&getProxy(), "RequestScan", e);
+    return false;
+  }
   return false;
 }
 
@@ -239,8 +144,12 @@ NetworkManagerWifiMedium::SearchBySSIDNoScan(
     std::vector<std::uint8_t> &ssid_bytes) {
   absl::ReaderMutexLock l(&known_access_points_lock_);
   for (auto &[object_path, ap] : known_access_points_) {
-    if (ap->Ssid() == ssid_bytes) {
-      return ap;
+    try {
+      if (ap->Ssid() == ssid_bytes) {
+        return ap;
+      }
+    } catch (const sdbus::Error &e) {
+      DBUS_LOG_PROPERTY_GET_ERROR(ap, "Ssid", e);
     }
   }
 
@@ -275,9 +184,9 @@ NetworkManagerWifiMedium::SearchBySSID(absl::string_view ssid,
     DBUS_LOG_METHOD_CALL_ERROR(this, "RequestScan", e);
   }
 
-  auto scan_finish = [cur_last_scan, this]() {
-    this->last_scan_lock_.AssertReaderHeld();
-    return cur_last_scan != this->last_scan_;
+  auto scan_finish = [&, cur_last_scan]() {
+    last_scan_lock_.AssertReaderHeld();
+    return cur_last_scan != last_scan_;
   };
 
   absl::Condition cond(&scan_finish);
@@ -298,25 +207,23 @@ NetworkManagerWifiMedium::SearchBySSID(absl::string_view ssid,
   return ap;
 }
 
-static inline std::pair<std::string, std::string>
-AuthAlgAndKeyMgmt(api::WifiAuthType auth_type) {
+static inline std::pair<std::string, std::string> AuthAlgAndKeyMgmt(
+    api::WifiAuthType auth_type) {
   switch (auth_type) {
-  case api::WifiAuthType::kUnknown:
-    return {"open", "none"};
-  case api::WifiAuthType::kOpen:
-    return {"open", "none"};
-  case api::WifiAuthType::kWpaPsk:
-    return {"shared", "wpa-psk"};
-  case api::WifiAuthType::kWep:
-    return {"none", "wep"};
+    case api::WifiAuthType::kUnknown:
+      return {"open", "none"};
+    case api::WifiAuthType::kOpen:
+      return {"open", "none"};
+    case api::WifiAuthType::kWpaPsk:
+      return {"shared", "wpa-psk"};
+    case api::WifiAuthType::kWep:
+      return {"none", "wep"};
   }
 }
 
-api::WifiConnectionStatus
-NetworkManagerWifiMedium::ConnectToNetwork(absl::string_view ssid,
-                                           absl::string_view password,
-                                           api::WifiAuthType auth_type) {
-
+api::WifiConnectionStatus NetworkManagerWifiMedium::ConnectToNetwork(
+    absl::string_view ssid, absl::string_view password,
+    api::WifiAuthType auth_type) {
   auto ap = SearchBySSID(ssid);
   if (ap == nullptr) {
     NEARBY_LOGS(ERROR) << __func__ << ": " << getObjectPath()
@@ -399,8 +306,8 @@ NetworkManagerWifiMedium::ConnectToNetwork(absl::string_view ssid,
                        << active_conn_path
                        << " failed to activate, NMActiveConnectionStateReason:"
                        << *reason;
-    if (*reason == ActiveConnectionStateReason::kStateReasonNoSecrets ||
-        *reason == ActiveConnectionStateReason::kStateReasonLoginFailed)
+    if (*reason == NetworkManagerActiveConnection::kStateReasonNoSecrets ||
+        *reason == NetworkManagerActiveConnection::kStateReasonLoginFailed)
       return api::WifiConnectionStatus::kAuthFailure;
   }
 
@@ -410,7 +317,7 @@ NetworkManagerWifiMedium::ConnectToNetwork(absl::string_view ssid,
 bool NetworkManagerWifiMedium::VerifyInternetConnectivity() {
   try {
     std::uint32_t connectivity = network_manager_->CheckConnectivity();
-    return connectivity == 4; // NM_CONNECTIVITY_FULL
+    return connectivity == 4;  // NM_CONNECTIVITY_FULL
   } catch (const sdbus::Error &e) {
     DBUS_LOG_METHOD_CALL_ERROR(network_manager_, "CheckConnectivity", e);
     return false;
@@ -451,5 +358,5 @@ NetworkManagerWifiMedium::GetActiveConnection() {
   return conn;
 }
 
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby

@@ -1,7 +1,21 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <arpa/inet.h>
-#include <memory>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <memory>
 
 #include "internal/platform/implementation/linux/wifi_direct.h"
 #include "internal/platform/implementation/linux/wifi_direct_server_socket.h"
@@ -132,7 +146,7 @@ bool NetworkManagerWifiDirectMedium::DisconnectWifiDirect() {
 bool NetworkManagerWifiDirectMedium::ConnectedToWifi() {
   try {
     auto mode = wireless_device_->Mode();
-    return mode == 2; // NM_802_11_MODE_INFRA
+    return mode == 2;  // NM_802_11_MODE_INFRA
   } catch (const sdbus::Error &e) {
     DBUS_LOG_PROPERTY_GET_ERROR(wireless_device_, "Mode", e);
     return false;
@@ -142,29 +156,30 @@ bool NetworkManagerWifiDirectMedium::ConnectedToWifi() {
 bool NetworkManagerWifiDirectMedium::StartWifiDirect(
     WifiDirectCredentials *wifi_direct_credentials) {
   // According to the comments in the windows implementation, the wifi direct
-  // medium is currently just a regular wifi hotspot.  
-  auto wireless_device = std::make_unique<NetworkManagerWifiMedium>(
-      network_manager_, system_bus_, wireless_device_->getObjectPath());
-  auto hotspot = NetworkManagerWifiHotspotMedium(system_bus_, network_manager_,
-                                                 std::move(wireless_device));
+  // medium is currently just a regular wifi hotspot.
+  // auto wireless_device = std::make_unique<NetworkManagerWifiMedium>(
+  //     network_manager_, system_bus_, wireless_device_->getObjectPath());
+  // auto hotspot = NetworkManagerWifiHotspotMedium(system_bus_, network_manager_,
+  //                                                std::move(wireless_device));
 
-  HotspotCredentials hotspot_creds;
-  if (!hotspot.StartWifiHotspot(&hotspot_creds))
-    return false;
+  // HotspotCredentials hotspot_creds;
+  // if (!hotspot.StartWifiHotspot(&hotspot_creds)) return false;
 
-  wifi_direct_credentials->SetSSID(hotspot_creds.GetSSID());
-  wifi_direct_credentials->SetPassword(hotspot_creds.GetPassword());
-  return true;
+  // wifi_direct_credentials->SetSSID(hotspot_creds.GetSSID());
+  // wifi_direct_credentials->SetPassword(hotspot_creds.GetPassword());
+  // return true;
+ return false;
 }
 
 bool NetworkManagerWifiDirectMedium::StopWifiDirect() {
-  auto wireless_device = std::make_unique<NetworkManagerWifiMedium>(
-      network_manager_, system_bus_, wireless_device_->getObjectPath());
-  auto hotspot = NetworkManagerWifiHotspotMedium(system_bus_, network_manager_,
-                                                 std::move(wireless_device));
+  // auto wireless_device = std::make_unique<NetworkManagerWifiMedium>(
+  //     network_manager_, system_bus_, wireless_device_->getObjectPath());
+  // auto hotspot = NetworkManagerWifiHotspotMedium(system_bus_, network_manager_,
+  //                                                std::move(wireless_device));
 
-  return hotspot.DisconnectWifiHotspot();
+ // return hotspot.DisconnectWifiHotspot();
+ return false;
 }
 
-} // namespace linux
-} // namespace nearby
+}  // namespace linux
+}  // namespace nearby
