@@ -13,20 +13,21 @@
 # limitations under the License.
 
 # target error_code_enums_cc_proto
-add_library(error_code_enums_cc_proto
-  OBJECT
-    "error_code_enums.proto"
-)
-
 protobuf_generate(
   LANGUAGE
     cpp
-  TARGET
-    error_code_enums_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
+  OUT_VAR
+    error_code_enums_cc_PROTO_GENERATED
+  PROTOS
+    "error_code_enums.proto"
+)
+
+add_library(error_code_enums_cc_proto
+    ${error_code_enums_cc_PROTO_GENERATED}
 )
 
 target_include_directories(error_code_enums_cc_proto PUBLIC ${CMAKE_BINARY_DIR})

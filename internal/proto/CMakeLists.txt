@@ -13,20 +13,21 @@
 # limitations under the License.
 
 # target credential_cc_proto
-add_library(credential_cc_proto
-  OBJECT
-    "credential.proto"
-)
-
 protobuf_generate(
   LANGUAGE
     cpp
-  TARGET
-    credential_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
+  OUT_VAR
+    credential_cc_PROTO_GENERATED
+  PROTOS
+    "credential.proto"
+)
+
+add_library(credential_cc_proto
+    ${credential_cc_PROTO_GENERATED}
 )
 
 target_include_directories(credential_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
@@ -34,20 +35,21 @@ target_link_libraries(credential_cc_proto PUBLIC protobuf::libprotobuf)
 set_property(TARGET credential_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # target local_credential_cc_proto
-add_library(local_credential_cc_proto
-  OBJECT
-    "local_credential.proto"
-)
-
 protobuf_generate(
   LANGUAGE
     cpp
-  TARGET
-    local_credential_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
+  OUT_VAR
+    local_credential_cc_PROTO_GENERATED
+  PROTOS
+    "local_credential.proto"
+)
+
+add_library(local_credential_cc_proto
+    ${local_credential_cc_PROTO_GENERATED}
 )
 
 target_include_directories(local_credential_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
@@ -55,20 +57,21 @@ target_link_libraries(local_credential_cc_proto PUBLIC protobuf::libprotobuf)
 set_property(TARGET local_credential_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # target metadata_cc_proto
-add_library(metadata_cc_proto
-  OBJECT
-    "metadata.proto"
-)
-
 protobuf_generate(
   LANGUAGE
     cpp
-  TARGET
-    metadata_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
+  OUT_VAR
+    metadata_cc_PROTO_GENERATED
+  PROTOS
+    "metadata.proto"
+)
+
+add_library(metadata_cc_proto
+    ${metadata_cc_PROTO_GENERATED}
 )
 
 target_include_directories(metadata_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
