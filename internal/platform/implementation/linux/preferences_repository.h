@@ -24,6 +24,10 @@
 #include "nlohmann/json.hpp"
 #include "nlohmann/json_fwd.hpp"
 
+#ifdef linux
+#undef linux
+#endif
+
 namespace nearby {
 namespace linux {
 

@@ -23,6 +23,10 @@
 #include "internal/platform/byte_array.h"
 #include "internal/platform/uuid.h"
 
+#ifdef linux
+#undef linux
+#endif
+
 namespace nearby {
 namespace linux {
 

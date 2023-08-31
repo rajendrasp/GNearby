@@ -26,6 +26,10 @@
 #include "absl/synchronization/mutex.h"
 #include "internal/platform/runnable.h"
 
+#ifdef linux
+#undef linux
+#endif
+
 namespace nearby {
 namespace linux {
 

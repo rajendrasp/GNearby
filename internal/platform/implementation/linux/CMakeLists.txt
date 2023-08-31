@@ -32,8 +32,8 @@ add_library(internal_platform_implementation_linux_types
     "log_message.h"
     "org_freedesktop_logcontrol_server_glue.h"
     "hostname_client_glue.h"
-    #"login_manager_client_glue.h"
-    #"login_session_client_glue.h"
+    "login_manager_client_glue.h"
+    "login_session_client_glue.h"
     "utils.h"
     "device_info.cc"
     "log_message.cc"
@@ -141,7 +141,7 @@ add_library(internal_platform_implementation_linux
     "bluetooth_classic_device.cc"
     "bluetooth_classic_medium.cc"
     "bluetooth_classic_socket.cc"
-    #"bluetooth_classic_server_socket.cc"
+    "bluetooth_classic_server_socket.cc"
     "bluetooth_devices.cc"
     "bluetooth_pairing.cc"
     "bluez.cc"
@@ -169,7 +169,7 @@ target_link_libraries(internal_platform_implementation_linux
     internal_platform_implementation_comm
     internal_platform_implementation_linux_crypto
     internal_platform_implementation_linux_types
-    internal_plags_nearby_flags
+    internal_flags_nearby_flags
     internal_platform_base
     internal_platform_cancellation_flag
     internal_platform_comm

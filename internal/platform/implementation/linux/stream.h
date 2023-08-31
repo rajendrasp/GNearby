@@ -8,6 +8,10 @@
 #include "internal/platform/input_stream.h"
 #include "internal/platform/output_stream.h"
 
+#ifdef linux
+#undef linux
+#endif
+
 namespace nearby {
 namespace linux {
 class InputStream : public nearby::InputStream {

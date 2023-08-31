@@ -13,6 +13,10 @@
 #include "internal/platform/implementation/bluetooth_classic.h"
 #include "internal/platform/implementation/linux/bluez_device_client_glue.h"
 
+#ifdef linux
+#undef linux
+#endif
+
 namespace nearby {
 namespace linux {
 // https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html.

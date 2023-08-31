@@ -17,6 +17,10 @@
 #include "internal/platform/implementation/linux/login_manager_client_glue.h"
 #include "internal/platform/implementation/linux/login_session_client_glue.h"
 
+#ifdef linux
+#undef linux
+#endif
+
 namespace nearby {
 namespace linux {
 
