@@ -26,7 +26,6 @@ target_link_libraries(connections_core
     internal_analytics_event_logger
     internal_interop_device
     internal_platform_base
-    internal_platform_logging
     internal_platform_types
     absl::strings
     absl::time
@@ -76,3 +75,7 @@ target_include_directories(connections_core_types PRIVATE ${CMAKE_SOURCE_DIR})
 
 add_subdirectory("implementation")
 add_subdirectory("v3")
+
+if(UNIX AND NOT APPLE)
+  add_subdirectory("connectionsd")
+endif()
