@@ -30,10 +30,6 @@ add_library(internal_platform_implementation_linux_types
     "timer.h"
     "thread_pool.h"
     "log_message.h"
-    "org_freedesktop_logcontrol_server_glue.h"
-    "hostname_client_glue.h"
-    "login_manager_client_glue.h"
-    "login_session_client_glue.h"
     "utils.h"
     "device_info.cc"
     "log_message.cc"
@@ -56,9 +52,8 @@ target_include_directories(internal_platform_implementation_linux_types PRIVATE 
 add_library(internal_platform_implementation_linux_comm
   INTERFACE
     "avahi.h"
-    "avahi_entrygroup_client_glue.h"
-    "avahi_server_client_glue.h"
-    "avahi_servicebrowser_client_glue.h"
+    "ble_medium.h"
+    "ble_v2_medium.h"
     "bluetooth_adapter.h"
     "bluetooth_bluez_profile.h"
     "bluetooth_classic_device.h"
@@ -68,17 +63,10 @@ add_library(internal_platform_implementation_linux_comm
     "bluetooth_devices.h"
     "bluetooth_pairing.h"
     "bluez.h"
-    "bluez_adapter_client_glue.h"
-    "bluez_device_client_glue.h"
-    "bluez_profile_glue.h"
-    "bluez_profile_manager_client_glue.h"
     "dbus.h"
-    "networkmanager_accesspoint_client_glue.h"
-    "networkmanager_client_glue.h"
-    "networkmanager_connection_active_client_glue.h"
-    "networkmanager_device_wifip2p_client_glue.h"
-    "networkmanager_device_wireless_client_glue.h"
-    "networkmanager_ip4config_client_glue.h"
+    "network_manager.h"
+    "network_manager_active_connection.h"
+    "network_manager_access_point.h"
     "stream.h"
     "wifi_direct.h"
     "wifi_direct_server_socket.h"
@@ -94,13 +82,14 @@ add_library(internal_platform_implementation_linux_comm
 )
 
 target_link_libraries(internal_platform_implementation_linux_comm
-    INTERFACE
+  INTERFACE
     internal_platform_base
     internal_platform_comm
     internal_platform_types
     internal_platform_uuid
     internal_platform_implementation_comm
     internal_platform_implementation_types
+    internal_platform_implementation_linux_generated_types
     absl::core_headers
     absl::flat_hash_map
     absl::flat_hash_set
@@ -147,6 +136,8 @@ add_library(internal_platform_implementation_linux
     "bluez.cc"
     "dbus.cc"
     "executor.cc"
+    "network_manager.cc"
+    "network_manager_active_connection.cc"
     "platform.cc"
     "preferences_manager.cc"
     "preferences_repository.cc"
@@ -181,6 +172,7 @@ target_link_libraries(internal_platform_implementation_linux
     internal_platform_implementation_types
     internal_platform_implementation_shared_count_down_latch
     internal_platform_implementation_shared_file
+    internal_platform_implementation_linux_generated_types
     absl::core_headers
     absl::flat_hash_map
     absl::status
@@ -215,3 +207,5 @@ target_link_libraries(internal_platform_implementation_linux_test_utils
 target_include_directories(internal_platform_implementation_linux_test_utils PRIVATE ${CMAKE_SOURCE_DIR})
 
 # target internal_platform_implementation_linux_impl_test
+
+add_subdirectory("generated")
