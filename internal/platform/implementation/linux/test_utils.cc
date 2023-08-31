@@ -14,6 +14,7 @@
 
 #include "internal/platform/implementation/linux/test_utils.h"
 #include "internal/platform/implementation/linux/device_info.h"
+#include "internal/platform/implementation/linux/dbus.h"
 
 #include <algorithm>
 #include <sstream>
@@ -29,7 +30,7 @@ std::wstring StringToWideString(const std::string& s) {
 }
 
 std::string GetPayloadPath(nearby::PayloadId payload_id) {
-    std::filesystem::path path = nearby::linux::DeviceInfo().GetDownloadPath().value_or(std::string(getenv("HOME")).append("Downloads"));
+    std::filesystem::path path = nearby::linux::DeviceInfo(nearby::linux::getDefaultBusConnection()).GetDownloadPath().value_or(std::string(getenv("HOME")).append("Downloads"));
 
   return path.string();
 }
