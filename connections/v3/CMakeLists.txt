@@ -14,17 +14,21 @@
 
 # target connections_v3_v3_types
 add_library(connections_v3_v3_types
-  INTERFACE
+    "connections_device.cc"
+    "advertising_options.h"
     "bandwidth_info.h"
     "connection_listening_options.h"
     "connection_result.h"
     "connections_device.h"
     "connections_device_provider.h"
+    "discovery_options.h"
     "listeners.h"
+    "listening_result.h"
+    "params.h"
 )
 
 target_link_libraries(connections_v3_v3_types
-  INTERFACE
+  PUBLIC
     connections_core_types
     internal_crypto
     internal_interop_device
@@ -33,6 +37,6 @@ target_link_libraries(connections_v3_v3_types
     absl::any_invocable
 )
 
-target_include_directories(connections_v3_v3_types INTERFACE ${CMAKE_SOURCE_DIR})
+target_include_directories(connections_v3_v3_types PUBLIC ${CMAKE_SOURCE_DIR})
 
 # target connections_v3_v3_types_test
