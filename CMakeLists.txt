@@ -44,12 +44,12 @@ endif()
 set(WITH_GFLAGS OFF CACHE BOOL "Disables building of GFlags")
 set(GFLAGS_IS_SUBPROJECT TRUE)
 set(GTEST_IS_SUBPROJECT TRUE)
-
 set(INSTALL_GTEST OFF CACHE BOOL "Turns off installing GTest because it's being embedded")
 set(BUILD_GMOCK OFF CACHE BOOL "Disable building of GMock in Google Test")
 set(GTEST_HAS ON CACHE BOOL "...")
 set(ABSL_ENABLE_INSTALL ON CACHE BOOL "...")
 set(protobuf_BUILD_TESTS OFF CACHE BOOL "...")
+set(JSON_MultipleHeaders ON CACHE BOOL "...")
 
 include("cmake/dependencies.cmake")
 

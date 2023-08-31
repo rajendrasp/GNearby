@@ -25,6 +25,8 @@ protobuf_generate(
     credential_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(credential_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
@@ -44,6 +46,8 @@ protobuf_generate(
     local_credential_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(local_credential_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
@@ -63,6 +67,8 @@ protobuf_generate(
     metadata_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(metadata_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
@@ -89,6 +95,8 @@ protobuf_generate(
     ${CMAKE_BINARY_DIR}
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(tachyon_cc_proto PUBLIC ${CMAKE_BINARY_DIR})

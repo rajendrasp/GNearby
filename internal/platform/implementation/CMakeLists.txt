@@ -111,5 +111,5 @@ target_include_directories(internal_platform_implementation_platform INTERFACE $
 add_subdirectory("shared")
 
 IF (UNIX AND NOT APPLE)
-    # add_subdirectory("linux")
+    add_subdirectory("linux")
 endif()

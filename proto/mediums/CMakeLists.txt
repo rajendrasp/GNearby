@@ -24,6 +24,8 @@ protobuf_generate(
     ble_frames_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(ble_frames_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
@@ -43,6 +45,8 @@ protobuf_generate(
     multiplex_frames_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(multiplex_frames_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
@@ -61,6 +65,8 @@ protobuf_generate(
     nfc_frames_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(nfc_frames_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
@@ -80,6 +86,8 @@ protobuf_generate(
     web_rtc_signaling_frames_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(web_rtc_signaling_frames_cc_proto PUBLIC ${CMAKE_BINARY_DIR})

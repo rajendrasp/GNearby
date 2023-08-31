@@ -25,6 +25,8 @@ protobuf_generate(
     connections_log_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(connections_log_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
@@ -44,6 +46,8 @@ protobuf_generate(
     fast_pair_log_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(fast_pair_log_cc_proto PUBLIC ${CMAKE_BINARY_DIR})

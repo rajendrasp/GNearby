@@ -25,6 +25,8 @@ protobuf_generate(
     error_code_enums_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(error_code_enums_cc_proto PUBLIC ${CMAKE_BINARY_DIR})

@@ -25,6 +25,8 @@ protobuf_generate(
     connections_enums_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 
@@ -45,6 +47,8 @@ protobuf_generate(
     fast_pair_enums_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(fast_pair_enums_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
@@ -64,6 +68,8 @@ protobuf_generate(
     sharing_enums_cc_proto
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
+  PROTOC_OUT_DIR
+    ${CMAKE_BINARY_DIR}
 )
 
 target_include_directories(sharing_enums_cc_proto PUBLIC ${CMAKE_BINARY_DIR})

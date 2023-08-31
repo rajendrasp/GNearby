@@ -17,15 +17,18 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/abseil/abseil-cpp.git"
   GIT_TAG "20230802.0"
   GIT_PROGRESS TRUE
-  FIND_PACKAGE_ARGS CONFIG
+  # FIND_PACKAGE_ARGS CONFIG
+  OVERRIDE_FIND_PACKAGE
 )
 
 fetchcontent_declare(
   protobuf
   GIT_REPOSITORY "https://github.com/protocolbuffers/protobuf.git"
-  GIT_TAG "v3.22.5"
+  GIT_TAG "v3.17.0"
   GIT_PROGRESS TRUE
-  FIND_PACKAGE_ARGS CONFIG
+  SOURCE_SUBDIR "cmake"
+  # FIND_PACKAGE_ARGS CONFIG
+  OVERRIDE_FIND_PACKAGE
 )
 
 fetchcontent_declare(
@@ -33,6 +36,7 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/aappleby/smhasher.git"
   GIT_PROGRESS TRUE
   SOURCE_SUBDIR "src"
+  # OVERRIDE_FIND_PACKAGE
   OVERRIDE_FIND_PACKAGE
 )
 
@@ -41,7 +45,8 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/nlohmann/json.git"
   GIT_TAG "v3.10.5"
   GIT_PROGRESS TRUE
-  FIND_PACKAGE_ARGS CONFIG
+  # FIND_PACKAGE_ARGS CONFIG
+  OVERRIDE_FIND_PACKAGE
 )
 
 fetchcontent_declare(
@@ -49,7 +54,8 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/google/googletest.git"
   GIT_TAG "main"
   GIT_PROGRESS TRUE
-  FIND_PACKAGE_ARGS CONFIG
+  # FIND_PACKAGE_ARGS CONFIG
+  OVERRIDE_FIND_PACKAGE
 )
 
 fetchcontent_declare(
@@ -57,7 +63,8 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/gflags/gflags.git"
   GIT_TAG "v2.2.2"
   GIT_PROGRESS TRUE
-  FIND_PACKAGE_ARGS
+  # FIND_PACKAGE_ARGS
+  OVERRIDE_FIND_PACKAGE
 )
 
 fetchcontent_declare(
@@ -65,7 +72,8 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/google/glog.git"
   GIT_TAG "v0.4.0"
   GIT_PROGRESS TRUE
-  FIND_PACKAGE_ARGS CONFIG
+  # FIND_PACKAGE_ARGS CONFIG
+  OVERRIDE_FIND_PACKAGE
 )
 
 fetchcontent_declare(
@@ -106,11 +114,12 @@ fetchcontent_declare(
 )
 
 fetchcontent_declare(
-  sdbus-cpp
+  sdbus-c++
   GIT_REPOSITORY "https://github.com/Kistler-Group/sdbus-cpp.git"
   GIT_TAG "v1.3.0"
   GIT_PROGRESS TRUE
-  FIND_PACKAGE_ARGS CONFIG NAMES sdbus-c++
+  # FIND_PACKAGE_ARGS CONFIG NAMES sdbus-c++
+  OVERRIDE_FIND_PACKAGE
 )
 
 fetchcontent_declare(
@@ -118,7 +127,8 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/google/leveldb.git"
   GIT_TAG "v1.20"
   GIT_PROGRESS TRUE
-  FIND_PACKAGE_ARGS CONFIG
+  # FIND_PACKAGE_ARGS CONFIG
+  OVERRIDE_FIND_PACKAGE
 )
 
 fetchcontent_makeavailable(
@@ -137,13 +147,18 @@ fetchcontent_makeavailable(
 
 # Find packages
 include(FindGTest)
-add_library(gtest ALIAS GTest::gtest)
+if(NOT TARGET gtest)
+  add_library(gtest ALIAS GTest::gtest)
+endif()
 
 if(UNIX AND NOT APPLE)
   include(FindPkgConfig)
   fetchcontent_makeavailable(
-    sdbus-cpp
+    sdbus-c++
   )
+  if(NOT TARGET SDBusCpp)
+      add_library(SDBusCpp::sdbus-c++ ALIAS sdbus-c++)
+  endif()
   pkg_check_modules(
     libsystemd
     REQUIRED
@@ -160,10 +175,9 @@ endif()
 set(Protobuf_LIBRARIES protobuf::libprotobuf)
 
 if(NOT protobuf_FOUND)
-
   # Include the CMake file that adds the function protobuf_generate into our project
-  fetchcontent_getproperties(protobuf SOURCE_DIR protobuf_SOURCE_DIR)
-  include(${protobuf_SOURCE_DIR}/cmake/protobuf-generate.cmake)
+  fetchcontent_getproperties(protobuf BINARY_DIR protobuf_BINARY_DIR)
+  include(${protobuf_BINARY_DIR}/cmake/protobuf/protobuf-generate.cmake)
 endif()
 
 # UKey2 and securemessage depends on the functions included in protobuf-generate.cmake
