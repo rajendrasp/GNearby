@@ -13,8 +13,7 @@
 # limitations under the License.
 
 # target internal_crypto_cros
-add_library(
-  internal_crypto_cros
+add_library(internal_crypto_cros
     "aead.cc"
     "ec_private_key.cc"
     "ec_signature_creator.cc"
