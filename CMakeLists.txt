@@ -51,7 +51,16 @@ set(ABSL_ENABLE_INSTALL ON CACHE BOOL "...")
 set(protobuf_BUILD_TESTS OFF CACHE BOOL "...")
 set(JSON_MultipleHeaders ON CACHE BOOL "...")
 
+if(BUILD_SHARED_LIBS)
+  set(nearby_SHARED_LIBS ${BUILD_SHARED_LIBS})
+endif()
+
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "Disable building of shared libs for third party projects" FORCE)
+set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
+
 include("cmake/dependencies.cmake")
+
+set(BUILD_SHARED_LIBS ${nearby_SHARED_LIBS} CACHE BOOL "Revert the option to build the installable project" FORCE)
 
 # Targets
 add_subdirectory("proto")

@@ -159,6 +159,12 @@ if(UNIX AND NOT APPLE)
   if(NOT TARGET SDBusCpp)
       add_library(SDBusCpp::sdbus-c++ ALIAS sdbus-c++)
   endif()
+  # SDBus sets the PIC option to the same as BUILD_SHARED_LIBS
+  # We are not building shared libraries with the dependencies
+  # but we are with the actual library output, thus we require
+  # this option to be true to link static sdbus to our shared
+  # targets
+  set_target_properties(sdbus-c++-objlib PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
   pkg_check_modules(
     libsystemd
     REQUIRED
@@ -172,6 +178,10 @@ if(UNIX AND NOT APPLE)
     libcurl
   )
 endif()
+
+# The function used in some of the dependencies to generate
+# protobuf files use this variable instead of a target to
+# link to libprotobuf
 set(Protobuf_LIBRARIES protobuf::libprotobuf)
 
 if(NOT protobuf_FOUND)
@@ -184,25 +194,6 @@ endif()
 # We make this avaliable after we include that
 fetchcontent_makeavailable(securemessage)
 fetchcontent_makeavailable(ukey2)
-
-# Both UKey2 and SecureMessage don't compile with -fPIC making compiling into a .so (or .dll) imposible
-set_property(
-  TARGET
-    ukey2
-  APPEND
-  PROPERTY
-    POSITION_INDEPENDENT_CODE
-      TRUE
-)
-
-set_property(
-  TARGET
-    securemessage
-  APPEND
-  PROPERTY
-    POSITION_INDEPENDENT_CODE
-      TRUE
-)
 
 # For BoringSSL, it throws all warnings as errors, and this gets thrown on the current "master" branch
 target_compile_options(crypto INTERFACE "-Wno-error=ignored-attributes")
