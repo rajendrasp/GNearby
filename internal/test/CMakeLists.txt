@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# target internal_test_test
+# target internal_test
 add_library(internal_test
   STATIC
     "fake_clock.cc"
@@ -39,6 +39,6 @@ target_link_libraries(internal_test
     absl::span
 )
 
-target_include_directories(internal_test_test PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(internal_test PRIVATE ${CMAKE_SOURCE_DIR})
 
 # target internal_test_test

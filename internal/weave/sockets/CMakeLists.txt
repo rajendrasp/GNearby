@@ -25,7 +25,7 @@ target_link_libraries(internal_weave_sockets
   PUBLIC
     internal_platform_types
     internal_weave
-    absl::random
+    absl::random_random
     absl::status
 )
 

@@ -142,6 +142,7 @@ add_library(internal_platform_implementation_linux
     "preferences_manager.cc"
     "preferences_repository.cc"
     "scheduled_executor.cc"
+    "stream.cc"
     "submittable_executor.cc"
     "system_clock.cc"
     "thread_pool.cc"

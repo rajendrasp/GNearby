@@ -27,6 +27,10 @@
 #include "internal/platform/input_stream.h"
 #include "internal/platform/output_stream.h"
 
+#ifdef linux
+#undef linux
+#endif
+
 namespace nearby {
 namespace linux {
 // BlueZ's NewConnection gives us a non-blocking FD, so we need to poll
