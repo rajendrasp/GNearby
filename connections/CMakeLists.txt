@@ -73,9 +73,10 @@ target_include_directories(connections_core_types PRIVATE ${CMAKE_SOURCE_DIR})
 
 # target connections_core_test
 
-add_subdirectory("implementation")
-add_subdirectory("v3")
-
 if(UNIX AND NOT APPLE)
+  target_link_libraries(connections_core PUBLIC internal_platform_implementation_linux)
   add_subdirectory("connectionsd")
 endif()
+
+add_subdirectory("implementation")
+add_subdirectory("v3")

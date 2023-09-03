@@ -21,5 +21,4 @@ target_link_libraries(connectionsd
   PRIVATE
     connections_core
     connections_core_types
-    internal_platform_implementation_linux
 )
