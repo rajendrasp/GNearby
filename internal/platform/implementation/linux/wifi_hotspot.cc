@@ -51,7 +51,7 @@ NetworkManagerWifiHotspotMedium::ConnectToService(
 
   NEARBY_LOGS(VERBOSE) << __func__ << ": Connecting to " << ip_address << ":"
                        << port;
-  struct sockaddr_in addr{};
+  struct sockaddr_in addr {};
   addr.sin_addr.s_addr = inet_addr(std::string(ip_address).c_str());
   addr.sin_family = AF_INET;
   addr.sin_port = htons(port);
@@ -141,7 +141,7 @@ bool NetworkManagerWifiHotspotMedium::StartWifiHotspot(
     return false;
   }
 
-  char id_cstr[SD_ID128_STRING_MAX];
+  char id_cstr[SD_ID128_UUID_STRING_MAX];
   sd_id128_to_string(id, id_cstr);
 
   std::string ssid = absl::StrCat("DIRECT-", id_cstr);
@@ -163,7 +163,7 @@ bool NetworkManagerWifiHotspotMedium::StartWifiHotspot(
                        << std::strerror(ret);
     return false;
   }
-  sd_id128_to_string(id, id_cstr);
+  sd_id128_to_uuid_string(id, id_cstr);
 
   std::vector<uint8_t> ssid_bytes(ssid.begin(), ssid.end());
   std::map<std::string, std::map<std::string, sdbus::Variant>>
@@ -179,6 +179,8 @@ bool NetworkManagerWifiHotspotMedium::StartWifiHotspot(
           {"802-11-wireless",
            std::map<std::string, sdbus::Variant>{
                {"assigned-mac-address", "random"},
+               {"ap-isolation",
+                static_cast<std::int32_t>(0)},  // NM_TERNARY_FALSE
                {"mode", "ap"},
                {"ssid", ssid_bytes},
                {"security", "802-11-wireless-security"}}},
