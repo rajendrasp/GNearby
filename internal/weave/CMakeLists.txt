@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# target internal_weave_weave
+# target internal_weave
 add_library(internal_weave
     "base_socket.cc"
     "message_write_request.cc"
@@ -53,3 +53,5 @@ target_include_directories(internal_weave PRIVATE ${CMAKE_SOURCE_DIR})
 # target internal_weave_control_packet_write_request_test
 
 # target internal_weave_message_write_request_test
+
+add_subdirectory("sockets")
