@@ -14,14 +14,12 @@
 
 # target ble_frames_cc_proto
 protobuf_generate(
-  LANGUAGE
-    cpp
+  LANGUAGE cpp
+  OUT_VAR ble_frames_cc_PROTO_GENERATED
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
-  OUT_VAR
-    ble_frames_cc_PROTO_GENERATED
   PROTOS
     "ble_frames.proto"
 )
@@ -32,18 +30,15 @@ add_library(ble_frames_cc_proto
 
 target_include_directories(ble_frames_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(ble_frames_cc_proto PUBLIC protobuf::libprotobuf)
-set_property(TARGET ble_frames_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # target multiplex_frames_cc_proto
 protobuf_generate(
-  LANGUAGE
-    cpp
+  LANGUAGE cpp
+  OUT_VAR multiplex_frames_cc_PROTO_GENERATED
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
-  OUT_VAR
-    multiplex_frames_cc_PROTO_GENERATED
   PROTOS
     "multiplex_frames.proto"
 )
@@ -54,18 +49,15 @@ add_library(multiplex_frames_cc_proto
 
 target_include_directories(multiplex_frames_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(multiplex_frames_cc_proto PUBLIC protobuf::libprotobuf)
-set_property(TARGET multiplex_frames_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # target nfc_frames_cc_proto
 protobuf_generate(
-  LANGUAGE
-    cpp
+  LANGUAGE cpp
+  OUT_VAR nfc_frames_cc_PROTO_GENERATED
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
-  OUT_VAR
-    nfc_frames_cc_PROTO_GENERATED
   PROTOS
     "nfc_frames.proto"
 )
@@ -76,18 +68,15 @@ add_library(nfc_frames_cc_proto
 
 target_include_directories(nfc_frames_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(nfc_frames_cc_proto PUBLIC protobuf::libprotobuf)
-set_property(TARGET nfc_frames_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # target web_rtc_signaling_frames_cc_proto
 protobuf_generate(
-  LANGUAGE
-    cpp
+  LANGUAGE cpp
+  OUT_VAR web_rtc_signaling_frames_cc_PROTO_GENERATED
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
-  OUT_VAR
-    web_rtc_signaling_frames_cc_PROTO_GENERATED
   PROTOS
     "web_rtc_signaling_frames.proto"
 )
@@ -98,4 +87,3 @@ add_library(web_rtc_signaling_frames_cc_proto
 
 target_include_directories(web_rtc_signaling_frames_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(web_rtc_signaling_frames_cc_proto PUBLIC protobuf::libprotobuf)
-set_property(TARGET web_rtc_signaling_frames_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)

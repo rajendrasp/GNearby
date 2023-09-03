@@ -18,14 +18,15 @@ add_library(internal_crypto
   "ed25519.h"
 )
 
-target_link_libraries(internal_crypto PUBLIC
-  internal_crypto_cros
-  boringssl::crypto
-  absl::status
-  absl::statusor
-  absl::str_format
-  absl::optional
-  absl::span
+target_link_libraries(internal_crypto
+  PUBLIC
+    internal_crypto_cros
+    boringssl::crypto
+    absl::status
+    absl::statusor
+    absl::str_format
+    absl::optional
+    absl::span
 )
 
 target_include_directories(internal_crypto PRIVATE ${CMAKE_SOURCE_DIR})

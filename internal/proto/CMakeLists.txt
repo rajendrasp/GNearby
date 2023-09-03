@@ -14,14 +14,12 @@
 
 # target credential_cc_proto
 protobuf_generate(
-  LANGUAGE
-    cpp
+  LANGUAGE cpp
+  OUT_VAR credential_cc_PROTO_GENERATED
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
-  OUT_VAR
-    credential_cc_PROTO_GENERATED
   PROTOS
     "credential.proto"
 )
@@ -32,18 +30,15 @@ add_library(credential_cc_proto
 
 target_include_directories(credential_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(credential_cc_proto PUBLIC protobuf::libprotobuf)
-set_property(TARGET credential_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # target local_credential_cc_proto
 protobuf_generate(
-  LANGUAGE
-    cpp
+  LANGUAGE cpp
+  OUT_VAR local_credential_cc_PROTO_GENERATED
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
-  OUT_VAR
-    local_credential_cc_PROTO_GENERATED
   PROTOS
     "local_credential.proto"
 )
@@ -54,18 +49,15 @@ add_library(local_credential_cc_proto
 
 target_include_directories(local_credential_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(local_credential_cc_proto PUBLIC protobuf::libprotobuf)
-set_property(TARGET local_credential_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # target metadata_cc_proto
 protobuf_generate(
-  LANGUAGE
-    cpp
+  LANGUAGE cpp
+  OUT_VAR metadata_cc_PROTO_GENERATED
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
-  OUT_VAR
-    metadata_cc_PROTO_GENERATED
   PROTOS
     "metadata.proto"
 )
@@ -76,30 +68,26 @@ add_library(metadata_cc_proto
 
 target_include_directories(metadata_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(metadata_cc_proto PUBLIC protobuf::libprotobuf)
-set_property(TARGET metadata_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 #[[
 # target tachyon_cc_proto
-add_library(tachyon_cc_proto
-  OBJECT
-    "${CMAKE_CURRENT_LIST_DIR}/duration.proto"
-    "${CMAKE_CURRENT_LIST_DIR}/ice.proto"
-    "${CMAKE_CURRENT_LIST_DIR}/tachyon.proto"
-    "${CMAKE_CURRENT_LIST_DIR}/tachyon_common.proto"
-    "${CMAKE_CURRENT_LIST_DIR}/tachyon_enums.proto"
-)
-
 protobuf_generate(
-  LANGUAGE
-    cpp
-  TARGET
-    tachyon_cc_proto
-  PROTOC_OUT_DIR
-    ${CMAKE_BINARY_DIR}
+  LANGUAGE cpp
+  OUT_VAR tachyon_cc_PROTO_GENERATED
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
+  PROTOS
+    "duration.proto"
+    "ice.proto"
+    "tachyon.proto"
+    "tachyon_common.proto"
+    "tachyon_enums.proto"
+)
+
+add_library(tachyon_cc_proto
+    ${tachyon_cc_PROTO_GENERATED}
 )
 
 target_include_directories(tachyon_cc_proto PUBLIC ${CMAKE_BINARY_DIR})

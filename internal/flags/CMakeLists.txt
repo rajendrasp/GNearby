@@ -15,22 +15,22 @@
 # target internal_flags_flag_reader
 add_library(internal_flags_flag_reader
   INTERFACE
-  "default_flag_reader.h"
-  "flag.h"
-  "flag_reader.h"
+    "default_flag_reader.h"
+    "flag.h"
+    "flag_reader.h"
 )
 
 target_link_libraries(internal_flags_flag_reader
   INTERFACE
-  absl::strings
+    absl::strings
 )
 
 target_include_directories(internal_flags_flag_reader INTERFACE ${CMAKE_SOURCE_DIR})
 
 # target internal_flags_nearby_flags
 add_library(internal_flags_nearby_flags
-  "nearby_flags.cc"
-  "nearby_flags.h"
+    "nearby_flags.cc"
+    "nearby_flags.h"
 )
 
 target_link_libraries(internal_flags_nearby_flags

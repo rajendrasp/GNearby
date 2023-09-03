@@ -15,14 +15,12 @@
 # target connections_enums_cc_proto
 
 protobuf_generate(
-  LANGUAGE
-    cpp
+  LANGUAGE cpp
+  OUT_VAR connections_enums_cc_PROTO_GENERATED
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
-  OUT_VAR
-    connections_enums_cc_PROTO_GENERATED
   PROTOS
     "connections_enums.proto"
 )
@@ -33,18 +31,15 @@ add_library(connections_enums_cc_proto
 
 target_include_directories(connections_enums_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(connections_enums_cc_proto PUBLIC protobuf::libprotobuf)
-set_property(TARGET connections_enums_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # target fast_pair_enums_cc_proto
 protobuf_generate(
-  LANGUAGE
-    cpp
+  LANGUAGE cpp
+  OUT_VAR fast_pair_enums_cc_PROTO_GENERATED
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
-  OUT_VAR
-    fast_pair_enums_cc_PROTO_GENERATED
   PROTOS
     "fast_pair_enums.proto"
 )
@@ -55,18 +50,15 @@ add_library(fast_pair_enums_cc_proto
 
 target_include_directories(fast_pair_enums_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(fast_pair_enums_cc_proto PUBLIC protobuf::libprotobuf)
-set_property(TARGET fast_pair_enums_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # target sharing_enums_cc_proto
 protobuf_generate(
-  LANGUAGE
-    cpp
+  LANGUAGE cpp
+  OUT_VAR sharing_enums_cc_PROTO_GENERATED
   IMPORT_DIRS
     ${CMAKE_SOURCE_DIR}
   PROTOC_OUT_DIR
     ${CMAKE_BINARY_DIR}
-  OUT_VAR
-    sharing_enums_cc_PROTO_GENERATED
   PROTOS
     "sharing_enums.proto"
 )
@@ -77,7 +69,6 @@ add_library(sharing_enums_cc_proto
 
 target_include_directories(sharing_enums_cc_proto PUBLIC ${CMAKE_BINARY_DIR})
 target_link_libraries(sharing_enums_cc_proto PUBLIC protobuf::libprotobuf)
-set_property(TARGET sharing_enums_cc_proto PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 add_subdirectory("errorcode")
 add_subdirectory("mediums")

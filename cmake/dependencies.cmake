@@ -17,17 +17,19 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/abseil/abseil-cpp.git"
   GIT_TAG "20230802.0"
   GIT_PROGRESS TRUE
-  # FIND_PACKAGE_ARGS CONFIG
   OVERRIDE_FIND_PACKAGE
 )
 
+# Earlier versions of protobuf had the needed protobuf-generate.cmake
+# file be generated at build time, though we need this at configure time.
+# This version adds it's own file, and fixes C++ includes for cstdint
+# https://github.com/protocolbuffers/protobuf/commit/477e35f4c2dd5a8eb9f829cd6671e1b5e38f2535
+# https://github.com/protocolbuffers/protobuf/commit/ad55f52fdb4557953593cd096b903b0347b02f25
 fetchcontent_declare(
   protobuf
   GIT_REPOSITORY "https://github.com/protocolbuffers/protobuf.git"
-  GIT_TAG "v3.17.0"
+  GIT_TAG "v3.23.0"
   GIT_PROGRESS TRUE
-  SOURCE_SUBDIR "cmake"
-  # FIND_PACKAGE_ARGS CONFIG
   OVERRIDE_FIND_PACKAGE
 )
 
@@ -36,7 +38,6 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/aappleby/smhasher.git"
   GIT_PROGRESS TRUE
   SOURCE_SUBDIR "src"
-  # OVERRIDE_FIND_PACKAGE
   OVERRIDE_FIND_PACKAGE
 )
 
@@ -45,7 +46,6 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/nlohmann/json.git"
   GIT_TAG "v3.10.5"
   GIT_PROGRESS TRUE
-  # FIND_PACKAGE_ARGS CONFIG
   OVERRIDE_FIND_PACKAGE
 )
 
@@ -54,7 +54,6 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/google/googletest.git"
   GIT_TAG "main"
   GIT_PROGRESS TRUE
-  # FIND_PACKAGE_ARGS CONFIG
   OVERRIDE_FIND_PACKAGE
 )
 
@@ -63,7 +62,6 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/gflags/gflags.git"
   GIT_TAG "v2.2.2"
   GIT_PROGRESS TRUE
-  # FIND_PACKAGE_ARGS
   OVERRIDE_FIND_PACKAGE
 )
 
@@ -72,7 +70,6 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/google/glog.git"
   GIT_TAG "v0.4.0"
   GIT_PROGRESS TRUE
-  # FIND_PACKAGE_ARGS CONFIG
   OVERRIDE_FIND_PACKAGE
 )
 
@@ -118,7 +115,6 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/Kistler-Group/sdbus-cpp.git"
   GIT_TAG "v1.3.0"
   GIT_PROGRESS TRUE
-  # FIND_PACKAGE_ARGS CONFIG NAMES sdbus-c++
   OVERRIDE_FIND_PACKAGE
 )
 
@@ -127,7 +123,6 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/google/leveldb.git"
   GIT_TAG "v1.20"
   GIT_PROGRESS TRUE
-  # FIND_PACKAGE_ARGS CONFIG
   OVERRIDE_FIND_PACKAGE
 )
 
@@ -140,7 +135,7 @@ fetchcontent_makeavailable(
   GTest
   gflags
   boringssl
-  #protobuf_matchers
+  # protobuf_matchers
   re2
   leveldb
 )
@@ -151,31 +146,34 @@ if(NOT TARGET gtest)
   add_library(gtest ALIAS GTest::gtest)
 endif()
 
+# Only Linux targets
 if(UNIX AND NOT APPLE)
   include(FindPkgConfig)
-  fetchcontent_makeavailable(
-    sdbus-c++
-  )
+
+  fetchcontent_makeavailable(sdbus-c++)
+
+  # Normal SDBusCpp would go under this target
+  # When including it in our project, it does not
   if(NOT TARGET SDBusCpp)
       add_library(SDBusCpp::sdbus-c++ ALIAS sdbus-c++)
   endif()
+
   # SDBus sets the PIC option to the same as BUILD_SHARED_LIBS
   # We are not building shared libraries with the dependencies
   # but we are with the actual library output, thus we require
   # this option to be true to link static sdbus to our shared
   # targets
   set_target_properties(sdbus-c++-objlib PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+
   pkg_check_modules(
     libsystemd
-    REQUIRED
-    IMPORTED_TARGET
-    libsystemd
+      REQUIRED
+      IMPORTED_TARGET libsystemd
   )
   pkg_check_modules(
     libcurl
-    REQUIRED
-    IMPORTED_TARGET
-    libcurl
+      REQUIRED
+      IMPORTED_TARGET libcurl
   )
 endif()
 
@@ -187,7 +185,7 @@ set(Protobuf_LIBRARIES protobuf::libprotobuf)
 if(NOT protobuf_FOUND)
   # Include the CMake file that adds the function protobuf_generate into our project
   fetchcontent_getproperties(protobuf BINARY_DIR protobuf_BINARY_DIR)
-  include(${protobuf_BINARY_DIR}/cmake/protobuf/protobuf-generate.cmake)
+  include(${protobuf_SOURCE_DIR}/cmake/protobuf-generate.cmake)
 endif()
 
 # UKey2 and securemessage depends on the functions included in protobuf-generate.cmake
@@ -211,16 +209,14 @@ fetchcontent_getproperties(smhasher
     smhasher_SOURCE_DIR
 )
 set_property(
-  TARGET
-    SMHasherSupport
+  TARGET SMHasherSupport
   APPEND
   PROPERTY
     INCLUDE_DIRECTORIES
       ${smhasher_SOURCE_DIR}
 )
 set_property(
-  TARGET
-    SMHasherSupport
+  TARGET SMHasherSupport
   APPEND
   PROPERTY
     INTERFACE_INCLUDE_DIRECTORIES

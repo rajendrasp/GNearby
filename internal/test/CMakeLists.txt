@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # target internal_test_test
-add_library(internal_test_test
+add_library(internal_test
   STATIC
     "fake_clock.cc"
     "fake_single_thread_executor.cc"
@@ -26,7 +26,7 @@ add_library(internal_test_test
     "fake_timer.h"
 )
 
-target_link_libraries(internal_test_test
+target_link_libraries(internal_test
   PUBLIC
     internal_base_bluetooth_address
     internal_platform_types
@@ -41,4 +41,4 @@ target_link_libraries(internal_test_test
 
 target_include_directories(internal_test_test PRIVATE ${CMAKE_SOURCE_DIR})
 
-# target internal_test_test_test
+# target internal_test_test

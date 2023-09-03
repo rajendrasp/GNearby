@@ -20,14 +20,11 @@ include(ExternalProject)
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
 project(Nearby
-DESCRIPTION "A collection of projects focused on connectivity that enable building cross-device experiences."
+  DESCRIPTION "A collection of projects focused on connectivity that enable building cross-device experiences."
   HOMEPAGE_URL "https://github.com/google/nearby"
   LANGUAGES 
     C
     CXX
-    #OBJC
-    #OBJCPP
-    #Swift
 )
 
 set(FETCHCONTENT_QUIET OFF)
@@ -46,10 +43,9 @@ set(GFLAGS_IS_SUBPROJECT TRUE)
 set(GTEST_IS_SUBPROJECT TRUE)
 set(INSTALL_GTEST OFF CACHE BOOL "Turns off installing GTest because it's being embedded")
 set(BUILD_GMOCK OFF CACHE BOOL "Disable building of GMock in Google Test")
-set(GTEST_HAS ON CACHE BOOL "...")
-set(ABSL_ENABLE_INSTALL ON CACHE BOOL "...")
-set(protobuf_BUILD_TESTS OFF CACHE BOOL "...")
-set(JSON_MultipleHeaders ON CACHE BOOL "...")
+set(ABSL_ENABLE_INSTALL ON CACHE BOOL "Enables install targets of Abseil")
+set(protobuf_BUILD_TESTS OFF CACHE BOOL "Disables Protobuf testing")
+set(JSON_MultipleHeaders ON CACHE BOOL "Enables nlohmann jsons Multiple headers")
 
 if(BUILD_SHARED_LIBS)
   set(nearby_SHARED_LIBS ${BUILD_SHARED_LIBS})

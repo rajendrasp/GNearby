@@ -48,10 +48,7 @@ target_link_libraries(internal_platform_implementation_types
     nlohmann_json::nlohmann_json
 )
 
-target_include_directories(internal_platform_implementation_types
-  INTERFACE
-    ${CMAKE_SOURCE_DIR}
-)
+target_include_directories(internal_platform_implementation_types INTERFACE ${CMAKE_SOURCE_DIR})
 
 # target internal_platform_implementation_comm
 add_library(internal_platform_implementation_comm
@@ -111,5 +108,5 @@ target_include_directories(internal_platform_implementation_platform INTERFACE $
 add_subdirectory("shared")
 
 IF (UNIX AND NOT APPLE)
-    add_subdirectory("linux")
+  add_subdirectory("linux")
 endif()
