@@ -20,7 +20,7 @@ add_library(internal_crypto
 
 target_link_libraries(internal_crypto
   PUBLIC
-    internal_crypto_cros
+    internal::crypto_cros
     boringssl::crypto
     absl::status
     absl::statusor
@@ -30,5 +30,7 @@ target_link_libraries(internal_crypto
 )
 
 target_include_directories(internal_crypto PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::crypto ALIAS internal_crypto)
 
 # target internal_crypto_unittests

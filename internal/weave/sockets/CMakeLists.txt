@@ -23,12 +23,14 @@ add_library(internal_weave_sockets
 
 target_link_libraries(internal_weave_sockets
   PUBLIC
-    internal_platform_types
-    internal_weave
+    internal::platform::types
+    internal::weave
     absl::random_random
     absl::status
 )
 
 target_include_directories(internal_weave_sockets PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::weave::sockets ALIAS internal_weave_sockets)
 
 # target internal_weave_sockets_test

@@ -24,7 +24,7 @@ add_library(internal_data_data_manager
 
 target_link_libraries(internal_data_data_manager
   INTERFACE
-    internal_platform_types
+    internal::platform::types
     leveldb::leveldb
     protobuf::protobuf_lite
     absl::flat_hash_map
@@ -33,6 +33,8 @@ target_link_libraries(internal_data_data_manager
 )
 
 target_include_directories(internal_data_data_manager INTERFACE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::data::data_manager ALIAS internal_data_data_manager)
 
 # target leveldb_data_set_test_cc_proto
 

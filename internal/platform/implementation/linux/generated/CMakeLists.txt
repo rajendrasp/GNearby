@@ -19,3 +19,7 @@ add_library(internal_platform_implementation_linux_generated_types
   INTERFACE
     ${internal_platform_implementation_linux_generated_types_HEADERS}
 )
+
+target_include_directories(internal_platform_implementation_linux_generated_types INTERFACE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::implementation::linux::generated::types ALIAS internal_platform_implementation_linux_generated_types)

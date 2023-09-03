@@ -66,4 +66,6 @@ target_link_libraries(internal_crypto_cros
 target_include_directories(internal_crypto_cros PRIVATE ${CMAKE_SOURCE_DIR})
 target_compile_definitions(internal_crypto_cros PRIVATE CRYPTO_IMPLEMENTATION)
 
+add_library(internal::crypto_cros ALIAS internal_crypto_cros)
+
 # target internal_crypto_cros_unittests

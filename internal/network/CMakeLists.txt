@@ -31,7 +31,7 @@ add_library(internal_network_types
 
 target_link_libraries(internal_network_types
   PUBLIC
-    internal_platform_types
+    internal::platform::types
     absl::flat_hash_map
     absl::status
     absl::statusor
@@ -39,6 +39,8 @@ target_link_libraries(internal_network_types
 )
 
 target_include_directories(internal_network_types PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::network::types ALIAS internal_network_types)
 
 # target internal_network_nearby_http_client
 add_library(internal_network_nearby_http_client
@@ -50,12 +52,12 @@ add_library(internal_network_nearby_http_client
 
 target_link_libraries(internal_network_nearby_http_client
   PUBLIC
-    internal_network_types
-    internal_flags_nearby_flags
-    internal_platform_logging
-    internal_platform_types
-    internal_platform_flags_platform_flags
-    internal_platform_implementation_platform
+    internal::network::types
+    internal::flags::nearby_flags
+    internal::platform::logging
+    internal::platform::types
+    internal::platform::flags::platform_flags
+    internal::platform::implementation::platform
     absl::core_headers
     absl::flat_hash_map
     absl::status
@@ -65,5 +67,7 @@ target_link_libraries(internal_network_nearby_http_client
 )
 
 target_include_directories(internal_network_nearby_http_client PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::network::nearby_http_client ALIAS internal_network_nearby_http_client)
 
 # target internal_network_nearby_http_client_test

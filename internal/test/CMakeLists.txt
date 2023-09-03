@@ -28,9 +28,9 @@ add_library(internal_test
 
 target_link_libraries(internal_test
   PUBLIC
-    internal_base_bluetooth_address
-    internal_platform_types
-    internal_platform_implementation_types
+    internal::base::bluetooth_address
+    internal::platform::types
+    internal::platform::implementation::types
     absl::core_headers
     absl::flat_hash_map
     absl::strings
@@ -40,5 +40,7 @@ target_link_libraries(internal_test
 )
 
 target_include_directories(internal_test PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::test ALIAS internal_test)
 
 # target internal_test_test

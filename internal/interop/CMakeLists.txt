@@ -21,10 +21,12 @@ add_library(internal_interop_device
 
 target_link_libraries(internal_interop_device
   INTERFACE
-    internal_platform_connection_info
-    internal_platform_types
+    internal::platform::connection_info
+    internal::platform::types
     absl::strings
     absl::variant
 )
 
 target_include_directories(internal_interop_device INTERFACE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::interop::device ALIAS internal_interop_device)

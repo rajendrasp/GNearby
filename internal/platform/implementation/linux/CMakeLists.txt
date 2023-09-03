@@ -38,8 +38,8 @@ add_library(internal_platform_implementation_linux_types
 
 target_link_libraries(internal_platform_implementation_linux_types
   PUBLIC
-    internal_platform_implementation_linux_comm
-    internal_platform_implementation_types
+    internal::platform::implementation::linux::comm
+    internal::platform::implementation::types
     absl::strings
     PkgConfig::libsystemd
     SDBusCpp::sdbus-c++
@@ -47,6 +47,8 @@ target_link_libraries(internal_platform_implementation_linux_types
 )
 
 target_include_directories(internal_platform_implementation_linux_types PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::implementation::linux::types ALIAS internal_platform_implementation_linux_types)
 
 # target internal_platform_implementation_linux_comm
 add_library(internal_platform_implementation_linux_comm
@@ -83,13 +85,13 @@ add_library(internal_platform_implementation_linux_comm
 
 target_link_libraries(internal_platform_implementation_linux_comm
   INTERFACE
-    internal_platform_base
-    internal_platform_comm
-    internal_platform_types
-    internal_platform_uuid
-    internal_platform_implementation_comm
-    internal_platform_implementation_types
-    internal_platform_implementation_linux_generated_types
+    internal::platform::base
+    internal::platform::comm
+    internal::platform::types
+    internal::platform::uuid
+    internal::platform::implementation::comm
+    internal::platform::implementation::types
+    internal::platform::implementation::linux::generated::types
     absl::core_headers
     absl::flat_hash_map
     absl::flat_hash_set
@@ -107,6 +109,8 @@ target_link_libraries(internal_platform_implementation_linux_comm
 
 target_include_directories(internal_platform_implementation_linux_comm INTERFACE ${CMAKE_SOURCE_DIR})
 
+add_library(internal::platform::implementation::linux::comm ALIAS internal_platform_implementation_linux_comm)
+
 # target internal_platform_implementation_linux_crypto
 add_library(internal_platform_implementation_linux_crypto
     "crypto.cc"
@@ -114,13 +118,15 @@ add_library(internal_platform_implementation_linux_crypto
 
 target_link_libraries(internal_platform_implementation_linux_crypto
   PUBLIC
-    internal_platform_base
-    internal_platform_implementation_types
+    internal::platform::base
+    internal::platform::implementation::types
     boringssl::crypto
     absl::strings
 )
 
 target_include_directories(internal_platform_implementation_linux_crypto PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::implementation::linux::crypto ALIAS internal_platform_implementation_linux_crypto)
 
 # target internal_platform_implementation_linux
 add_library(internal_platform_implementation_linux
@@ -158,22 +164,22 @@ add_library(internal_platform_implementation_linux
 
 target_link_libraries(internal_platform_implementation_linux
   PUBLIC
-    internal_platform_implementation_comm
-    internal_platform_implementation_linux_crypto
-    internal_platform_implementation_linux_types
-    internal_flags_nearby_flags
-    internal_platform_base
-    internal_platform_cancellation_flag
-    internal_platform_comm
-    internal_platform_types
-    internal_platform_uuid
-    internal_platform_flags_platform_flags
-    internal_platform_implementation_comm
-    internal_platform_implementation_platform
-    internal_platform_implementation_types
-    internal_platform_implementation_shared_count_down_latch
-    internal_platform_implementation_shared_file
-    internal_platform_implementation_linux_generated_types
+    internal::platform::implementation::comm
+    internal::platform::implementation::linux::crypto
+    internal::platform::implementation::linux::types
+    internal::flags::nearby_flags
+    internal::platform::base
+    internal::platform::cancellation_flag
+    internal::platform::comm
+    internal::platform::types
+    internal::platform::uuid
+    internal::platform::flags::platform_flags
+    internal::platform::implementation::comm
+    internal::platform::implementation::platform
+    internal::platform::implementation::types
+    internal::platform::implementation::shared::count_down_latch
+    internal::platform::implementation::shared::file
+    internal::platform::implementation::linux::generated::types
     absl::core_headers
     absl::flat_hash_map
     absl::status
@@ -191,6 +197,8 @@ target_link_libraries(internal_platform_implementation_linux
 
 target_include_directories(internal_platform_implementation_linux PRIVATE ${CMAKE_SOURCE_DIR})
 
+add_library(internal::platform::imlementation::linux ALIAS internal_platform_implementation_linux)
+
 # target internal_platform_implementation_linux_test_utils
 add_library(internal_platform_implementation_linux_test_utils
   STATIC
@@ -201,11 +209,13 @@ add_library(internal_platform_implementation_linux_test_utils
 
 target_link_libraries(internal_platform_implementation_linux_test_utils
   PUBLIC
-    internal_platform_base
+    internal::platform::base
     nlohmann_json::nlohmann_json
 )
 
 target_include_directories(internal_platform_implementation_linux_test_utils PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::implementation::linux::test_utils ALIAS internal_platform_implementation_linux_test_utils)
 
 # target internal_platform_implementation_linux_impl_test
 

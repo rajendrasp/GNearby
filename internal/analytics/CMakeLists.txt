@@ -20,3 +20,5 @@ add_library(internal_analytics_event_logger
 
 target_link_libraries(internal_analytics_event_logger INTERFACE protobuf::libprotobuf)
 target_include_directories(internal_analytics_event_logger INTERFACE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::analytics::event_logger ALIAS internal_analytics_event_logger)

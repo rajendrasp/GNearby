@@ -20,10 +20,12 @@ add_library(internal_platform_implementation_shared_posix_mutex
 
 target_link_libraries(internal_platform_implementation_shared_posix_mutex
   PUBLIC
-    internal_platform_implementation_types
+    internal::platform::implementation::types
 )
 
 target_include_directories(internal_platform_implementation_shared_posix_mutex PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::implementation::shared::posix_mutex ALIAS internal_platform_implementation_shared_posix_mutex)
 
 # target internal_platform_implementation_shared_posix_condition_variable
 add_library(internal_platform_implementation_shared_posix_condition_variable
@@ -33,11 +35,13 @@ add_library(internal_platform_implementation_shared_posix_condition_variable
 
 target_link_libraries(internal_platform_implementation_shared_posix_condition_variable
   PUBLIC
-    internal_platform_implementation_shared_posix_mutex
-    internal_platform_implementation_types
+    internal::platform::implementation::shared::posix_mutex
+    internal::platform::implementation::types
 )
 
 target_include_directories(internal_platform_implementation_shared_posix_condition_variable PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::implementation::shared::posix_condition_variable ALIAS internal_platform_implementation_shared_posix_condition_variable)
 
 # target internal_platform_implementation_shared_file
 add_library(internal_platform_implementation_shared_file
@@ -47,13 +51,15 @@ add_library(internal_platform_implementation_shared_file
 
 target_link_libraries(internal_platform_implementation_shared_file
   PUBLIC
-    internal_platform_base
-    internal_platform_implementation_types
+    internal::platform::base
+    internal::platform::implementation::types
     absl::memory
     absl::strings
 )
 
 target_include_directories(internal_platform_implementation_shared_file PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::implementation::shared::file ALIAS internal_platform_implementation_shared_file)
 
 # target internal_platform_implementation_shared_count_down_latch
 add_library(internal_platform_implementation_shared_count_down_latch
@@ -63,11 +69,15 @@ add_library(internal_platform_implementation_shared_count_down_latch
 
 target_link_libraries(internal_platform_implementation_shared_count_down_latch
   PUBLIC
-    internal_platform_implementation_types
+    internal::platform::implementation::types
     absl::core_headers
     absl::strings
     absl::synchronization
     absl::time
 )
+
+target_include_directories(internal_platform_implementation_shared_count_down_latch PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::implementation::shared::count_down_latch ALIAS internal_platform_implementation_shared_count_down_latch)
 
 # target internal_platform_implementation_shared_file_test

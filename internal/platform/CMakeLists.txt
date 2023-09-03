@@ -53,6 +53,8 @@ target_link_libraries(internal_platform_base
 target_include_directories(internal_platform_base PRIVATE ${CMAKE_SOURCE_DIR})
 target_compile_definitions(internal_platform_base PRIVATE "CORE_ADAPTER_DLL")
 
+add_library(internal::platform::base ALIAS internal_platform_base)
+
 # target internal_platform_util
 add_library(internal_platform_util
     "base_input_stream.cc"
@@ -64,13 +66,15 @@ add_library(internal_platform_util
 
 target_link_libraries(internal_platform_util
   PUBLIC
-    internal_platform_base
-    internal_platform_implementation_types
+    internal::platform::base
+    internal::platform::implementation::types
     absl::core_headers
     absl::str_format
 )
 
 target_include_directories(internal_platform_util PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::util ALIAS internal_platform_util)
 
 # target internal_platform_logging
 add_library(internal_platform_logging
@@ -80,12 +84,14 @@ add_library(internal_platform_logging
 
 target_link_libraries(internal_platform_logging
   INTERFACE
-    internal_platform_implementation_platform
-    internal_platform_implementation_types
+    internal::platform::implementation::platform
+    internal::platform::implementation::types
     glog::glog
 )
 
 target_include_directories(internal_platform_logging INTERFACE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::logging ALIAS internal_platform_logging)
 
 # target internal_platform_cancellation_flag
 add_library(internal_platform_cancellation_flag
@@ -95,14 +101,16 @@ add_library(internal_platform_cancellation_flag
 )
 
 target_link_libraries(internal_platform_cancellation_flag
-    PUBLIC
-    internal_platform_base
+  PUBLIC
+    internal::platform::base
     absl::flat_hash_map
     absl::any_invocable
     absl::synchronization
 )
 
 target_include_directories(internal_platform_cancellation_flag PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::cancellation_flag ALIAS internal_platform_cancellation_flag)
 
 # target internal_platform_connection_info
 add_library(internal_platform_connection_info
@@ -118,7 +126,7 @@ add_library(internal_platform_connection_info
 
 target_link_libraries(internal_platform_connection_info
   PUBLIC
-    internal_platform_types
+    internal::platform::types
     connections_enums_cc_proto
     absl::status
     absl::statusor
@@ -129,6 +137,8 @@ target_link_libraries(internal_platform_connection_info
 
 target_include_directories(internal_platform_connection_info PRIVATE ${CMAKE_SOURCE_DIR})
 
+add_library(internal::platform::connection_info ALIAS internal_platform_connection_info)
+
 # target internal_platform_error_code_recorder
 add_library(internal_platform_error_code_recorder
     "error_code_recorder.cc"
@@ -138,13 +148,15 @@ add_library(internal_platform_error_code_recorder
 
 target_link_libraries(internal_platform_error_code_recorder
   PUBLIC
-    internal_platform_logging
+    internal::platform::logging
     connections_enums_cc_proto
     error_code_enums_cc_proto
     absl::any_invocable
 )
 
 target_include_directories(internal_platform_error_code_recorder PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::error_code_recorder ALIAS internal_platform_error_code_recorder)
 
 # target internal_platform_uuid
 add_library(internal_platform_uuid
@@ -154,11 +166,13 @@ add_library(internal_platform_uuid
 
 target_link_libraries(internal_platform_uuid
   PUBLIC
-    internal_platform_implementation_types
+    internal::platform::implementation::types
     absl::strings
 )
 
 target_include_directories(internal_platform_uuid PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::uuid ALIAS internal_platform_uuid)
 
 # target internal_platform_test_util
 
@@ -218,11 +232,11 @@ add_library(internal_platform_types
 
 target_link_libraries(internal_platform_types
   PUBLIC
-    internal_platform_base
-    internal_platform_util
-    internal_crypto_cros
-    internal_platform_implementation_platform
-    internal_platform_implementation_types
+    internal::platform::base
+    internal::platform::util
+    internal::crypto_cros
+    internal::platform::implementation::platform
+    internal::platform::implementation::types
     absl::core_headers
     absl::flat_hash_map
     absl::any_invocable
@@ -234,6 +248,8 @@ target_link_libraries(internal_platform_types
 )
 
 target_include_directories(internal_platform_types PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::types ALIAS internal_platform_types)
 
 # target internal_platform_comm
 add_library(internal_platform_comm
@@ -261,13 +277,13 @@ add_library(internal_platform_comm
 
 target_link_libraries(internal_platform_comm
   PUBLIC
-    internal_platform_base
-    internal_platform_cancellation_flag
-    internal_platform_types
-    internal_platform_uuid
-    internal_base
-    internal_platform_implementation_comm
-    internal_platform_implementation_platform
+    internal::platform::base
+    internal::platform::cancellation_flag
+    internal::platform::types
+    internal::platform::uuid
+    internal::base
+    internal::platform::implementation::comm
+    internal::platform::implementation::platform
     # TODO: Support WebRTC
     absl::flat_hash_map
     absl::flat_hash_set
@@ -276,6 +292,8 @@ target_link_libraries(internal_platform_comm
     absl::strings
     absl::optional
 )
+
+add_library(internal::platform::comm ALIAS internal_platform_comm)
 
 # target internal_platform_public_test
 

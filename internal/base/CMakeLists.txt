@@ -20,20 +20,22 @@ add_library(internal_base
 
 target_link_libraries(internal_base
   INTERFACE
-    internal_platform_types
+    internal::platform::types
     absl::core_headers
     absl::flat_hash_map
 )
 
 target_include_directories(internal_base INTERFACE ${CMAKE_SOURCE_DIR})
 
-# target internal_bluetooth_address
-add_library(internal_bluetooth_address
+add_library(internal::base ALIAS internal_base)
+
+# target internal_base_bluetooth_address
+add_library(internal_base_bluetooth_address
     "bluetooth_address.cc"
     "bluetooth_address.h"
 )
 
-target_link_libraries(internal_bluetooth_address
+target_link_libraries(internal_base_bluetooth_address
   PUBLIC
     absl::strings
     absl::str_format
@@ -41,6 +43,8 @@ target_link_libraries(internal_bluetooth_address
     absl::span
 )
 
-target_include_directories(internal_bluetooth_address PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(internal_base_bluetooth_address PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::base::bluetooth_address ALIAS internal_base_bluetooth_address)
 
 # target internal_base_test

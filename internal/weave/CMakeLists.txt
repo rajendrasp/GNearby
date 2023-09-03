@@ -31,8 +31,8 @@ add_library(internal_weave
 
 target_link_libraries(internal_weave
   PUBLIC
-    internal_platform_base
-    internal_platform_types
+    internal::platform::base
+    internal::platform::types
     absl::core_headers
     absl::any_invocable
     absl::check
@@ -43,6 +43,8 @@ target_link_libraries(internal_weave
 )
 
 target_include_directories(internal_weave PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::weave ALIAS internal_weave)
 
 # target internal_weave_packet_test
 

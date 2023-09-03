@@ -20,8 +20,10 @@ add_library(internal_platform_flags_platform_flags
 
 target_link_libraries(internal_platform_flags_platform_flags
   INTERFACE
-    internal_flags_flag_reader
+    internal::flags::flag_reader
     absl::strings
 )
 
 target_include_directories(internal_platform_flags_platform_flags INTERFACE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::flags::platform_flags ALIAS internal_platform_flags_platform_flags)

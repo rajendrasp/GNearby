@@ -27,6 +27,8 @@ target_link_libraries(internal_flags_flag_reader
 
 target_include_directories(internal_flags_flag_reader INTERFACE ${CMAKE_SOURCE_DIR})
 
+add_library(internal::flags::flag_reader ALIAS internal_flags_flag_reader)
+
 # target internal_flags_nearby_flags
 add_library(internal_flags_nearby_flags
     "nearby_flags.cc"
@@ -35,8 +37,8 @@ add_library(internal_flags_nearby_flags
 
 target_link_libraries(internal_flags_nearby_flags
   PUBLIC
-    internal_flags_flag_reader
-    internal_platform_types
+    internal::flags::flag_reader
+    internal::platform::types
     absl::core_headers
     absl::flat_hash_map
     absl::strings
@@ -44,5 +46,7 @@ target_link_libraries(internal_flags_nearby_flags
 )
 
 target_include_directories(internal_flags_nearby_flags PRIVATE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::flags::nearby_flags ALIAS internal_flags_nearby_flags)
 
 # target internal_flags_nearby_flags_test

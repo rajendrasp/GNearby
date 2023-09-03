@@ -40,8 +40,8 @@ add_library(internal_platform_implementation_types
 
 target_link_libraries(internal_platform_implementation_types
   INTERFACE
-    internal_crypto
-    internal_platform_base
+    internal::crypto
+    internal::platform::base
     absl::base
     absl::strings
     absl::time
@@ -49,6 +49,8 @@ target_link_libraries(internal_platform_implementation_types
 )
 
 target_include_directories(internal_platform_implementation_types INTERFACE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::implementation::types ALIAS internal_platform_implementation_types)
 
 # target internal_platform_implementation_comm
 add_library(internal_platform_implementation_comm
@@ -71,9 +73,9 @@ add_library(internal_platform_implementation_comm
 target_link_libraries(internal_platform_implementation_comm
   INTERFACE
     offline_wire_formats_cc_proto
-    internal_platform_base
-    internal_platform_cancellation_flag
-    internal_platform_uuid
+    internal::platform::base
+    internal::platform::cancellation_flag
+    internal::platform::uuid
     credential_cc_proto
     local_credential_cc_proto
     # TODO: Support WebRTC
@@ -88,6 +90,8 @@ target_link_libraries(internal_platform_implementation_comm
 
 target_include_directories(internal_platform_implementation_comm INTERFACE ${CMAKE_SOURCE_DIR})
 
+add_library(internal::platform::implementation::comm ALIAS internal_platform_implementation_comm)
+
 # target internal_platform_implementation_platform
 add_library(internal_platform_implementation_platform
   INTERFACE
@@ -96,14 +100,16 @@ add_library(internal_platform_implementation_platform
 
 target_link_libraries(internal_platform_implementation_platform
   INTERFACE
-    internal_platform_implementation_comm
-    internal_platform_implementation_types
-    internal_platform_base
+    internal::platform::implementation::comm
+    internal::platform::implementation::types
+    internal::platform::base
     absl::statusor
     absl::strings
 )
 
 target_include_directories(internal_platform_implementation_platform INTERFACE ${CMAKE_SOURCE_DIR})
+
+add_library(internal::platform::implementation::platform ALIAS internal_platform_implementation_platform)
 
 add_subdirectory("shared")
 
