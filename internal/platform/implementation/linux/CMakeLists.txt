@@ -210,6 +210,7 @@ add_library(internal_platform_implementation_linux_test_utils
 target_link_libraries(internal_platform_implementation_linux_test_utils
   PUBLIC
     internal::platform::base
+    SDBusCpp::sdbus-c++
     nlohmann_json::nlohmann_json
 )
 

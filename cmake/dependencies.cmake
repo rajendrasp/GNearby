@@ -30,6 +30,10 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/protocolbuffers/protobuf.git"
   GIT_TAG "v3.23.0"
   GIT_PROGRESS TRUE
+<<<<<<< Updated upstream
+=======
+  # FIND_PACKAGE_ARGS CONFIG
+>>>>>>> Stashed changes
   OVERRIDE_FIND_PACKAGE
 )
 
@@ -115,6 +119,8 @@ fetchcontent_declare(
   GIT_REPOSITORY "https://github.com/Kistler-Group/sdbus-cpp.git"
   GIT_TAG "v1.3.0"
   GIT_PROGRESS TRUE
+  SYSTEM
+  # FIND_PACKAGE_ARGS CONFIG NAMES sdbus-c++
   OVERRIDE_FIND_PACKAGE
 )
 
@@ -155,7 +161,7 @@ if(UNIX AND NOT APPLE)
   # Normal SDBusCpp would go under this target
   # When including it in our project, it does not
   if(NOT TARGET SDBusCpp)
-      add_library(SDBusCpp::sdbus-c++ ALIAS sdbus-c++)
+    add_library(SDBusCpp::sdbus-c++ ALIAS sdbus-c++)
   endif()
 
   # SDBus sets the PIC option to the same as BUILD_SHARED_LIBS
