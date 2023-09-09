@@ -54,8 +54,10 @@ add_library(internal::platform::implementation::linux::types ALIAS internal_plat
 add_library(internal_platform_implementation_linux_comm
   INTERFACE
     "avahi.h"
+    "ble_gatt_server.h"
     "ble_medium.h"
     "ble_v2_medium.h"
+    "ble_v2_server_socket.h"
     "bluetooth_adapter.h"
     "bluetooth_bluez_profile.h"
     "bluetooth_classic_device.h"
@@ -65,6 +67,12 @@ add_library(internal_platform_implementation_linux_comm
     "bluetooth_devices.h"
     "bluetooth_pairing.h"
     "bluez.h"
+    "bluez_advertisement_monitor.h"
+    "bluez_advertisement_monitor_manager.h"
+    "bluez_gatt_characteristic.h"
+    "bluez_gatt_manager.h"
+    "bluez_gatt_service.h"
+    "bluez_le_advertisement.h"
     "dbus.h"
     "network_manager.h"
     "network_manager_active_connection.h"
@@ -131,6 +139,8 @@ add_library(internal::platform::implementation::linux::crypto ALIAS internal_pla
 # target internal_platform_implementation_linux
 add_library(internal_platform_implementation_linux
     "avahi.cc"
+    "ble_gatt_server.cc"
+    "ble_v2_medium.cc"
     "bluetooth_adapter.cc"
     "bluetooth_bluez_profile.cc"
     "bluetooth_classic_device.cc"
@@ -140,6 +150,10 @@ add_library(internal_platform_implementation_linux
     "bluetooth_devices.cc"
     "bluetooth_pairing.cc"
     "bluez.cc"
+    "bluez_advertisement_monitor.cc"
+    "bluez_gatt_characteristic.cc"
+    "bluez_gatt_service.cc"
+    "bluez_le_advertisement.cc"
     "dbus.cc"
     "executor.cc"
     "network_manager.cc"
