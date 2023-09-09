@@ -32,7 +32,7 @@ class AdvertisementMonitorManager final
  private:
   friend std::unique_ptr<AdvertisementMonitorManager>
   std::make_unique<AdvertisementMonitorManager>(sdbus::IConnection &,
-                                                const BluetoothAdapter &);
+                                                const nearby::linux::BluetoothAdapter &);
   AdvertisementMonitorManager(sdbus::IConnection &system_bus,
                               const BluetoothAdapter &adapter)
       : ProxyInterfaces(system_bus, "org.bluez", adapter.GetObjectPath()) {
