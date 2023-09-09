@@ -32,7 +32,7 @@ std::wstring StringToWideString(const std::string& s) {
 }
 
 std::string GetPayloadPath(nearby::PayloadId payload_id) {
-    std::filesystem::path path = nearby::linux::DeviceInfo(nearby::linux::getDefaultBusConnection()).GetDownloadPath().value_or(std::string(getenv("HOME")).append("Downloads"));
+    std::filesystem::path path = nearby::linux::DeviceInfo(sdbus::createDefaultBusConnection()).GetDownloadPath().value_or(std::string(getenv("HOME")).append("Downloads"));
 
   return path.string();
 }
