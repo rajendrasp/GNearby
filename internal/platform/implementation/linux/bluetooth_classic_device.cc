@@ -17,6 +17,7 @@
 #include <systemd/sd-bus.h>
 
 #include "absl/strings/string_view.h"
+#include "internal/platform/bluetooth_utils.h"
 #include "internal/platform/implementation/linux/bluetooth_classic_device.h"
 #include "internal/platform/implementation/linux/bluez.h"
 #include "internal/platform/implementation/linux/dbus.h"
@@ -27,7 +28,8 @@ namespace linux {
 BluetoothDevice::BluetoothDevice(sdbus::IConnection &system_bus,
                                  sdbus::ObjectPath device_object_path)
     : ProxyInterfaces(system_bus, bluez::SERVICE_DEST,
-                      std::move(device_object_path)) {
+                      std::move(device_object_path)),
+      lost_(false) {
   registerProxy();
   try {
     last_known_name_ = Alias();
@@ -36,6 +38,7 @@ BluetoothDevice::BluetoothDevice(sdbus::IConnection &system_bus,
   }
   try {
     last_known_address_ = Address();
+    unique_id_ = BluetoothUtils::ToNumber(last_known_address_);
   } catch (const sdbus::Error &e) {
     DBUS_LOG_PROPERTY_GET_ERROR(this, "Address", e);
   }
@@ -100,14 +103,6 @@ std::string BluetoothDevice::GetMacAddress() const {
   }
 }
 
-void BluetoothDevice::onConnectProfileReply(const sdbus::Error *error) {
-  if (error != nullptr && error->getName() != "org.bluez.Error.InProgress") {
-    NEARBY_LOGS(ERROR) << __func__ << ": Got error '" << error->getName()
-                       << "' with message '" << error->getMessage()
-                       << " while connecting to profile.";
-  }
-}
-
 bool BluetoothDevice::ConnectToProfile(absl::string_view service_uuid) {
   NEARBY_LOGS(VERBOSE) << __func__ << ": " << getObjectPath()
                        << ": Attempting to connect to profile " << service_uuid;
@@ -117,7 +112,7 @@ bool BluetoothDevice::ConnectToProfile(absl::string_view service_uuid) {
   } catch (const sdbus::Error &e) {
     NEARBY_LOGS(ERROR) << __func__ << ": Got error '" << e.getName()
                        << "' with message '" << e.getMessage()
-                       << "' while trying to asynchronously connect to profile "
+                       << "' while trying to connect to profile "
                        << service_uuid << " on device " << getObjectPath();
     return false;
   }
@@ -163,6 +158,10 @@ void MonitoredBluetoothDevice::onPropertiesChanged(
       for (auto &observer : observers_.GetObservers()) {
         observer->DeviceConnectedStateChanged(*this, it->second);
       }
+    } else if (it->first == bluez::DEVICE_NAME) {
+      auto callback = GetDiscoveryCallback();
+      if (callback != nullptr && callback->device_name_changed_cb != nullptr)
+        callback->device_name_changed_cb(*this);
     }
   }
 }
