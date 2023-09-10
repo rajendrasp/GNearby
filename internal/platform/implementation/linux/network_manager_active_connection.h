@@ -25,6 +25,8 @@
 #include "internal/platform/implementation/linux/generated/dbus/networkmanager/connection_active_client.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class NetworkManagerActiveConnection
     : public sdbus::ProxyInterfaces<
@@ -113,5 +115,6 @@ extern std::ostream &operator<<(
     const NetworkManagerActiveConnection::ActiveConnectionStateReason &reason);
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 #endif

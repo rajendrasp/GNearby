@@ -20,6 +20,8 @@
 
 #include "internal/platform/implementation/linux/generated/dbus/bluez/gatt_manager_client.h"
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace bluez {
 class GattManager
@@ -40,5 +42,6 @@ class GattManager
 };
 }  // namespace bluez
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 #endif

@@ -22,6 +22,8 @@
 #include "internal/platform/implementation/linux/thread_pool.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 // This abstract class is the superclass of all classes representing an
@@ -43,6 +45,7 @@ class Executor : public api::Executor {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_EXECUTOR_H_

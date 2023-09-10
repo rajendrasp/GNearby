@@ -20,6 +20,8 @@
 #include "internal/platform/implementation/input_file.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 // An InputFile represents a readable file on the system.
@@ -43,6 +45,7 @@ class InputFile : public api::InputFile {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_INPUT_FILE_H_

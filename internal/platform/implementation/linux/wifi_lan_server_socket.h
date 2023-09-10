@@ -25,6 +25,8 @@
 #include "internal/platform/implementation/wifi_lan.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class WifiLanServerSocket : public api::WifiLanServerSocket {
  public:
@@ -46,5 +48,6 @@ class WifiLanServerSocket : public api::WifiLanServerSocket {
   std::shared_ptr<sdbus::IConnection> system_bus_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 #endif

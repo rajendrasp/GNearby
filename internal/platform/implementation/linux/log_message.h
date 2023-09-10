@@ -23,6 +23,8 @@
 #include "internal/platform/implementation/log_message.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 // See documentation in
@@ -40,6 +42,7 @@ class LogMessage : public api::LogMessage {
   google::LogMessage log_streamer_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_LOG_MESSAGE_H_

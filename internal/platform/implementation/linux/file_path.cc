@@ -28,6 +28,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 const wchar_t* kUpOneLevel = L"/..";
@@ -206,4 +208,5 @@ void FilePath::ReplaceInvalidCharacters(std::wstring& path) {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

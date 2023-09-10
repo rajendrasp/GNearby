@@ -24,6 +24,8 @@
 #include "internal/platform/implementation/credential_storage.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class CredentialStorage : public api::CredentialStorage {
   using LocalCredential = ::nearby::internal::LocalCredential;
@@ -59,6 +61,7 @@ class CredentialStorage : public api::CredentialStorage {
   std::unique_ptr<sdbus::IProxy> proxy;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

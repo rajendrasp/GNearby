@@ -20,6 +20,8 @@
 #include "internal/platform/implementation/linux/bluez.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace bluez {
 std::string device_object_path(const sdbus::ObjectPath &adapter_object_path,
@@ -76,4 +78,5 @@ int16_t TxPowerLevelDbm(api::ble_v2::TxPowerLevel level) {
 
 }  // namespace bluez
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

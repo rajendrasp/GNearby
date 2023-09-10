@@ -35,6 +35,8 @@
 #include "internal/platform/implementation/wifi.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class NetworkManagerWifiMedium
     : public api::WifiMedium,
@@ -133,6 +135,7 @@ class NetworkManagerWifiMedium
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

@@ -25,6 +25,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 void BluetoothPairing::pairing_reply_handler(const sdbus::Error *error) {
@@ -138,4 +140,5 @@ bool BluetoothPairing::IsPaired() {
   }
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

@@ -16,9 +16,13 @@
 
 #include "gtest/gtest.h"
 
+
 TEST(atomic_boolean, SuccessfulCreation) {
   // Arrange
+#pragma push_macro("linux")
+#undef linux
   nearby::linux::AtomicBoolean atomicBoolean;
+#pragma pop_macro("linux")
   bool oldValue = true;
   bool result = false;
 
@@ -30,3 +34,4 @@ TEST(atomic_boolean, SuccessfulCreation) {
   EXPECT_TRUE(result);
   EXPECT_FALSE(oldValue);
 }
+

@@ -17,6 +17,8 @@
 #include "internal/platform/implementation/linux/utils.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 std::optional<Uuid> UuidFromString(const std::string &uuid_str) {
   sd_id128_t uuid;
@@ -48,4 +50,5 @@ std::optional<Uuid> UuidFromString(const std::string &uuid_str) {
   return Uuid(uuid.qwords[0], uuid.qwords[1]);
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

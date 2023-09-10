@@ -35,6 +35,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 bool ProfileManager::ProfileRegistered(absl::string_view service_uuid) {
@@ -281,4 +283,5 @@ ProfileManager::GetServiceRecordFD(absl::string_view service_uuid,
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

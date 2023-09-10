@@ -19,6 +19,8 @@
 #include "internal/platform/implementation/linux/generated/dbus/networkmanager/access_point_client.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class NetworkManagerAccessPoint
     : public sdbus::ProxyInterfaces<
@@ -38,6 +40,7 @@ class NetworkManagerAccessPoint
   ~NetworkManagerAccessPoint() { unregisterProxy(); }
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

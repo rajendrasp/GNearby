@@ -32,6 +32,8 @@
 #include "internal/platform/implementation/linux/generated/dbus/bluez/le_advertisement_manager_client.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 BleV2Medium::BleV2Medium(BluetoothAdapter &adapter)
     : system_bus_(adapter.GetConnection()),
@@ -449,4 +451,5 @@ bool BleV2Medium::GetRemotePeripheral(api::ble_v2::BlePeripheral::UniqueId id,
   return true;
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

@@ -22,11 +22,9 @@
 #include "internal/platform/input_stream.h"
 #include "internal/platform/output_stream.h"
 
-#ifdef linux
-#undef linux
-#endif
-
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class InputStream : public nearby::InputStream {
  public:
@@ -53,6 +51,7 @@ class OutputStream : public nearby::OutputStream {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

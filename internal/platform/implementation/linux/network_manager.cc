@@ -19,6 +19,8 @@
 #include "internal/platform/implementation/linux/network_manager_active_connection.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 std::unique_ptr<NetworkManagerActiveConnection>
 NetworkManagerObjectManager::GetActiveConnectionForAccessPoint(
@@ -90,4 +92,5 @@ NetworkManagerObjectManager::GetIp4Config(
   return nullptr;
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

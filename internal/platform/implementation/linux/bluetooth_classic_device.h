@@ -31,11 +31,9 @@
 #include "internal/platform/implementation/bluetooth_classic.h"
 #include "internal/platform/implementation/linux/generated/dbus/bluez/device_client.h"
 
-#ifdef linux
-#undef linux
-#endif
-
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 // https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html.
 class BluetoothDevice
@@ -147,6 +145,7 @@ class MonitoredBluetoothDevice final
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

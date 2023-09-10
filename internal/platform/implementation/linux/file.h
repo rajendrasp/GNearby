@@ -26,6 +26,8 @@
 #include "internal/platform/implementation/output_file.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 class IOFile final : public api::InputFile, public api::OutputFile {
@@ -55,6 +57,7 @@ class IOFile final : public api::InputFile, public api::OutputFile {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_FILE_H_

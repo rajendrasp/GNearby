@@ -20,6 +20,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 Executor::Executor(size_t max_concurrency)
     : thread_pool_(std::make_unique<ThreadPool>(max_concurrency)) {
@@ -49,4 +51,5 @@ void Executor::Shutdown() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

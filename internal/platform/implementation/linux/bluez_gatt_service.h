@@ -32,6 +32,8 @@
 #include "internal/platform/uuid.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace bluez {
 class GattService final
@@ -105,6 +107,7 @@ class GattService final
 };
 }  // namespace bluez
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

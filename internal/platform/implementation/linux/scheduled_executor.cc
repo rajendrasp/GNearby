@@ -22,6 +22,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 ScheduledExecutor::ScheduledExecutor()
@@ -81,4 +83,5 @@ void ScheduledExecutor::Shutdown() {
                      << ": Attempt to Shutdown on a shut down executor.";
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

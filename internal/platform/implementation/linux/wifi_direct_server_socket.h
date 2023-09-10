@@ -19,7 +19,10 @@
 #include "internal/platform/implementation/linux/network_manager_active_connection.h"
 #include "internal/platform/implementation/linux/wifi_medium.h"
 #include "internal/platform/implementation/wifi_direct.h"
+
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class NetworkManagerWifiDirectServerSocket
     : public api::WifiDirectServerSocket {
@@ -42,6 +45,7 @@ class NetworkManagerWifiDirectServerSocket
   std::shared_ptr<NetworkManager> network_manager_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

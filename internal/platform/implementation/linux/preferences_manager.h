@@ -32,6 +32,8 @@
 #include "nlohmann/json_fwd.hpp"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 // Sets and gets preference settings from the application.
@@ -136,6 +138,7 @@ class PreferencesManager : public api::PreferencesManager {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPLEMENTATION_LINUX_PREFERENCES_MANAGER_H_

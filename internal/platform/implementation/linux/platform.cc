@@ -56,6 +56,8 @@
 
 namespace nearby {
 namespace api {
+#pragma push_macro("linux")
+#undef linux
 std::string ImplementationPlatform::GetCustomSavePath(
     const std::string &parent_folder, const std::string &file_name) {
   auto fs = std::filesystem::path(parent_folder);
@@ -372,6 +374,6 @@ ImplementationPlatform::CreatePreferencesManager(absl::string_view path) {
   return std::make_unique<linux::PreferencesManager>(path);
 }
 #endif
-
+#pragma pop_macro("linux")
 }  // namespace api
 }  // namespace nearby

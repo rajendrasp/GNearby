@@ -24,10 +24,6 @@
 
 #include <string>
 
-#ifdef linux
-#undef linux
-#endif
-
 #define BLUEZ_LOG_METHOD_CALL_ERROR(proxy, method, err)                        \
   do {                                                                         \
     NEARBY_LOGS(ERROR) << __func__ << ": Got error '" << (err).getName()       \
@@ -37,6 +33,8 @@
   } while (false)
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace bluez {
 static constexpr const char *SERVICE_DEST = "org.bluez";
@@ -85,6 +83,7 @@ class BluezObjectManager
 
 }  // namespace bluez
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

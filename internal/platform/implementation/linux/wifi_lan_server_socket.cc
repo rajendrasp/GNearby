@@ -31,6 +31,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 std::string WifiLanServerSocket::GetIPAddress() const {
   std::vector<sdbus::ObjectPath> connection_paths;
@@ -116,4 +118,5 @@ Exception WifiLanServerSocket::Close() {
   return {Exception::kSuccess};
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

@@ -27,6 +27,8 @@
 #include "internal/platform/implementation/wifi_lan.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace avahi {
 class Server final
@@ -122,6 +124,7 @@ class ServiceBrowser final
 };
 }  // namespace avahi
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

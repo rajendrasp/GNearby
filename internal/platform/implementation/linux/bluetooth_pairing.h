@@ -28,6 +28,8 @@
 #include "internal/platform/implementation/linux/bluetooth_classic_device.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class BluetoothPairing final : public api::BluetoothPairing {
  public:
@@ -50,6 +52,7 @@ class BluetoothPairing final : public api::BluetoothPairing {
   api::BluetoothPairingCallback pairing_cb_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

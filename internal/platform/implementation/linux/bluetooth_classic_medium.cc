@@ -32,6 +32,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 BluetoothClassicMedium::BluetoothClassicMedium(BluetoothAdapter &adapter)
     : system_bus_(adapter.GetConnection()),
@@ -161,4 +163,5 @@ std::unique_ptr<api::BluetoothPairing> BluetoothClassicMedium::CreatePairing(
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

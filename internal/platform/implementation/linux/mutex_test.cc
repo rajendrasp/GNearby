@@ -18,6 +18,8 @@
 
 #include "gtest/gtest.h"
 
+#pragma push_macro("linux")
+#undef linux
 class MutexTests : public testing::Test {
  public:
   class MutexTest {
@@ -103,3 +105,4 @@ TEST_F(MutexTests, SuccessfulRecursiveSignal) {
   // Assert
   ASSERT_TRUE(result.get());
 }
+#pragma pop_macro("linux")

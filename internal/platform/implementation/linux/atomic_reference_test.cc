@@ -16,6 +16,8 @@
 
 #include "gtest/gtest.h"
 
+#pragma push_macro("linux")
+#undef linux
 TEST(atomic_reference, SuccessfulCreation) {
   // Arrange
   nearby::linux::AtomicUint32 atomicUint32;
@@ -70,3 +72,4 @@ TEST(atomic_reference, SetNegativeOneReturnsMAXUINT) {
   // Assert
   EXPECT_EQ(result, expected);
 }
+#pragma pop_macro("linux")

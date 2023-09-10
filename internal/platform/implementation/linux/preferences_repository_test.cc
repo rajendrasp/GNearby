@@ -24,6 +24,8 @@
 #include "internal/platform/implementation/linux/preferences_repository.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace {
 
@@ -157,4 +159,5 @@ TEST(PreferencesRepository, RecoverFromCorruption) {
 
 }  // namespace
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

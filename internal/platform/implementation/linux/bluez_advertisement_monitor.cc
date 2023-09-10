@@ -4,7 +4,10 @@
 #include "internal/platform/implementation/linux/dbus.h"
 #include "internal/platform/implementation/linux/utils.h"
 #include "internal/platform/uuid.h"
+
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace bluez {
 AdvertisementMonitor::AdvertisementMonitor(
@@ -70,4 +73,5 @@ void AdvertisementMonitor::DeviceLost(const sdbus::ObjectPath &device) {
 }
 }  // namespace bluez
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

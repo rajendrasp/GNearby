@@ -20,10 +20,6 @@
 #include <sdbus-c++/StandardInterfaces.h>
 #include "internal/platform/logging.h"
 
-#ifdef linux
-#undef linux
-#endif
-
 #define DBUS_LOG_METHOD_CALL_ERROR(p, m, e)                                    \
   do {                                                                         \
     NEARBY_LOGS(ERROR) << __func__ << ": Got error '" << (e).getName()         \
@@ -49,6 +45,8 @@
   } while (false)
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 extern std::shared_ptr<sdbus::IConnection> getSystemBusConnection();
 class RootObjectManager final
@@ -63,5 +61,6 @@ class RootObjectManager final
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 #endif

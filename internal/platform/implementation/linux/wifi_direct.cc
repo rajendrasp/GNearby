@@ -26,6 +26,8 @@
 #include "internal/platform/wifi_credential.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 std::unique_ptr<api::WifiDirectSocket>
 NetworkManagerWifiDirectMedium::ConnectToService(
@@ -184,4 +186,5 @@ bool NetworkManagerWifiDirectMedium::StopWifiDirect() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

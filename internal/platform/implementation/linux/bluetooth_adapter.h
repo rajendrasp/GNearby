@@ -24,6 +24,8 @@
 #include "internal/platform/implementation/linux/generated/dbus/bluez/adapter_client.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class BluezAdapter : public sdbus::ProxyInterfaces<org::bluez::Adapter1_proxy> {
  public:
@@ -79,6 +81,7 @@ class BluetoothAdapter : public api::BluetoothAdapter {
   std::shared_ptr<BluezAdapter> bluez_adapter_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_BLUETOOTH_ADAPTER_H_

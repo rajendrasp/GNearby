@@ -21,6 +21,8 @@
 #include "internal/platform/uuid.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace bluez {
 LEAdvertisement::LEAdvertisement(
@@ -51,4 +53,5 @@ LEAdvertisement::LEAdvertisement(
 }
 }  // namespace bluez
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

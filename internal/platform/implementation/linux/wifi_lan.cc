@@ -35,6 +35,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 WifiLanMedium::WifiLanMedium(
     std::shared_ptr<linux::NetworkManager> network_manager)
@@ -269,4 +271,5 @@ absl::optional<std::pair<std::int32_t, std::int32_t>> GetDynamicPortRange() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

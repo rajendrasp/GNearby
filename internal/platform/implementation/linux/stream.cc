@@ -24,6 +24,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 ExceptionOr<ByteArray> InputStream::Read(std::int64_t size) {
@@ -79,4 +81,5 @@ Exception OutputStream::Close() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

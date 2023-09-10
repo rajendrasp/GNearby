@@ -22,6 +22,8 @@
 #include "internal/platform/implementation/mutex.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class ABSL_LOCKABLE Mutex : public api::Mutex {
  public:
@@ -59,5 +61,6 @@ class ABSL_LOCKABLE Mutex : public api::Mutex {
   Mode mode_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 #endif

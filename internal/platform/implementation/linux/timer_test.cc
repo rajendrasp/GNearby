@@ -23,6 +23,8 @@
 #include "internal/platform/implementation/platform.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace {
 
@@ -65,4 +67,5 @@ TEST(Timer, DISABLED_TestFireNow) {
 
 }  // namespace
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

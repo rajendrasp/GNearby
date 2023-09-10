@@ -25,6 +25,8 @@
 #include "internal/platform/implementation/linux/device_info.h"
 #include "internal/platform/implementation/linux/test_utils.h"
 
+#pragma push_macro("linux")
+#undef linux
 namespace test_utils {
 std::wstring StringToWideString(const std::string& s) {
   std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
@@ -38,3 +40,4 @@ std::string GetPayloadPath(nearby::PayloadId payload_id) {
 }
 
 }  // namespace test_utils
+#pragma pop_macro("linux")

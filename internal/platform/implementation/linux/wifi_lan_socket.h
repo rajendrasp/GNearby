@@ -25,6 +25,8 @@
 #include "internal/platform/output_stream.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class WifiLanSocket : public api::WifiLanSocket {
  public:
@@ -45,6 +47,7 @@ class WifiLanSocket : public api::WifiLanSocket {
   InputStream input_stream_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

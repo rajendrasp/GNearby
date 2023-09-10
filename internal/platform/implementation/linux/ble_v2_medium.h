@@ -33,6 +33,8 @@
 #include "internal/platform/uuid.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class BleV2Medium final : public api::ble_v2::BleMedium {
  public:
@@ -139,6 +141,7 @@ class BleV2Medium final : public api::ble_v2::BleMedium {
       ABSL_GUARDED_BY(advs_mutex_);
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

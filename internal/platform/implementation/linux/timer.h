@@ -26,6 +26,8 @@
 #include "internal/platform/implementation/timer.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 class Timer : public api::Timer {
@@ -47,6 +49,7 @@ class Timer : public api::Timer {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_TIMER_H_

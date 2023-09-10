@@ -28,11 +28,9 @@
 #include "internal/platform/input_stream.h"
 #include "internal/platform/output_stream.h"
 
-#ifdef linux
-#undef linux
-#endif
-
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 // BlueZ's NewConnection gives us a non-blocking FD, so we need to poll
 // it to be able to write/read bytes.
@@ -103,5 +101,6 @@ class BluetoothSocket final : public api::BluetoothSocket {
   BluetoothInputStream input_stream_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 #endif

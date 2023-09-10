@@ -29,6 +29,8 @@
 #include "internal/platform/implementation/linux/utils.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 // InputFile
@@ -110,4 +112,5 @@ Exception IOFile::Flush() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

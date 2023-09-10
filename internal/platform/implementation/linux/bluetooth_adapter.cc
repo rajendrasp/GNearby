@@ -22,6 +22,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 bool BluetoothAdapter::SetStatus(Status status) {
@@ -118,4 +120,5 @@ std::string BluetoothAdapter::GetMacAddress() const {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

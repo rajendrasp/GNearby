@@ -18,6 +18,8 @@
 #include "internal/platform/implementation/ble.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 // Container of operations that can be performed over the BLE medium.
 class BleMedium : public api::BleMedium {
@@ -68,6 +70,7 @@ class BleMedium : public api::BleMedium {
   }
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

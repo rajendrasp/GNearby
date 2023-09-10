@@ -22,6 +22,8 @@
 #include "internal/platform/implementation/linux/thread_pool.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace {
 
@@ -67,4 +69,5 @@ TEST(ThreadPool, TasksInMultipleThreadsRunInParallel) {
 
 }  // namespace
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

@@ -31,6 +31,8 @@
 #include "internal/platform/uuid.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class LocalBlePeripheral : public api::ble_v2::BlePeripheral {
  public:
@@ -92,5 +94,6 @@ class GattServer : public api::ble_v2::GattServer {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 #endif

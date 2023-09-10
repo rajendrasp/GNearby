@@ -23,16 +23,15 @@
 #include "absl/strings/string_view.h"
 #include "internal/platform/uuid.h"
 
-#ifdef linux
-#undef linux
-#endif
-
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 std::optional<Uuid> UuidFromString(const std::string &uuid_str);
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  //  PLATFORM_IMPL_LINUX_UTILS_H_

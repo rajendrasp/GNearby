@@ -22,6 +22,8 @@
 #include "internal/platform/runnable.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 ThreadPool::ThreadPool(size_t max_pool_size)
     : max_pool_size_(max_pool_size), shut_down_(false) {
@@ -121,4 +123,5 @@ Runnable ThreadPool::NextTask() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

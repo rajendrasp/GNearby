@@ -18,6 +18,8 @@
 #include "internal/platform/implementation/future.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 // A Future represents the result of an asynchronous computation.
@@ -43,6 +45,7 @@ class Future : public api::Future<T> {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_FUTURE_H_

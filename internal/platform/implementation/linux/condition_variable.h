@@ -21,6 +21,8 @@
 #include "internal/platform/implementation/mutex.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class ConditionVariable : public api::ConditionVariable {
  public:
@@ -45,6 +47,7 @@ class ConditionVariable : public api::ConditionVariable {
   absl::CondVar cond_var_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_CONDITION_VARIABLE_H_

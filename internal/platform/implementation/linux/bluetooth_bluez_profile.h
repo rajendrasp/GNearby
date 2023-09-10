@@ -43,6 +43,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class ProfileManager;
 
@@ -143,5 +145,6 @@ class ProfileManager final
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 #endif

@@ -25,6 +25,8 @@
 #include "internal/platform/nsd_service_info.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class WifiLanMedium : public api::WifiLanMedium {
  public:
@@ -75,6 +77,7 @@ class WifiLanMedium : public api::WifiLanMedium {
       service_browsers_ ABSL_GUARDED_BY(service_browsers_mutex_);
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

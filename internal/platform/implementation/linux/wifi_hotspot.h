@@ -22,6 +22,8 @@
 #include "internal/platform/implementation/wifi_hotspot.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class NetworkManagerWifiHotspotMedium : public api::WifiHotspotMedium {
  public:
@@ -66,6 +68,7 @@ class NetworkManagerWifiHotspotMedium : public api::WifiHotspotMedium {
   std::shared_ptr<NetworkManager> network_manager_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

@@ -30,6 +30,8 @@
 #include "internal/platform/implementation/linux/log_message.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 std::atomic<api::LogMessage::Severity> min_log_severity_ =
@@ -80,4 +82,5 @@ bool LogMessage::ShouldCreateLogMessage(Severity severity) {
   return severity >= linux::min_log_severity_;
 }
 }  // namespace api
+#pragma pop_macro("linux")
 }  // namespace nearby

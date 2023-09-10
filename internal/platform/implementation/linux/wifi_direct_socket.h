@@ -20,6 +20,8 @@
 #include "internal/platform/implementation/wifi_direct.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class WifiDirectSocket : public api::WifiDirectSocket {
  public:
@@ -42,6 +44,7 @@ class WifiDirectSocket : public api::WifiDirectSocket {
   InputStream input_stream_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

@@ -26,6 +26,8 @@
 #include "internal/platform/implementation/scheduled_executor.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 #define TIMER_NAME_BUFFER_SIZE 64
@@ -95,6 +97,7 @@ class ScheduledExecutor : public api::ScheduledExecutor {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_SCHEDULED_EXECUTOR_H_

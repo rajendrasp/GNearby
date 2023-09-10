@@ -19,6 +19,8 @@
 #include "internal/platform/implementation/submittable_executor.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 // Main interface to be used by platform as a base class for
@@ -47,6 +49,7 @@ class SubmittableExecutor : public api::SubmittableExecutor {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_SUBMITTABLE_EXECUTOR_H_

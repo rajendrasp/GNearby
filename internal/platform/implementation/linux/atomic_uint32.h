@@ -20,6 +20,8 @@
 #include "internal/platform/implementation/atomic_reference.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 // A boolean value that may be updated atomically.
 class AtomicUint32 : public api::AtomicUint32 {
@@ -37,6 +39,7 @@ class AtomicUint32 : public api::AtomicUint32 {
   std::atomic_bool atomic_uint_ = false;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

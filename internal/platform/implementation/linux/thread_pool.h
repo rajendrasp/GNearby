@@ -26,11 +26,9 @@
 #include "absl/synchronization/mutex.h"
 #include "internal/platform/runnable.h"
 
-#ifdef linux
-#undef linux
-#endif
-
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 class ThreadPool {
@@ -62,6 +60,7 @@ class ThreadPool {
   std::queue<Runnable> tasks_ ABSL_GUARDED_BY(tasks_mutex_);
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  //  PLATFORM_IMPL_LINUX_THREAD_POOL_H_

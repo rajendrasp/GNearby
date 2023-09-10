@@ -20,6 +20,8 @@
 #include "internal/platform/implementation/atomic_reference.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 // Type that allows 32-bit atomic reads and writes.
@@ -38,6 +40,7 @@ class AtomicUint32 : public api::AtomicUint32 {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_ATOMIC_REFERENCE_H_

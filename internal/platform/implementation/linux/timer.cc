@@ -25,6 +25,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 static void timer_callback(union sigval val) {
@@ -131,4 +133,5 @@ bool Timer::FireNow() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

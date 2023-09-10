@@ -26,6 +26,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 Exception Poller::Ready() {
   while (true) {
@@ -120,4 +122,5 @@ Exception BluetoothOutputStream::Close() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

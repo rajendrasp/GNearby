@@ -20,6 +20,8 @@
 #include "absl/strings/string_view.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 class FilePath {
@@ -44,6 +46,7 @@ class FilePath {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // THIRD_PARTY_NEARBY_INTERNAL_PLATFORM_IMPLEMENTATION_LINUX_FILE_PATH_H_

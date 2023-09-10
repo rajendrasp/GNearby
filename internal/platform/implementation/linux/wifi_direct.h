@@ -24,6 +24,8 @@
 #include "internal/platform/implementation/wifi_direct.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class NetworkManagerWifiDirectMedium : public api::WifiDirectMedium {
  public:
@@ -60,6 +62,7 @@ class NetworkManagerWifiDirectMedium : public api::WifiDirectMedium {
   std::unique_ptr<NetworkManagerWifiMedium> wireless_device_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

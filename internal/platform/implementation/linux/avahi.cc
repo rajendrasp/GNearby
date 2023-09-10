@@ -18,6 +18,8 @@
 #include "internal/platform/nsd_service_info.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace avahi {
 void ServiceBrowser::onItemNew(const int32_t &interface,
@@ -123,4 +125,5 @@ void ServiceBrowser::onCacheExhausted() {
 
 }  // namespace avahi
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

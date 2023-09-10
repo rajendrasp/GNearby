@@ -25,6 +25,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace {
 
@@ -570,4 +572,5 @@ absl::Status HttpLoader::HTTPCodeToStatus(int status_code,
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

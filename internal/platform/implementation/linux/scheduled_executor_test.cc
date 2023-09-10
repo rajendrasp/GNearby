@@ -23,6 +23,8 @@
 #include "internal/platform/implementation/linux/scheduled_executor.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace {
 
@@ -175,4 +177,5 @@ TEST(ScheduledExecutorTests, CancelAfterStartedFails) {
 
 }  // namespace
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

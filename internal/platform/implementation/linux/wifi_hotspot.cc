@@ -30,6 +30,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 std::unique_ptr<api::WifiHotspotSocket>
 NetworkManagerWifiHotspotMedium::ConnectToService(
@@ -333,4 +335,5 @@ bool NetworkManagerWifiHotspotMedium::ConnectedToWifi() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

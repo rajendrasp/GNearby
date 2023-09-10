@@ -22,6 +22,8 @@
 
 #include "gtest/gtest.h"
 
+#pragma push_macro("linux")
+#undef linux
 class ConditionVariableTests : public testing::Test {
  public:
   class ConditionVariableTest {
@@ -98,3 +100,5 @@ TEST_F(ConditionVariableTests, TimedCreation) {
   // Assert
   ASSERT_TRUE(result.get());  // Didn't timeout
 }
+
+#pragma pop_macro("linux")

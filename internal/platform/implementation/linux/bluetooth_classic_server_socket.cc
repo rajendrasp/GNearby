@@ -20,6 +20,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 std::unique_ptr<api::BluetoothSocket> BluetoothServerSocket::Accept() {
   if (stopped_.Cancelled()) {
@@ -52,4 +54,5 @@ Exception BluetoothServerSocket::Close() {
   return {Exception::kSuccess};
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

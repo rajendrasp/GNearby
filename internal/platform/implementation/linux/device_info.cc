@@ -30,6 +30,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 void CurrentUserSession::RegisterScreenLockedListener(
     absl::string_view listener_name,
@@ -180,4 +182,5 @@ bool DeviceInfo::AllowSleep() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

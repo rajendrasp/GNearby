@@ -19,6 +19,8 @@
 #include "internal/platform/implementation/wifi_hotspot.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class WifiHotspotSocket : public api::WifiHotspotSocket {
  public:
@@ -42,6 +44,7 @@ class WifiHotspotSocket : public api::WifiHotspotSocket {
   InputStream input_stream_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

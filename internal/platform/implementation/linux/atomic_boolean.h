@@ -18,6 +18,8 @@
 #include <atomic>
 #include "internal/platform/implementation/atomic_boolean.h"
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 // A boolean value that may be updated atomically.
 class AtomicBoolean : public api::AtomicBoolean {
@@ -36,6 +38,7 @@ class AtomicBoolean : public api::AtomicBoolean {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_ATOMIC_BOOLEAN_H_

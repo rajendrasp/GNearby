@@ -33,6 +33,8 @@
 #include "internal/platform/implementation/linux/bluetooth_devices.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 // Container of operations that can be performed over the Bluetooth Classic
 // medium.
@@ -111,6 +113,7 @@ class BluetoothClassicMedium : public api::BluetoothClassicMedium {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

@@ -20,6 +20,8 @@
 #include "internal/platform/uuid.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace bluez {
 bool GattService::AddCharacteristic(
@@ -60,4 +62,5 @@ std::shared_ptr<GattCharacteristic> GattService::GetCharacteristic(
 }
 }  // namespace bluez
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

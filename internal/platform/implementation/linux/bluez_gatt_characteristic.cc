@@ -22,6 +22,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace bluez {
 void GattCharacteristic::Update(const nearby::ByteArray &value) {
@@ -228,4 +230,5 @@ std::vector<std::string> GattCharacteristic::Flags() {
 }
 }  // namespace bluez
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

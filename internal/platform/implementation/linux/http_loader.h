@@ -24,6 +24,8 @@
 #include "internal/platform/implementation/http_loader.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 // HttpLoader is used to get HTTP response from remote server.
@@ -86,6 +88,7 @@ class HttpLoader {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // THIRD_PARTY_NEARBY_INTERNAL_PLATFORM_IMPLEMENTATION_LINUX_HTTP_LOADER_H_

@@ -20,6 +20,8 @@
 #include "internal/platform/implementation/linux/wifi_medium.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 std::string NetworkManagerWifiHotspotServerSocket::GetIPAddress() const {
   auto ip4addresses = active_conn_->GetIP4Addresses();
@@ -75,4 +77,5 @@ Exception NetworkManagerWifiHotspotServerSocket::Close() {
   return {Exception::kSuccess};
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

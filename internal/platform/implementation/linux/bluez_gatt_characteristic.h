@@ -36,6 +36,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace bluez {
 class GattCharacteristic final
@@ -120,6 +122,7 @@ class GattCharacteristic final
 
 }  // namespace bluez
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

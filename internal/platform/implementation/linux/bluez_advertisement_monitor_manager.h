@@ -24,6 +24,8 @@
 #include "internal/platform/implementation/linux/generated/dbus/bluez/advertisement_monitor_manager_client.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace bluez {
 class AdvertisementMonitorManager final
@@ -82,6 +84,7 @@ class AdvertisementMonitorManager final
 };
 }  // namespace bluez
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

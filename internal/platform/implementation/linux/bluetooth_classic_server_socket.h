@@ -22,6 +22,8 @@
 #include "internal/platform/implementation/linux/bluetooth_bluez_profile.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class BluetoothServerSocket final : public api::BluetoothServerSocket {
  public:
@@ -51,6 +53,7 @@ class BluetoothServerSocket final : public api::BluetoothServerSocket {
   std::string service_uuid_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

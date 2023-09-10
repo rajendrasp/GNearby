@@ -24,11 +24,9 @@
 #include "nlohmann/json.hpp"
 #include "nlohmann/json_fwd.hpp"
 
-#ifdef linux
-#undef linux
-#endif
-
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 class PreferencesRepository {
@@ -47,6 +45,7 @@ class PreferencesRepository {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPLEMENTATION_LINUX_PREFERENCES_REPOSITORY_H_

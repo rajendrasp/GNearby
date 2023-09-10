@@ -20,6 +20,8 @@
 #include "gtest/gtest.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 TEST(UtilsTests, UuidFromStringRoundTrip) {
@@ -33,4 +35,5 @@ TEST(UtilsTests, UuidFromStringRoundTrip) {
             "b5209043-f493-4b38-8c34-810aa3cd1407");
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

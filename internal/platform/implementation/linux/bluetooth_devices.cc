@@ -17,9 +17,9 @@
 #include <functional>
 #include <optional>
 
-#include <absl/time/clock.h>
 #include <sdbus-c++/Types.h>
 
+#include "absl/time/clock.h"
 #include "absl/strings/substitute.h"
 #include "absl/synchronization/mutex.h"
 #include "internal/platform/implementation/linux/bluetooth_classic_device.h"
@@ -30,6 +30,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 static constexpr std::chrono::minutes kLostPeripheralsCleanupMinFreq(5);
 
@@ -187,4 +189,5 @@ void DeviceWatcher::notifyExistingDevices() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

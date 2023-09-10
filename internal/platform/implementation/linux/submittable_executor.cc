@@ -18,6 +18,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 SubmittableExecutor::SubmittableExecutor(size_t max_concurrancy)
@@ -59,4 +61,5 @@ void SubmittableExecutor::Shutdown() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

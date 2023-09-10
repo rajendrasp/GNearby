@@ -22,6 +22,8 @@
 #include "nlohmann/json_fwd.hpp"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace {
 using json = ::nlohmann::json;
@@ -149,4 +151,5 @@ std::optional<json> PreferencesRepository::RestoreFromBackup() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

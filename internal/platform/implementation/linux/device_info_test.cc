@@ -22,6 +22,8 @@
 #include "internal/platform/implementation/device_info.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace {
 
@@ -126,4 +128,5 @@ TEST(DeviceInfo, DISABLED_UpdateScreenLockedListener) {
 
 }  // namespace
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

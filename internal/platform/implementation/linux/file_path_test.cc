@@ -25,6 +25,8 @@
 #include "gtest/gtest.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 namespace {
@@ -776,4 +778,5 @@ AHoleBetweenRenamedFiles) {
   ASSERT_FALSE(input_file.rdstate() == std::ifstream::goodbit);
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

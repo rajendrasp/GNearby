@@ -23,6 +23,8 @@
 #include "internal/platform/uuid.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 absl::optional<api::ble_v2::GattCharacteristic>
 GattServer::CreateCharacteristic(
@@ -144,4 +146,5 @@ void GattServer::Stop() {
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

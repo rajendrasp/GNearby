@@ -19,6 +19,8 @@
 #include "gtest/gtest.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 namespace {
 using ::nearby::api::WebRequest;
@@ -48,4 +50,5 @@ TEST(HttpLoader, DISABLED_TestInvalidUrl) {
 
 }  // namespace
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

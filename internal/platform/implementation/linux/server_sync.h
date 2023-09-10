@@ -18,6 +18,8 @@
 #include "internal/platform/implementation/server_sync.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 // Abstraction that represents a Nearby endpoint exchanging data through
@@ -83,6 +85,7 @@ class ServerSyncMedium : public api::ServerSyncMedium {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_SERVER_SYNC_H_

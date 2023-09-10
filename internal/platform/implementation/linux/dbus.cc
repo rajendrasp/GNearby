@@ -23,6 +23,8 @@
 #include "internal/platform/implementation/linux/dbus.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 namespace {
@@ -44,4 +46,5 @@ std::shared_ptr<sdbus::IConnection> getSystemBusConnection() {
   return bus;
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

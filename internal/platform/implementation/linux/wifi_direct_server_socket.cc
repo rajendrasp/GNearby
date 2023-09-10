@@ -20,6 +20,8 @@
 #include "internal/platform/implementation/linux/wifi_direct_socket.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 std::string NetworkManagerWifiDirectServerSocket::GetIPAddress() const {
   auto ip4addresses = active_conn_->GetIP4Addresses();
@@ -76,4 +78,5 @@ Exception NetworkManagerWifiDirectServerSocket::Close() {
   return {Exception::kSuccess};
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

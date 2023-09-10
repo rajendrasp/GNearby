@@ -24,6 +24,8 @@
 #include "internal/platform/logging.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 BluetoothDevice::BluetoothDevice(sdbus::IConnection &system_bus,
                                  sdbus::ObjectPath device_object_path)
@@ -167,4 +169,5 @@ void MonitoredBluetoothDevice::onPropertiesChanged(
 }
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

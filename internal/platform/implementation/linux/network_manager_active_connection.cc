@@ -22,6 +22,8 @@
 #include "internal/platform/implementation/linux/network_manager_active_connection.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 std::ostream &operator<<(
     std::ostream &stream,
@@ -121,4 +123,5 @@ NetworkManagerActiveConnection::WaitForConnection(absl::Duration timeout) {
                                   : std::pair{std::optional(reason), false};
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

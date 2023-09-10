@@ -19,6 +19,8 @@
 #include "internal/platform/implementation/ble_v2.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class BleV2ServerSocket final : public api::ble_v2::BleServerSocket {
  public:
@@ -37,6 +39,7 @@ class BleV2ServerSocket final : public api::ble_v2::BleServerSocket {
   absl::Notification stopped_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif

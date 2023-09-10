@@ -20,6 +20,8 @@
 #include "internal/platform/implementation/output_file.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 
 // An OutputFile represents a writable file on the system.
@@ -40,6 +42,7 @@ class OutputFile : public api::OutputFile {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_OUTPUT_FILE_H_

@@ -26,6 +26,8 @@
 #include "internal/platform/implementation/linux/network_manager_active_connection.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class NetworkManager final
     : public sdbus::ProxyInterfaces<org::freedesktop::NetworkManager_proxy> {
@@ -155,5 +157,6 @@ class NetworkManagerObjectManager final
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 #endif

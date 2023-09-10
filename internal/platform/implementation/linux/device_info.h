@@ -31,13 +31,10 @@
 #include "internal/platform/implementation/linux/generated/dbus/login/login_manager_client.h"
 #include "internal/platform/implementation/linux/generated/dbus/login/login_session_client.h"
 
-#ifdef linux
-#undef linux
-#endif
-
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
-
 class CurrentUserSession final
     : public sdbus::ProxyInterfaces<org::freedesktop::login1::Session_proxy> {
  public:
@@ -170,6 +167,7 @@ class DeviceInfo final : public api::DeviceInfo {
   std::optional<sdbus::UnixFd> inhibit_fd_;
 };
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif  // PLATFORM_IMPL_LINUX_DEVICE_INFO_H_

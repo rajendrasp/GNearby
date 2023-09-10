@@ -33,6 +33,8 @@
 #include "internal/platform/implementation/wifi.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 api::WifiCapability &NetworkManagerWifiMedium::GetCapability() {
   try {
@@ -357,4 +359,5 @@ NetworkManagerWifiMedium::GetActiveConnection() {
   return conn;
 }
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby

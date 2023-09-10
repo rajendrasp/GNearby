@@ -33,6 +33,8 @@
 #include "internal/platform/implementation/linux/bluetooth_classic_device.h"
 
 namespace nearby {
+#pragma push_macro("linux")
+#undef linux
 namespace linux {
 class BluetoothDevices final {
  public:
@@ -121,6 +123,7 @@ class DeviceWatcher final : sdbus::ProxyInterfaces<sdbus::ObjectManager_proxy> {
 };
 
 }  // namespace linux
+#pragma pop_macro("linux")
 }  // namespace nearby
 
 #endif
