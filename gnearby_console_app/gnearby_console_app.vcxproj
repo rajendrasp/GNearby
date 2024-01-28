@@ -77,7 +77,6 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby;C:\D\Work\GNearbyCmake\GNearby\build;C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-src\src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\nlohmann_json-src\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-build;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-src\src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-src\src\windows;C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-src\src\main\cpp\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto\..;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto\..;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-src\cpp\include;C:\D\Work\Dependencies\vcpkg\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -92,7 +91,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -108,7 +106,6 @@
       <PreprocessorDefinitions>NO_WEBRTC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby;C:\D\Work\GNearbyCmake\GNearby\build;C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-src\src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\nlohmann_json-src\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-build;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-src\src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-src\src\windows;C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-src\src\main\cpp\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto\..;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto\..;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-src\cpp\include;C:\D\Work\Dependencies\vcpkg\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,7 +122,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

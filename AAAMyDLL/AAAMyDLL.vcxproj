@@ -113,7 +113,6 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby;C:\D\Work\GNearbyCmake\GNearby\build;C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-src\src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\nlohmann_json-src\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-build;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-src\src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-src\src\windows;C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-src\src\main\cpp\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto\..;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto\..;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-src\cpp\include;C:\D\Work\Dependencies\vcpkg\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile />
     </ClCompile>
@@ -122,7 +121,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>C:\D\Work\GNearbyCmake\GNearby\build\connections\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>connections_core.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;Cfgmgr32.lib;shlwapi.lib;connections_core.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -159,6 +158,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\build\connections\connections_core.vcxproj">
+      <Project>{8aa3df73-a2b3-3c60-bd1d-0e15a2eacef7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\build\internal\platform\implementation\windows\internal_platform_implementation_windows.vcxproj">
+      <Project>{8a6fdb0b-e8e8-3b8e-be34-63442484c5b4}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
