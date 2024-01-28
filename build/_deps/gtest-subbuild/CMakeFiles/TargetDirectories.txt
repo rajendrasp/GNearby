@@ -1,0 +1,3 @@
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/gtest-populate.dir
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/ALL_BUILD.dir
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/ZERO_CHECK.dir

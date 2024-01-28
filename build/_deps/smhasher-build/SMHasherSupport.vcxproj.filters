@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\AvalancheTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\Bitslice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\Bitvec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\CityTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\City.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\crc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\DifferentialTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\Hashes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\KeysetTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\lookup3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\md5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\MurmurHash1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\MurmurHash2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\MurmurHash3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\Platform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\Random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\sha1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\SpeedTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\Spooky.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\SpookyTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\Stats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\SuperFastHash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\Types.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\PMurHash.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6AA7338F-503B-33B6-B53E-34BADF7308F5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

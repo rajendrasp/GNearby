@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\gflags-subbuild\CMakeFiles\411f5c341c02c7d0b70052e8e9e41ee1\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{C5F4A0C4-8172-33E0-9150-1EA6EE754D3C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

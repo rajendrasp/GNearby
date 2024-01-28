@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\3fbd97466c060f5d3fb1afd165b10854\PACKAGE_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{70ED1803-D9A8-3470-A3D7-D255B38A6D8B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

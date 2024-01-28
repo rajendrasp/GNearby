@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/smhasher-subbuild/CMakeFiles/smhasher-populate"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/smhasher-subbuild/CMakeFiles/cc6386109ed26a726476f6501ee882f7/smhasher-populate.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/smhasher-subbuild/CMakeFiles/f7a72a35e141c6a8e93f9d8e7480ef8d/smhasher-populate-complete.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/smhasher-subbuild/CMakeFiles/04fcb1dc227ade6320c70621af44341f/smhasher-populate-build.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/smhasher-subbuild/CMakeFiles/04fcb1dc227ade6320c70621af44341f/smhasher-populate-configure.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/smhasher-subbuild/CMakeFiles/04fcb1dc227ade6320c70621af44341f/smhasher-populate-download.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/smhasher-subbuild/CMakeFiles/04fcb1dc227ade6320c70621af44341f/smhasher-populate-install.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/smhasher-subbuild/CMakeFiles/04fcb1dc227ade6320c70621af44341f/smhasher-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/smhasher-subbuild/CMakeFiles/04fcb1dc227ade6320c70621af44341f/smhasher-populate-patch.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/smhasher-subbuild/CMakeFiles/04fcb1dc227ade6320c70621af44341f/smhasher-populate-test.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/smhasher-subbuild/CMakeFiles/04fcb1dc227ade6320c70621af44341f/smhasher-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"smhasher-populate"
+		],
+		"name" : "smhasher-populate"
+	}
+}

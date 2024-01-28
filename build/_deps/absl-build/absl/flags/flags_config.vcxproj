@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{182113F2-0AA7-3EC2-AAB8-8FAC7B39B653}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>flags_config</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\flags\flags_config.dir\nasm.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\flags\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">flags_config.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">absl_flags_config</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\flags\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">flags_config.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">absl_flags_config</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\flags\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">flags_config.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">absl_flags_config</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\flags\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">flags_config.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">absl_flags_config</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4005;4068;4180;4244;4267;4503;4800</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <NASM>
+      <IncludePaths>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src\;%(IncludePaths)</IncludePaths>
+      <AdditionalOptions>/W3 /bigobj /wd4005 /wd4068 /wd4180 /wd4244 /wd4267 /wd4503 /wd4800 -f</AdditionalOptions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+    </NASM>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DisableSpecificWarnings>4005;4068;4180;4244;4267;4503;4800</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <NASM>
+      <IncludePaths>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src\;%(IncludePaths)</IncludePaths>
+      <AdditionalOptions>/W3 /bigobj /wd4005 /wd4068 /wd4180 /wd4244 /wd4267 /wd4503 /wd4800 -f</AdditionalOptions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+    </NASM>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DisableSpecificWarnings>4005;4068;4180;4244;4267;4503;4800</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <NASM>
+      <IncludePaths>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src\;%(IncludePaths)</IncludePaths>
+      <AdditionalOptions>/W3 /bigobj /wd4005 /wd4068 /wd4180 /wd4244 /wd4267 /wd4503 /wd4800 -f</AdditionalOptions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+    </NASM>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4005;4068;4180;4244;4267;4503;4800</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <NASM>
+      <IncludePaths>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src\;%(IncludePaths)</IncludePaths>
+      <AdditionalOptions>/W3 /bigobj /wd4005 /wd4068 /wd4180 /wd4244 /wd4267 /wd4503 /wd4800 -f</AdditionalOptions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NO_WEBRTC;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+    </NASM>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src\absl\flags\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-src/absl/flags/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-build/absl/flags/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\flags\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-src/absl/flags/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-build/absl/flags/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\flags\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-src/absl/flags/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-build/absl/flags/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\flags\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-src/absl/flags/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-build/absl/flags/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\flags\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src\absl\flags\usage_config.cc" />
+    <ClInclude Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src\absl\flags\config.h" />
+    <ClInclude Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src\absl\flags\usage_config.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\ZERO_CHECK.vcxproj">
+      <Project>{3FE2F9D4-45B8-3597-9212-745053FCE55C}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\base\base.vcxproj">
+      <Project>{18F3B9E2-32A9-3FE3-AC13-276CE6D401B4}</Project>
+      <Name>base</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\time\civil_time.vcxproj">
+      <Project>{0BC2DF74-20E4-35D3-AAE2-31E437586ADD}</Project>
+      <Name>civil_time</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\debugging\debugging_internal.vcxproj">
+      <Project>{85D6FDEC-39FF-3121-B8E9-5463BD905BFD}</Project>
+      <Name>debugging_internal</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\debugging\demangle_internal.vcxproj">
+      <Project>{8A3A0F34-A57A-3A48-8077-57202FEDBA5A}</Project>
+      <Name>demangle_internal</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\flags\flags_program_name.vcxproj">
+      <Project>{74883492-C316-3AE0-9E30-06588DC57DA6}</Project>
+      <Name>flags_program_name</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\synchronization\graphcycles_internal.vcxproj">
+      <Project>{29CC48C8-2DCC-3156-BF5A-1EB7CB16483A}</Project>
+      <Name>graphcycles_internal</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\numeric\int128.vcxproj">
+      <Project>{A2D56844-9DB6-351E-BAE6-0E4BDD893EC8}</Project>
+      <Name>int128</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\synchronization\kernel_timeout_internal.vcxproj">
+      <Project>{71B542CD-3ABC-3977-89CE-1DFBFB63838C}</Project>
+      <Name>kernel_timeout_internal</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\base\log_severity.vcxproj">
+      <Project>{A54C1410-6D44-39E3-9FA5-CFBF01C59F94}</Project>
+      <Name>log_severity</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\base\malloc_internal.vcxproj">
+      <Project>{DFF6646E-74D3-3C9E-8526-C65F4326C910}</Project>
+      <Name>malloc_internal</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\base\raw_logging_internal.vcxproj">
+      <Project>{9A29A3CB-8116-3EE8-83EB-37B31463146D}</Project>
+      <Name>raw_logging_internal</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\base\spinlock_wait.vcxproj">
+      <Project>{B840470D-BD82-35D4-8431-21BCF6D182B4}</Project>
+      <Name>spinlock_wait</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\debugging\stacktrace.vcxproj">
+      <Project>{C2D6E95F-756E-3B77-B4AB-6598F761F455}</Project>
+      <Name>stacktrace</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\strings\string_view.vcxproj">
+      <Project>{211DBA01-7CA9-360D-AF49-103A26B038AA}</Project>
+      <Name>string_view</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\strings\strings.vcxproj">
+      <Project>{F5C12B72-18B9-3A89-8D76-DFD7C4BC5A7E}</Project>
+      <Name>strings</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\strings\strings_internal.vcxproj">
+      <Project>{85F172B1-174E-3B27-8152-1D2FDFE199A3}</Project>
+      <Name>strings_internal</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\debugging\symbolize.vcxproj">
+      <Project>{79D75283-5995-3B53-85E9-6DD9824D6E2C}</Project>
+      <Name>symbolize</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\synchronization\synchronization.vcxproj">
+      <Project>{B7570735-9C66-31BC-BA5B-081D0145631E}</Project>
+      <Name>synchronization</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\base\throw_delegate.vcxproj">
+      <Project>{2009F4F7-606B-3335-9560-9D8A89C66DCD}</Project>
+      <Name>throw_delegate</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\time\time.vcxproj">
+      <Project>{CAAE21F6-2375-3055-A72E-7523FE11CC2C}</Project>
+      <Name>time</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\time\time_zone.vcxproj">
+      <Project>{FF52DDED-AA83-3A30-9DC3-11C453F9C44A}</Project>
+      <Name>time_zone</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.targets" />
+  </ImportGroup>
+</Project>

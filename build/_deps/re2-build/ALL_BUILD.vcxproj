@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{16B6E5AA-A63F-3E0B-8396-138805E4B0C6}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\ALL_BUILD.dir\nasm.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-src\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\CTest.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CTestUseLaunchers.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\CTest.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CTestUseLaunchers.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\CTest.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CTestUseLaunchers.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\CTest.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CTestUseLaunchers.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\ZERO_CHECK.vcxproj">
+      <Project>{3FE2F9D4-45B8-3597-9212-745053FCE55C}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\charclass_test.vcxproj">
+      <Project>{863D860F-0953-3261-8867-5C3D4E238795}</Project>
+      <Name>charclass_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\compile_test.vcxproj">
+      <Project>{2D9252C2-1079-3CBF-8689-254571D43D14}</Project>
+      <Name>compile_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\dfa_test.vcxproj">
+      <Project>{93CD043B-8FF8-39C0-BF58-BAC2C20046EF}</Project>
+      <Name>dfa_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\exhaustive1_test.vcxproj">
+      <Project>{B9DD81C4-5DC1-3994-BA0F-E9E2054AA6C6}</Project>
+      <Name>exhaustive1_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\exhaustive2_test.vcxproj">
+      <Project>{057238C7-B03E-3506-BCD9-78C1185A5D13}</Project>
+      <Name>exhaustive2_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\exhaustive3_test.vcxproj">
+      <Project>{5660F9FC-60C3-3807-BFF9-B25095DBC923}</Project>
+      <Name>exhaustive3_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\exhaustive_test.vcxproj">
+      <Project>{E932FD64-04C6-374B-8025-325CCB065D19}</Project>
+      <Name>exhaustive_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\filtered_re2_test.vcxproj">
+      <Project>{BB801897-EBBF-3457-8C24-E4DB14282C80}</Project>
+      <Name>filtered_re2_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\mimics_pcre_test.vcxproj">
+      <Project>{6EADB634-3919-3023-89EA-9A1A4E8A03A5}</Project>
+      <Name>mimics_pcre_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\parse_test.vcxproj">
+      <Project>{7A8CD04E-0C85-3B42-937E-994F57708D22}</Project>
+      <Name>parse_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\possible_match_test.vcxproj">
+      <Project>{260D2048-2981-3DA1-8D5F-9E323B8A1927}</Project>
+      <Name>possible_match_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\random_test.vcxproj">
+      <Project>{E28829FB-72F2-3BF8-8DBA-0BE27B0258D0}</Project>
+      <Name>random_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\re2.vcxproj">
+      <Project>{B0B8C1D1-DB87-320D-AF14-F54485F1E842}</Project>
+      <Name>re2</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\re2_arg_test.vcxproj">
+      <Project>{37DF9AFB-7536-3844-9F03-6CEB73E02460}</Project>
+      <Name>re2_arg_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\re2_test.vcxproj">
+      <Project>{1E39DC47-6C57-3BA3-85CA-291814B24BC1}</Project>
+      <Name>re2_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\regexp_benchmark.vcxproj">
+      <Project>{AE6B2FAA-1475-39A1-99F3-2BC7866F9D44}</Project>
+      <Name>regexp_benchmark</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\regexp_test.vcxproj">
+      <Project>{AC9054BC-99A5-361D-BB71-1050CD9D2AE8}</Project>
+      <Name>regexp_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\required_prefix_test.vcxproj">
+      <Project>{D498EBA8-3A1D-301F-B642-04E5D88993CF}</Project>
+      <Name>required_prefix_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\search_test.vcxproj">
+      <Project>{CF77E2B8-FB0E-3BD2-8AF9-8055C1D1B48F}</Project>
+      <Name>search_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\set_test.vcxproj">
+      <Project>{E9D2B31F-E8D8-3477-97A0-F17364909BC3}</Project>
+      <Name>set_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\simplify_test.vcxproj">
+      <Project>{0CC81580-30CC-31A1-BBF4-3B918013A795}</Project>
+      <Name>simplify_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\string_generator_test.vcxproj">
+      <Project>{DBD8CE99-87D6-3874-9A62-74492A82DB5E}</Project>
+      <Name>string_generator_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\re2-build\testing.vcxproj">
+      <Project>{3E062AA3-8346-3389-8262-D7FAD151FA89}</Project>
+      <Name>testing</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.targets" />
+  </ImportGroup>
+</Project>

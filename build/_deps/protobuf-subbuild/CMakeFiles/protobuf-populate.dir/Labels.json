@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/protobuf-populate"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/38937e9f6cfd3bb4ad8c255fc943802f/protobuf-populate.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/8894321aaa7ddb8dc8b249a181be1c3e/protobuf-populate-complete.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-build.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-configure.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-download.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-install.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-patch.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-test.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"protobuf-populate"
+		],
+		"name" : "protobuf-populate"
+	}
+}

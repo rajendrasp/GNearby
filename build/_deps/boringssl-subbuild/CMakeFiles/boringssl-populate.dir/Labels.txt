@@ -1,0 +1,14 @@
+# Target labels
+ boringssl-populate
+# Source files and their labels
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/boringssl-populate
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/8e31fec93abe98aa133a6baeb93071f7/boringssl-populate.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/2d3c8305dee1dce81562e4b82182404f/boringssl-populate-complete.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/b42a59a3498e8f3b4c7c6c9e5fb529f7/boringssl-populate-build.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/b42a59a3498e8f3b4c7c6c9e5fb529f7/boringssl-populate-configure.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/b42a59a3498e8f3b4c7c6c9e5fb529f7/boringssl-populate-download.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/b42a59a3498e8f3b4c7c6c9e5fb529f7/boringssl-populate-install.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/b42a59a3498e8f3b4c7c6c9e5fb529f7/boringssl-populate-mkdir.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/b42a59a3498e8f3b4c7c6c9e5fb529f7/boringssl-populate-patch.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/b42a59a3498e8f3b4c7c6c9e5fb529f7/boringssl-populate-test.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/b42a59a3498e8f3b4c7c6c9e5fb529f7/boringssl-populate-update.rule

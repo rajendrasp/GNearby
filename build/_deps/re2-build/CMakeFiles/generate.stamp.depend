@@ -1,0 +1,6 @@
+# CMake generation dependency list for this directory.
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-src/CMakeLists.txt
+C:/Program Files/CMake/share/cmake-3.27/Modules/CTest.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CTestUseLaunchers.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/GNUInstallDirs.cmake
+C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in

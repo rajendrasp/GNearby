@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-subbuild/CMakeFiles/securemessage-populate"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-subbuild/CMakeFiles/8c3b8f7df8ce488ecf2dd4b2ec5cd061/securemessage-populate.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-subbuild/CMakeFiles/0ed9dd0d15a0968cecba5ab1c714b553/securemessage-populate-complete.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-subbuild/CMakeFiles/c5c8e62acc1f5c11ab909193e86e35c1/securemessage-populate-build.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-subbuild/CMakeFiles/c5c8e62acc1f5c11ab909193e86e35c1/securemessage-populate-configure.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-subbuild/CMakeFiles/c5c8e62acc1f5c11ab909193e86e35c1/securemessage-populate-download.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-subbuild/CMakeFiles/c5c8e62acc1f5c11ab909193e86e35c1/securemessage-populate-install.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-subbuild/CMakeFiles/c5c8e62acc1f5c11ab909193e86e35c1/securemessage-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-subbuild/CMakeFiles/c5c8e62acc1f5c11ab909193e86e35c1/securemessage-populate-patch.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-subbuild/CMakeFiles/c5c8e62acc1f5c11ab909193e86e35c1/securemessage-populate-test.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-subbuild/CMakeFiles/c5c8e62acc1f5c11ab909193e86e35c1/securemessage-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"securemessage-populate"
+		],
+		"name" : "securemessage-populate"
+	}
+}

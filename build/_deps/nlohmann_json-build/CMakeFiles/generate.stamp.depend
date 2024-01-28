@@ -1,0 +1,10 @@
+# CMake generation dependency list for this directory.
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/nlohmann_json-src/CMakeLists.txt
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/nlohmann_json-src/cmake/config.cmake.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/nlohmann_json-src/cmake/nlohmann_jsonConfigVersion.cmake.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/nlohmann_json-src/cmake/pkg-config.pc.in
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakePackageConfigHelpers.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/ExternalProject.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/GNUInstallDirs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/WriteBasicConfigVersionFile.cmake
+C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in

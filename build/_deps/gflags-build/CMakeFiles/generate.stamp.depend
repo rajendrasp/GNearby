@@ -1,0 +1,15 @@
+# CMake generation dependency list for this directory.
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-src/CMakeLists.txt
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-src/cmake/config.cmake.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-src/cmake/utils.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-src/cmake/version.cmake.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-src/src/defines.h.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-src/src/gflags.h.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-src/src/gflags_completions.h.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-src/src/gflags_declare.h.in
+C:/Program Files/CMake/share/cmake-3.27/Modules/CheckCXXSymbolExists.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CheckIncludeFileCXX.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CheckSymbolExists.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CheckTypeSize.cmake
+C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in

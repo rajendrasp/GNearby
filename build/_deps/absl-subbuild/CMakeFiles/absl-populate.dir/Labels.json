@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-subbuild/CMakeFiles/absl-populate"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-subbuild/CMakeFiles/3f0179f99e4995963e7e027a0286725c/absl-populate.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-subbuild/CMakeFiles/41c97cdcfa74ab113a2de0655049264f/absl-populate-complete.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-subbuild/CMakeFiles/b175e279a5cfdc2f52a755dbf804b38f/absl-populate-build.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-subbuild/CMakeFiles/b175e279a5cfdc2f52a755dbf804b38f/absl-populate-configure.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-subbuild/CMakeFiles/b175e279a5cfdc2f52a755dbf804b38f/absl-populate-download.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-subbuild/CMakeFiles/b175e279a5cfdc2f52a755dbf804b38f/absl-populate-install.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-subbuild/CMakeFiles/b175e279a5cfdc2f52a755dbf804b38f/absl-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-subbuild/CMakeFiles/b175e279a5cfdc2f52a755dbf804b38f/absl-populate-patch.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-subbuild/CMakeFiles/b175e279a5cfdc2f52a755dbf804b38f/absl-populate-test.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/absl-subbuild/CMakeFiles/b175e279a5cfdc2f52a755dbf804b38f/absl-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"absl-populate"
+		],
+		"name" : "absl-populate"
+	}
+}

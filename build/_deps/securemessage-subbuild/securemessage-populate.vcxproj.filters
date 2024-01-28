@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeFiles\c5c8e62acc1f5c11ab909193e86e35c1\securemessage-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeFiles\c5c8e62acc1f5c11ab909193e86e35c1\securemessage-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeFiles\c5c8e62acc1f5c11ab909193e86e35c1\securemessage-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeFiles\c5c8e62acc1f5c11ab909193e86e35c1\securemessage-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeFiles\c5c8e62acc1f5c11ab909193e86e35c1\securemessage-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeFiles\c5c8e62acc1f5c11ab909193e86e35c1\securemessage-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeFiles\c5c8e62acc1f5c11ab909193e86e35c1\securemessage-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeFiles\c5c8e62acc1f5c11ab909193e86e35c1\securemessage-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeFiles\0ed9dd0d15a0968cecba5ab1c714b553\securemessage-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeFiles\8c3b8f7df8ce488ecf2dd4b2ec5cd061\securemessage-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-subbuild\CMakeFiles\securemessage-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{32E9E654-F798-3C27-ABE6-F07DD2943EFC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

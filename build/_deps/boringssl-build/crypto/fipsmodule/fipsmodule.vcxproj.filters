@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\crypto\fipsmodule\bcm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\crypto\fipsmodule\fips_shared_support.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\aesni-x86-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\bn-586-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\co-586-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\ghash-ssse3-x86-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\ghash-x86-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\md5-586-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\sha1-586-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\sha256-586-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\sha512-586-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\vpaes-x86-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\x86-mont-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\aesni-gcm-x86_64-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\aesni-x86_64-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\ghash-ssse3-x86_64-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\ghash-x86_64-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\md5-x86_64-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\p256_beeu-x86_64-asm-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\p256-x86_64-asm-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\rdrand-x86_64-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\rsaz-avx2-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\sha1-x86_64-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\sha256-x86_64-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\sha512-x86_64-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\vpaes-x86_64-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\x86_64-mont-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\b583c3fa3a56771be8f4c4e39b5a8eea\x86_64-mont5-win.asm.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\crypto\fipsmodule\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\aesni-x86-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\bn-586-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\co-586-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\ghash-ssse3-x86-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\ghash-x86-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\md5-586-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\sha1-586-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\sha256-586-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\sha512-586-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\vpaes-x86-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\x86-mont-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\aesni-gcm-x86_64-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\aesni-x86_64-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\ghash-ssse3-x86_64-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\ghash-x86_64-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\md5-x86_64-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\p256_beeu-x86_64-asm-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\p256-x86_64-asm-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\rdrand-x86_64-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\rsaz-avx2-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\sha1-x86_64-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\sha256-x86_64-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\sha512-x86_64-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\vpaes-x86_64-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\x86_64-mont-win.asm" />
+    <NASM Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto\fipsmodule\x86_64-mont5-win.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{736E658D-7845-32FB-803A-493685840983}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6AA7338F-503B-33B6-B53E-34BADF7308F5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

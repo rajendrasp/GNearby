@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src\absl\types\bad_optional_access.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src\absl\types\bad_optional_access.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src\absl\types\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{CD8292A7-1C59-34FE-9B09-678CE0683F85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6AA7338F-503B-33B6-B53E-34BADF7308F5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

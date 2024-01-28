@@ -1,0 +1,14 @@
+# Target labels
+ protobuf-populate
+# Source files and their labels
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/protobuf-populate
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/38937e9f6cfd3bb4ad8c255fc943802f/protobuf-populate.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/8894321aaa7ddb8dc8b249a181be1c3e/protobuf-populate-complete.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-build.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-configure.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-download.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-install.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-mkdir.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-patch.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-test.rule
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-subbuild/CMakeFiles/bba1d01f718916eb5ea179397dd3bfab/protobuf-populate-update.rule

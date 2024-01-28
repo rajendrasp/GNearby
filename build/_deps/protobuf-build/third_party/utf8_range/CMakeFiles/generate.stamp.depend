@@ -1,0 +1,8 @@
+# CMake generation dependency list for this directory.
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/third_party/utf8_range/CMakeLists.txt
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/third_party/utf8_range/cmake/utf8_range-config.cmake.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/third_party/utf8_range/cmake/utf8_range.pc.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakePackageConfigHelpers.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/GNUInstallDirs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/WriteBasicConfigVersionFile.cmake
+C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in

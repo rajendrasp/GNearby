@@ -1,0 +1,17 @@
+# CMake generation dependency list for this directory.
+C:/D/Work/GNearbyCmake/GNearby/build/CMakeFiles/3.27.3/CMakeASM_NASMCompiler.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-src/CMakeLists.txt
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-src/cmake/go.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-src/cmake/paths.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-src/cmake/perlasm.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-src/sources.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-src/util/go_tests.txt
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeASMInformation.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeASM_NASMInformation.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindCygwin.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindMsys.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPerl.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/GNUInstallDirs.cmake
+C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in

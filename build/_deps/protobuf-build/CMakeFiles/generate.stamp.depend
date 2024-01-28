@@ -1,0 +1,34 @@
+# CMake generation dependency list for this directory.
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/CMakeLists.txt
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/abseil-cpp.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/install.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/libprotobuf-lite.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/libprotobuf.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/libprotoc.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/protobuf-config-version.cmake.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/protobuf-config.cmake.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/protobuf-generate.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/protobuf-lite.pc.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/protobuf-module.cmake.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/protobuf-options.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/protobuf.pc.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/protoc.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/utf8_range.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/version.rc.in
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/src/file_lists.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeDependentOption.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CheckCSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CheckLibraryExists.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CheckLinkerFlag.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindThreads.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindZLIB.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/GNUInstallDirs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Internal/CheckFlagCommonConfig.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Internal/CheckLinkerFlag.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Internal/CheckSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/SelectLibraryConfigurations.cmake
+C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in

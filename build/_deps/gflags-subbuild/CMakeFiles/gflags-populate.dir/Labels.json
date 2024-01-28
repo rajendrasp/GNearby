@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-subbuild/CMakeFiles/gflags-populate"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-subbuild/CMakeFiles/411f5c341c02c7d0b70052e8e9e41ee1/gflags-populate.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-subbuild/CMakeFiles/6af134644df2281cef62912d3c2dd759/gflags-populate-complete.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-subbuild/CMakeFiles/9c58522c5edeb8fe0ed0c3223df643eb/gflags-populate-build.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-subbuild/CMakeFiles/9c58522c5edeb8fe0ed0c3223df643eb/gflags-populate-configure.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-subbuild/CMakeFiles/9c58522c5edeb8fe0ed0c3223df643eb/gflags-populate-download.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-subbuild/CMakeFiles/9c58522c5edeb8fe0ed0c3223df643eb/gflags-populate-install.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-subbuild/CMakeFiles/9c58522c5edeb8fe0ed0c3223df643eb/gflags-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-subbuild/CMakeFiles/9c58522c5edeb8fe0ed0c3223df643eb/gflags-populate-patch.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-subbuild/CMakeFiles/9c58522c5edeb8fe0ed0c3223df643eb/gflags-populate-test.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gflags-subbuild/CMakeFiles/9c58522c5edeb8fe0ed0c3223df643eb/gflags-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"gflags-populate"
+		],
+		"name" : "gflags-populate"
+	}
+}

@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{708FD2C1-5D8A-3AEA-A31C-4C003BA1646F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>all_tests</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\all_tests.dir\nasm.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\3.27.3\CMakeASM_NASMCompiler.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\go.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\paths.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\perlasm.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\sources.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\util\go_tests.txt;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakeASMInformation.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakeASM_NASMInformation.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindCygwin.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindMsys.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPerl.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\3.27.3\CMakeASM_NASMCompiler.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\go.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\paths.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\perlasm.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\sources.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\util\go_tests.txt;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakeASMInformation.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakeASM_NASMInformation.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindCygwin.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindMsys.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPerl.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\3.27.3\CMakeASM_NASMCompiler.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\go.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\paths.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\perlasm.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\sources.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\util\go_tests.txt;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakeASMInformation.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakeASM_NASMInformation.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindCygwin.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindMsys.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPerl.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/D/Work/GNearbyCmake/GNearby -BC:/D/Work/GNearbyCmake/GNearby/build --check-stamp-file C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\D\Work\GNearbyCmake\GNearby\build\CMakeFiles\3.27.3\CMakeASM_NASMCompiler.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\go.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\paths.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\cmake\perlasm.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\sources.cmake;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\util\go_tests.txt;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakeASMInformation.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakeASM_NASMInformation.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindCygwin.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindMsys.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPerl.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\ZERO_CHECK.vcxproj">
+      <Project>{3FE2F9D4-45B8-3597-9212-745053FCE55C}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\crypto_test.vcxproj">
+      <Project>{3BAFCB3D-FFAD-38AC-A371-8E0256DB09D1}</Project>
+      <Name>crypto_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\decrepit_test.vcxproj">
+      <Project>{B155A05D-CF8F-3EEE-85A4-AA4A0C7B42D6}</Project>
+      <Name>decrepit_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\pki_test.vcxproj">
+      <Project>{82E48994-A04E-3519-9820-FAD1EDB68C7C}</Project>
+      <Name>pki_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\ssl_test.vcxproj">
+      <Project>{9C9B5FC9-7214-3953-B872-E6B40A2B31C8}</Project>
+      <Name>ssl_test</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-build\urandom_test.vcxproj">
+      <Project>{E3B8BC8D-D2AE-340B-9149-8B12813D90F1}</Project>
+      <Name>urandom_test</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.targets" />
+  </ImportGroup>
+</Project>

@@ -1,0 +1,41 @@
+# CMake generation dependency list for this directory.
+C:/D/Work/GNearbyCmake/GNearby/CMakeLists.txt
+C:/D/Work/GNearbyCmake/GNearby/build/CMakeFiles/3.27.3/CMakeCCompiler.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/CMakeFiles/3.27.3/CMakeCXXCompiler.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/CMakeFiles/3.27.3/CMakeRCCompiler.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/CMakeFiles/3.27.3/CMakeSystem.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/CMakeFiles/pkgRedirects/gtest-config-version.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/CMakeFiles/pkgRedirects/gtest-config.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/protobuf-src/cmake/protobuf-generate.cmake
+C:/D/Work/GNearbyCmake/GNearby/cmake/dependencies.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeCXXInformation.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeGenericSystem.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeInitializeConfigs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeLanguageInformation.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeRCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Compiler/MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Compiler/MSVC-CXX.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Compiler/MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/ExternalProject.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/ExternalProject/shared_internal_commands.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FetchContent.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FetchContent/CMakeLists.cmake.in
+C:/Program Files/CMake/share/cmake-3.27/Modules/FetchContent/package-config-version.cmake.in
+C:/Program Files/CMake/share/cmake-3.27/Modules/FetchContent/package-config.cmake.in
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindGTest.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindGit.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/GoogleTest.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Platform/Windows-Initialize.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Platform/Windows-MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Platform/Windows-MSVC-CXX.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Platform/Windows-MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Platform/Windows.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Platform/WindowsPaths.cmake
+C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in

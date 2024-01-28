@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-subbuild/CMakeFiles/re2-populate"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-subbuild/CMakeFiles/a4c9ccdb2dd14dcd39591c43fdc9e5dd/re2-populate.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-subbuild/CMakeFiles/6e3a18599afb3ac0cb30782bf833b7ae/re2-populate-complete.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-subbuild/CMakeFiles/ab2428c71e8e95ad6a006ae45e582c69/re2-populate-build.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-subbuild/CMakeFiles/ab2428c71e8e95ad6a006ae45e582c69/re2-populate-configure.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-subbuild/CMakeFiles/ab2428c71e8e95ad6a006ae45e582c69/re2-populate-download.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-subbuild/CMakeFiles/ab2428c71e8e95ad6a006ae45e582c69/re2-populate-install.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-subbuild/CMakeFiles/ab2428c71e8e95ad6a006ae45e582c69/re2-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-subbuild/CMakeFiles/ab2428c71e8e95ad6a006ae45e582c69/re2-populate-patch.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-subbuild/CMakeFiles/ab2428c71e8e95ad6a006ae45e582c69/re2-populate-test.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/re2-subbuild/CMakeFiles/ab2428c71e8e95ad6a006ae45e582c69/re2-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"re2-populate"
+		],
+		"name" : "re2-populate"
+	}
+}

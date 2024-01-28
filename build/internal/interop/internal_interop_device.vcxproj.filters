@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\internal\interop\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\D\Work\GNearbyCmake\GNearby\internal\interop\device.h">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\D\Work\GNearbyCmake\GNearby\internal\interop\device_provider.h">
+      <Filter>Header Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{CD8292A7-1C59-34FE-9B09-678CE0683F85}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

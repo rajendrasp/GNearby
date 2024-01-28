@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/gtest-populate"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/f4908da777ee7d5b751f24a9c4fa7dfb/gtest-populate.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/853f161fe4581390e1ffd2c164aea619/gtest-populate-complete.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/0d8747a55d674bbd02fb38b9f9ae74fd/gtest-populate-build.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/0d8747a55d674bbd02fb38b9f9ae74fd/gtest-populate-configure.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/0d8747a55d674bbd02fb38b9f9ae74fd/gtest-populate-download.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/0d8747a55d674bbd02fb38b9f9ae74fd/gtest-populate-install.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/0d8747a55d674bbd02fb38b9f9ae74fd/gtest-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/0d8747a55d674bbd02fb38b9f9ae74fd/gtest-populate-patch.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/0d8747a55d674bbd02fb38b9f9ae74fd/gtest-populate-test.rule"
+		},
+		{
+			"file" : "C:/D/Work/GNearbyCmake/GNearby/build/_deps/gtest-subbuild/CMakeFiles/0d8747a55d674bbd02fb38b9f9ae74fd/gtest-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"gtest-populate"
+		],
+		"name" : "gtest-populate"
+	}
+}

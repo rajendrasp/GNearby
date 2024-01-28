@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeFiles\bba1d01f718916eb5ea179397dd3bfab\protobuf-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeFiles\bba1d01f718916eb5ea179397dd3bfab\protobuf-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeFiles\bba1d01f718916eb5ea179397dd3bfab\protobuf-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeFiles\bba1d01f718916eb5ea179397dd3bfab\protobuf-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeFiles\bba1d01f718916eb5ea179397dd3bfab\protobuf-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeFiles\bba1d01f718916eb5ea179397dd3bfab\protobuf-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeFiles\bba1d01f718916eb5ea179397dd3bfab\protobuf-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeFiles\bba1d01f718916eb5ea179397dd3bfab\protobuf-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeFiles\8894321aaa7ddb8dc8b249a181be1c3e\protobuf-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeFiles\38937e9f6cfd3bb4ad8c255fc943802f\protobuf-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-subbuild\CMakeFiles\protobuf-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{D11CE3C9-F87C-3A0F-BDC6-890B84B262B2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

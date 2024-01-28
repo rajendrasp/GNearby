@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\D\Work\GNearbyCmake\GNearby\internal\platform\implementation\windows\crypto.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\nlohmann_json-src\nlohmann_json.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{847A8580-EE57-353E-856F-AB23A054A7F2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

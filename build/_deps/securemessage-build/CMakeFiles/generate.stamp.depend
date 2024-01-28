@@ -1,0 +1,12 @@
+# CMake generation dependency list for this directory.
+C:/D/Work/GNearbyCmake/GNearby/build/CMakeFiles/pkgRedirects/protobuf-config-version.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/CMakeFiles/pkgRedirects/protobuf-config.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-src/CMakeLists.txt
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-src/cmake/local_build_setup.cmake
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/securemessage-src/cmake/proto_defs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindOpenSSL.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/ProcessorCount.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/SelectLibraryConfigurations.cmake
+C:\Program Files\CMake\share\cmake-3.27\Templates\MSBuild\nasm.props.in

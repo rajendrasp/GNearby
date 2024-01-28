@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeFiles\02aacdf9e82cdb9fc2a5944c4152a402\glog-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeFiles\02aacdf9e82cdb9fc2a5944c4152a402\glog-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeFiles\02aacdf9e82cdb9fc2a5944c4152a402\glog-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeFiles\02aacdf9e82cdb9fc2a5944c4152a402\glog-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeFiles\02aacdf9e82cdb9fc2a5944c4152a402\glog-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeFiles\02aacdf9e82cdb9fc2a5944c4152a402\glog-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeFiles\02aacdf9e82cdb9fc2a5944c4152a402\glog-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeFiles\02aacdf9e82cdb9fc2a5944c4152a402\glog-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeFiles\73bc25050ae9e83074d21ab622fb7d45\glog-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeFiles\bc5d51de28b7b895500c96b978b4db75\glog-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-subbuild\CMakeFiles\glog-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{184A0F10-C775-3ACB-B1F8-C21E184D8529}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

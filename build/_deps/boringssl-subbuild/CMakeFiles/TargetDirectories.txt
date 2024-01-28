@@ -1,0 +1,3 @@
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/boringssl-populate.dir
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/ALL_BUILD.dir
+C:/D/Work/GNearbyCmake/GNearby/build/_deps/boringssl-subbuild/CMakeFiles/ZERO_CHECK.dir
