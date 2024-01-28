@@ -102,14 +102,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="C:\D\Work\GNearbyCmake\GNearby\internal\platform\implementation\windows\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <Natvis Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\nlohmann_json-src\nlohmann_json.natvis" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{1C23A3F6-458B-39A3-BC58-B85196E3E41F}</UniqueIdentifier>
+      <UniqueIdentifier>{CD8292A7-1C59-34FE-9B09-678CE0683F85}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="comm_1.cpp" />
   </ItemGroup>
 </Project>

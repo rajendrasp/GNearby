@@ -335,6 +335,12 @@ C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/implementation/shared/CMa
 C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/implementation/shared/CMakeFiles/internal_platform_implementation_shared_count_down_latch.dir
 C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/implementation/shared/CMakeFiles/PACKAGE.dir
 C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/implementation/shared/CMakeFiles/INSTALL.dir
+C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/implementation/windows/CMakeFiles/internal_platform_implementation_windows_types.dir
+C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/implementation/windows/CMakeFiles/internal_platform_implementation_windows_comm.dir
+C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/implementation/windows/CMakeFiles/internal_platform_implementation_windows_crypto.dir
+C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/implementation/windows/CMakeFiles/internal_platform_implementation_windows.dir
+C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/implementation/windows/CMakeFiles/PACKAGE.dir
+C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/implementation/windows/CMakeFiles/INSTALL.dir
 C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/flags/CMakeFiles/internal_platform_flags_platform_flags.dir
 C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/flags/CMakeFiles/PACKAGE.dir
 C:/D/Work/GNearbyCmake/GNearby/build/internal/platform/flags/CMakeFiles/INSTALL.dir
