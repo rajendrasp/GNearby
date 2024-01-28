@@ -60,3 +60,4 @@ compile_commands.json
 
 .vs
 Debug
+internal/platform/implementation/out/build/x64-Debug
