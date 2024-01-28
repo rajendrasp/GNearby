@@ -47,32 +47,71 @@ void ResultCB(Status status)
     std::cout << "Status: " << std::endl;
 }
 
+void ListenerInitiatedCB(
+    const char* endpoint_id,
+    const ConnectionResponseInfoW& connection_response_info)
+{
+    std::cout << "Advertising initiated: " << endpoint_id << std::endl;
+}
+
+void ListenerAcceptedCB(const char* endpoint_id)
+{
+    std::cout << "Advertising accepted: " << endpoint_id << std::endl;
+}
+
+void ListenerRejectedCB(const char* endpoint_id, connections::Status status)
+{
+    std::cout << "Advertising rejected: " << endpoint_id << std::endl;
+}
+
+void ListenerDisconnectedCB(const char* endpoint_id)
+{
+    std::cout << "Advertising disconnected: " << endpoint_id << std::endl;
+}
+
+void ListenerBandwidthChangedCB(const char* endpoint_id, MediumW medium)
+{
+    std::cout << "Advertising bandwidth changed: " << endpoint_id << std::endl;
+}
+
 int main()
 {
     auto router = InitServiceControllerRouter();
     auto core = InitCore(router);
 
-    /*AdvertisingOptionsW a_options;
+    AdvertisingOptionsW a_options;
     a_options.strategy = StrategyW::kP2pCluster;
     a_options.device_info = "connectionsd";;
+    a_options.fast_advertisement_service_uuid = nullptr;
     a_options.low_power = false;
     a_options.allowed.ble = true;
     a_options.allowed.web_rtc = false;
 
-    ConnectionOptionsW con_req_info;*/
+    ConnectionListenerW clistener(ListenerInitiatedCB, ListenerAcceptedCB,
+        ListenerRejectedCB, ListenerDisconnectedCB,
+        ListenerBandwidthChangedCB);
+
+    auto infoo = "raje";
+    ConnectionRequestInfoW info{infoo, strlen(infoo), clistener };
+
+    ResultCallbackW callback2;
+    callback2.result_cb = ResultCB;
+
+    StartAdvertising(core, "rpardesh", a_options, info, callback2);
 
     DiscoveryOptionsW d_options;
     d_options.strategy = StrategyW::kP2pCluster;
     d_options.allowed.ble = true;
     d_options.allowed.web_rtc = false;
+    d_options.fast_advertisement_service_uuid = nullptr;
 
-    DiscoveryListenerW listener(ListenerEndpointFoundCB, ListenerEndpointLostCB,
+    DiscoveryListenerW dlistener(ListenerEndpointFoundCB, ListenerEndpointLostCB,
         ListenerEndpointDistanceChangedCB);
 
     ResultCallbackW callback;
     callback.result_cb = ResultCB;
 
-    StartDiscovery(core, "rajendra", d_options, listener, callback);
+    StartDiscovery(core, "rajendra", d_options, dlistener, callback);
 
     while (true) {
         Sleep(10);
