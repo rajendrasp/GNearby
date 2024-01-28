@@ -18,17 +18,17 @@
 #include <algorithm>
 #include <memory>
 
-#include "connections/advertising_options.h"
-#include "connections/core.h"
-#include "connections/implementation/service_controller_router.h"
-#include "connections/strategy.h"
+#include <AAAMyDLL/Adapter.h>
 
 using namespace nearby;
 using namespace connections;
 
-int main() {
+int main()
+{
     auto router = std::make_unique<ServiceControllerRouter>();
-    auto core = Core(router.get());
+
+
+    /*auto core = Core(router.get());
 
     AdvertisingOptions a_options;
     a_options.strategy = Strategy::kP2pCluster;
@@ -65,7 +65,7 @@ int main() {
         "com.google.nearby.connectionsd", d_options.CompatibleOptions(),
         d_listener, [](Status status) {
             std::cout << "Discovery status: " << status.ToString() << std::endl;
-        });
+        });*/
 
     while (true) {
         Sleep(10);

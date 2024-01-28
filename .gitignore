@@ -61,4 +61,10 @@ compile_commands.json
 .vs
 Debug
 internal/platform/implementation/out/build/x64-Debug
+build/_deps/boringssl-build/crypto
+build/_deps/securemessage-build/proto
+build/_deps/ukey2-build/src/main/proto
+build/proto
+build/internal/proto
+build/connections/implementation/proto
 generate.stamp

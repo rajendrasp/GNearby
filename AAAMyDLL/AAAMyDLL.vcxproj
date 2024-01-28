@@ -115,13 +115,14 @@
       </PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby;C:\D\Work\GNearbyCmake\GNearby\build;C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-src\src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\nlohmann_json-src\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-build;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-src\src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-src\src\windows;C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-src\src\main\cpp\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto\..;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto\..;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-src\cpp\include;C:\D\Work\Dependencies\vcpkg\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile />
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>C:\D\Work\GNearbyCmake\GNearby\build\connections\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Setupapi.lib;Cfgmgr32.lib;shlwapi.lib;connections_core.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\D\Work\GNearbyCmake\GNearby\build\connections\Debug\;C:\D\Work\Dependencies\vcpkg\vcpkg\installed\x64-windows\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libssl.lib;libcrypto.lib;dnsapi.lib;Wlanapi.lib;Ws2_32.lib;Wininet.lib;Wtsapi32.lib;Setupapi.lib;Cfgmgr32.lib;shlwapi.lib;connections_core.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,18 +147,26 @@
   <ItemGroup>
     <ClInclude Include="Adapter.h" />
     <ClInclude Include="dll_config.h" />
+    <ClInclude Include="file_w.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="listeners_w.h" />
+    <ClInclude Include="payload_w.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="strategy_w.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Adapter.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="file_w.cc" />
+    <ClCompile Include="listeners_w.cc" />
+    <ClCompile Include="payload_w.cc" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="strategy_w.cc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\build\connections\connections_core.vcxproj">
@@ -165,6 +174,9 @@
     </ProjectReference>
     <ProjectReference Include="..\build\internal\platform\implementation\windows\internal_platform_implementation_windows.vcxproj">
       <Project>{8a6fdb0b-e8e8-3b8e-be34-63442484c5b4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\build\_deps\securemessage-build\cpp\src\securemessage\securemessage.vcxproj">
+      <Project>{fa2c4ec7-9f4d-3aba-a790-47d83c49f3af}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
