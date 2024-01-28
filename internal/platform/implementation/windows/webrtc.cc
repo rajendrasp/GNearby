@@ -13,6 +13,10 @@
 // limitations under the License.
 
 #include "internal/platform/implementation/windows/webrtc.h"
+#include <Windows.h>
+
+#ifndef NO_WEBRTC
+
 
 #include <winnls.h>
 
@@ -113,3 +117,5 @@ WebRtcMedium::GetSignalingMessenger(
 
 }  // namespace windows
 }  // namespace nearby
+
+#endif

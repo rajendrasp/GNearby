@@ -1,6 +1,5 @@
 .DS_Store
 
-build/**
 .build
 
 # We might want to create a real project config at some point, but for now we
@@ -10,7 +9,6 @@ build/**
 # Xcode
 
 ## Build generated
-build/
 DerivedData
 
 ## Various settings
@@ -39,7 +37,6 @@ timeline.xctimeline
 playground.xcworkspace
 
 # Swift Package Manager
-.build/
 .swiftpm/
 
 # Carthage
@@ -60,3 +57,6 @@ bazel-*
 # Clang LSP compilation database
 compile_commands.json
 .cache/**
+
+.vs
+Debug
