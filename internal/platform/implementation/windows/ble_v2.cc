@@ -107,6 +107,7 @@ std::string TxPowerLevelToName(TxPowerLevel tx_power_level) {
     case TxPowerLevel::kUnknown:
       return "Unknown";
   }
+  return "Unknown";
 }
 
 // Max times trying to generate unused session id.
@@ -131,7 +132,7 @@ bool BleV2Medium::StartAdvertising(const BleAdvertisementData& advertising_data,
     service_data_info += "{uuid:" + std::string(it.first) +
                          ",data size:" + absl::StrCat(it.second.size()) +
                          ", data=0x" +
-                         absl::BytesToHexString(it.second.AsStringView()) + "}";
+                         absl::ABSL_OPTION_INLINE_NAMESPACE_NAME::BytesToHexString(it.second.AsStringView()) + "}";
   }
 
   NEARBY_LOGS(INFO) << __func__
@@ -995,7 +996,7 @@ void BleV2Medium::AdvertisementReceivedHandler(
                            << service_uuid_.Get16BitAsString()
                            << " Advertisement discovered. "
                               "0x16 Service data: advertisement bytes= 0x"
-                           << absl::BytesToHexString(
+                           << absl::ABSL_OPTION_INLINE_NAMESPACE_NAME::BytesToHexString(
                                   advertisement_data.AsStringView())
                            << "(" << advertisement_data.size() << ")";
 

@@ -768,7 +768,7 @@ bool BleV2::StartFastAdvertisingLocked(
            .is_connectable = true})) {
     NEARBY_LOGS(ERROR) << "Failed to turn on BLE fast advertising with "
                           "advertisement bytes="
-                       << absl::BytesToHexString(
+                       << absl::ABSL_OPTION_INLINE_NAMESPACE_NAME::BytesToHexString(
                               medium_advertisement_bytes.data());
     return false;
   }
@@ -802,7 +802,7 @@ bool BleV2::StartRegularAdvertisingLocked(
       NEARBY_LOGS(ERROR)
           << "Failed to turn on BLE extended regular advertising with "
              "advertisement bytes="
-          << absl::BytesToHexString(medium_advertisement_bytes.data());
+          << absl::ABSL_OPTION_INLINE_NAMESPACE_NAME::BytesToHexString(medium_advertisement_bytes.data());
     }
   }
 
@@ -879,7 +879,7 @@ bool BleV2::StartGattAdvertisingLocked(
            .is_connectable = true})) {
     NEARBY_LOGS(ERROR) << "Failed to turn on BLE GATT advertising with "
                           "advertisement bytes="
-                       << absl::BytesToHexString(
+                       << absl::ABSL_OPTION_INLINE_NAMESPACE_NAME::BytesToHexString(
                               medium_advertisement_bytes.data());
     // If BLE advertising was not successful, stop the advertisement GATT
     // server.

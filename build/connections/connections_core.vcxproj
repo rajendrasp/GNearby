@@ -290,13 +290,16 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\internal\platform\implementation\windows\internal_platform_implementation_windows.vcxproj">
-      <Project>{4a1f1a56-ca99-3563-bbc1-1ca2e7d8454e}</Project>
+      <Project>{8A6FDB0B-E8E8-3B8E-BE34-63442484C5B4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\internal\platform\implementation\windows\internal_platform_implementation_windows_comm.vcxproj">
+      <Project>{bc9bcc00-2ff9-300c-ac08-e6d4f09c0491}</Project>
     </ProjectReference>
     <ProjectReference Include="..\internal\platform\implementation\windows\internal_platform_implementation_windows_crypto.vcxproj">
-      <Project>{54aa37be-22bf-371a-98f1-1764ab443f0e}</Project>
+      <Project>{2750A176-FBEF-3C15-BE13-DE5E6A645765}</Project>
     </ProjectReference>
     <ProjectReference Include="..\internal\platform\implementation\windows\internal_platform_implementation_windows_types.vcxproj">
-      <Project>{12474028-2e52-30d0-b9a6-b2c90e52be95}</Project>
+      <Project>{C8E0160C-FC8A-3F66-987A-E13D9C5246D6}</Project>
     </ProjectReference>
     <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\ZERO_CHECK.vcxproj">
       <Project>{3FE2F9D4-45B8-3597-9212-745053FCE55C}</Project>

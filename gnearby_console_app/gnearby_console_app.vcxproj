@@ -104,7 +104,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NO_WEBRTC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\D\Work\GNearbyCmake\GNearby;C:\D\Work\GNearbyCmake\GNearby\build;C:\D\Work\GNearbyCmake\GNearby\build\_deps\protobuf-src\src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\boringssl-src\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\nlohmann_json-src\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-build;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-src\src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\glog-src\src\windows;C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-src;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-src\src\main\cpp\include;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto\..;C:\D\Work\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto\..;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto;C:\D\Work\GNearbyCmake\GNearby\build\_deps\securemessage-src\cpp\include;C:\D\Work\Dependencies\vcpkg\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -113,6 +113,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>absl_strings.lib;internal_platform_implementation_windows.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\D\Work\GNearbyCmake\GNearby\build\internal\platform\implementation\windows\Debug\;C:\D\Work\GNearbyCmake\GNearby\build\_deps\absl-build\absl\strings\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,13 +146,16 @@
       <Project>{f9e9b032-7379-3b8e-bd86-4dce1ed82fc6}</Project>
     </ProjectReference>
     <ProjectReference Include="..\build\internal\platform\implementation\windows\internal_platform_implementation_windows.vcxproj">
-      <Project>{4a1f1a56-ca99-3563-bbc1-1ca2e7d8454e}</Project>
+      <Project>{8A6FDB0B-E8E8-3B8E-BE34-63442484C5B4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\build\internal\platform\implementation\windows\internal_platform_implementation_windows_comm.vcxproj">
+      <Project>{bc9bcc00-2ff9-300c-ac08-e6d4f09c0491}</Project>
     </ProjectReference>
     <ProjectReference Include="..\build\internal\platform\implementation\windows\internal_platform_implementation_windows_crypto.vcxproj">
-      <Project>{54aa37be-22bf-371a-98f1-1764ab443f0e}</Project>
+      <Project>{2750A176-FBEF-3C15-BE13-DE5E6A645765}</Project>
     </ProjectReference>
     <ProjectReference Include="..\build\internal\platform\implementation\windows\internal_platform_implementation_windows_types.vcxproj">
-      <Project>{12474028-2e52-30d0-b9a6-b2c90e52be95}</Project>
+      <Project>{C8E0160C-FC8A-3F66-987A-E13D9C5246D6}</Project>
     </ProjectReference>
     <ProjectReference Include="C:\D\Work\GNearbyCmake\GNearby\build\_deps\smhasher-build\SMHasherSupport.vcxproj">
       <Project>{0C024611-5C78-3309-8480-10A97205E8FB}</Project>

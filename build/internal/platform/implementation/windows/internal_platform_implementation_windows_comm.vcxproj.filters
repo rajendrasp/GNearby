@@ -112,4 +112,7 @@
       <UniqueIdentifier>{CD8292A7-1C59-34FE-9B09-678CE0683F85}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="comm_2.cpp" />
+  </ItemGroup>
 </Project>
