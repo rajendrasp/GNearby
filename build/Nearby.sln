@@ -7303,6 +7303,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "web_rtc_signaling_frames_cc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gnearby_console_app", "..\gnearby_console_app\gnearby_console_app.vcxproj", "{B0857C01-6565-4B50-8D53-E44E1F8E78A3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AAAMyDLL", "..\AAAMyDLL\AAAMyDLL.vcxproj", "{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -10759,6 +10761,22 @@ Global
 		{B0857C01-6565-4B50-8D53-E44E1F8E78A3}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{B0857C01-6565-4B50-8D53-E44E1F8E78A3}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
 		{B0857C01-6565-4B50-8D53-E44E1F8E78A3}.RelWithDebInfo|x86.Build.0 = Release|Win32
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.Debug|x64.ActiveCfg = Debug|x64
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.Debug|x64.Build.0 = Debug|x64
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.Debug|x86.ActiveCfg = Debug|Win32
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.Debug|x86.Build.0 = Debug|Win32
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.MinSizeRel|x64.ActiveCfg = Debug|x64
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.MinSizeRel|x64.Build.0 = Debug|x64
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.MinSizeRel|x86.ActiveCfg = Debug|Win32
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.MinSizeRel|x86.Build.0 = Debug|Win32
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.Release|x64.ActiveCfg = Release|x64
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.Release|x64.Build.0 = Release|x64
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.Release|x86.ActiveCfg = Release|Win32
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.Release|x86.Build.0 = Release|Win32
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.RelWithDebInfo|x64.ActiveCfg = Release|x64
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.RelWithDebInfo|x64.Build.0 = Release|x64
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
+		{C04CC40C-22AF-4F5F-BB78-B7A17D0EB9CC}.RelWithDebInfo|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
