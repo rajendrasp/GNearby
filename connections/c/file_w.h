@@ -51,8 +51,11 @@ class DLL_API InputFileW {
 
   std::unique_ptr<nearby::InputFile, nearby::InputFileDeleter> GetImpl();
 
+#pragma warning( push )
+#pragma warning( disable : 4251)
  private:
   std::unique_ptr<nearby::InputFile, nearby::InputFileDeleter> impl_;
+#pragma warning( pop ) 
 };
 
 class DLL_API OutputFileW {

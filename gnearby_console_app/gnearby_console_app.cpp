@@ -23,9 +23,61 @@
 using namespace nearby;
 using namespace nearby::windows;
 
+void ListenerEndpointFoundCB(const char* endpoint_id, const char* endpoint_info,
+    size_t endpoint_info_size,
+    const char* str_service_id)
+{
+    std::cout << "Found endpoint " << endpoint_id << " on service " << str_service_id << std::endl;
+}
+
+void ListenerEndpointLostCB(const char* endpoint_id)
+{
+    std::cout << "Device lost: " << endpoint_id << std::endl;
+}
+
+void ListenerEndpointDistanceChangedCB(const char* endpoint_id,
+    DistanceInfoW distance_info)
+{
+    std::cout << "Device distance changed: " << endpoint_id << std::endl;
+}
+
+void ResultCB(Status status)
+{
+    (void)status;  // Avoid unused parameter warning
+    std::cout << "Status: " << std::endl;
+}
+
 int main()
 {
     auto router = InitServiceControllerRouter();
+    auto core = InitCore(router);
+
+    /*AdvertisingOptionsW a_options;
+    a_options.strategy = StrategyW::kP2pCluster;
+    a_options.device_info = "connectionsd";;
+    a_options.low_power = false;
+    a_options.allowed.ble = true;
+    a_options.allowed.web_rtc = false;
+
+    ConnectionOptionsW con_req_info;*/
+
+    DiscoveryOptionsW d_options;
+    d_options.strategy = StrategyW::kP2pCluster;
+    d_options.allowed.ble = true;
+    d_options.allowed.web_rtc = false;
+
+    DiscoveryListenerW listener(ListenerEndpointFoundCB, ListenerEndpointLostCB,
+        ListenerEndpointDistanceChangedCB);
+
+    ResultCallbackW callback;
+    callback.result_cb = ResultCB;
+
+    StartDiscovery(core, "rajendra", d_options, listener, callback);
+
+    while (true) {
+        Sleep(10);
+    }
+
 
 
     /*auto core = Core(router.get());
@@ -67,8 +119,6 @@ int main()
             std::cout << "Discovery status: " << status.ToString() << std::endl;
         });*/
 
-    while (true) {
-        Sleep(10);
-    }
+   
     return 0;
 }

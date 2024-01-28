@@ -5,6 +5,7 @@
 #include "connections/c/advertising_options_w.h"
 #include "connections/c/params_w.h"
 #include "connections/c/discovery_options_w.h"
+#include "connections/c/connection_options_w.h"
 
 namespace nearby::connections {
 	class Core;
