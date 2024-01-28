@@ -18,14 +18,14 @@
 #include <algorithm>
 #include <memory>
 
-#include <AAAMyDLL/Adapter.h>
+#include<AAAMyDLL/Adapter.h>
 
 using namespace nearby;
-using namespace connections;
+using namespace nearby::windows;
 
 int main()
 {
-    auto router = std::make_unique<ServiceControllerRouter>();
+    auto router = InitServiceControllerRouter();
 
 
     /*auto core = Core(router.get());

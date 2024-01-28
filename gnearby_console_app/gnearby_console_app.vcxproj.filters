@@ -18,9 +18,6 @@
     <ClCompile Include="gnearby_console_app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\internal\platform\implementation\windows\log_message.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\internal\platform\implementation\windows\log_message.h">

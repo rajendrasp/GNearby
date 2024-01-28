@@ -150,6 +150,7 @@
     <ClInclude Include="file_w.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="listeners_w.h" />
+    <ClInclude Include="medium_w.h" />
     <ClInclude Include="payload_w.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="strategy_w.h" />
