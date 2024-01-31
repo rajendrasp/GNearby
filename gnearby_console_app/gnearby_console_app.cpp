@@ -80,30 +80,47 @@ int main()
     auto core = InitCore(router);
 
     AdvertisingOptionsW a_options;
-    a_options.strategy = StrategyW::kP2pCluster;
+    a_options.strategy = StrategyW::kP2pPointToPoint;
     a_options.device_info = "connectionsd";;
-    a_options.fast_advertisement_service_uuid = nullptr;
-    a_options.low_power = false;
     a_options.allowed.ble = true;
+    a_options.allowed.bluetooth = true;
+    a_options.allowed.wifi_lan = true;
+    a_options.allowed.wifi_direct = true;
+    a_options.allowed.wifi_hotspot = true;
     a_options.allowed.web_rtc = false;
+    a_options.low_power = false;
+    a_options.auto_upgrade_bandwidth = false;
+    a_options.enforce_topology_constraints = false;
+    a_options.enable_bluetooth_listening = false;
+    
+
+    a_options.fast_advertisement_service_uuid = "0000fef3-0000-1000-8000-00805f9b34fb";
 
     ConnectionListenerW clistener(ListenerInitiatedCB, ListenerAcceptedCB,
         ListenerRejectedCB, ListenerDisconnectedCB,
         ListenerBandwidthChangedCB);
 
-    auto infoo = "raje";
-    ConnectionRequestInfoW info{infoo, strlen(infoo), clistener };
+    auto infoo = "Rajendra Windows";
+    ConnectionRequestInfoW info{ infoo, strlen(infoo), clistener };;
+
+
+    //{infoo, strlen(infoo), clistener };
 
     ResultCallbackW callback2;
     callback2.result_cb = ResultCB;
 
-    StartAdvertising(core, "rpardesh", a_options, info, callback2);
+    StartAdvertising(core, "NearbySharing", a_options, info, callback2);
 
     DiscoveryOptionsW d_options;
-    d_options.strategy = StrategyW::kP2pCluster;
+    d_options.strategy = StrategyW::kP2pPointToPoint;
     d_options.allowed.ble = true;
+    d_options.allowed.bluetooth = true;
+    d_options.allowed.wifi_lan = true;
+    d_options.allowed.wifi_direct = true;
+    d_options.allowed.wifi_hotspot = true;
     d_options.allowed.web_rtc = false;
-    d_options.fast_advertisement_service_uuid = nullptr;
+    d_options.fast_advertisement_service_uuid = "0000fef3-0000-1000-8000-00805f9b34fb";
+    d_options.is_out_of_band_connection = false;
 
     DiscoveryListenerW dlistener(ListenerEndpointFoundCB, ListenerEndpointLostCB,
         ListenerEndpointDistanceChangedCB);
@@ -111,7 +128,7 @@ int main()
     ResultCallbackW callback;
     callback.result_cb = ResultCB;
 
-    StartDiscovery(core, "rajendra", d_options, dlistener, callback);
+    StartDiscovery(core, "NearbySharing", d_options, dlistener, callback);
 
     while (true) {
         Sleep(10);

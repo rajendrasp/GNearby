@@ -26,6 +26,7 @@ struct DLL_API AdvertisingOptionsW : public OptionsBaseW {
   bool auto_upgrade_bandwidth = true;
   bool enforce_topology_constraints;
   bool low_power;
+  bool enable_bluetooth_listening;
 
   // Whether this is intended to be used in conjunction with InjectEndpoint().
   bool is_out_of_band_connection = false;

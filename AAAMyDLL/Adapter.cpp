@@ -59,7 +59,7 @@ namespace nearby::windows
         advertising_options.allowed.web_rtc = advertising_options_w.allowed.web_rtc;
         advertising_options.allowed.wifi_hotspot =
             advertising_options_w.allowed.wifi_hotspot;
-        advertising_options.enable_bluetooth_listening = false;
+        advertising_options.enable_bluetooth_listening = advertising_options_w.enable_bluetooth_listening;
         advertising_options.enable_webrtc_listening = false;
         advertising_options.auto_upgrade_bandwidth =
             advertising_options_w.auto_upgrade_bandwidth;

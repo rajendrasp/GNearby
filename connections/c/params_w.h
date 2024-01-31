@@ -21,22 +21,22 @@
 
 namespace nearby::windows {
 
-extern "C" {
+	extern "C" {
 
-// Used by Discovery in Core::RequestConnection().
-// Used by Advertising in Core::StartAdvertising().
-struct DLL_API ConnectionRequestInfoW {
-  // endpoint_info - Identifying information about this endpoint (eg. name,
-  //                 device type).
-  // listener      - A set of callbacks notified when remote endpoints request a
-  //                 connection to this endpoint.
-  // ByteArray endpoint_info;
-  const char* endpoint_info;
-  size_t endpoint_info_size;
-  ConnectionListenerW& listener;
-};
+		// Used by Discovery in Core::RequestConnection().
+		// Used by Advertising in Core::StartAdvertising().
+		struct DLL_API ConnectionRequestInfoW {
+			// endpoint_info - Identifying information about this endpoint (eg. name,
+			//                 device type).
+			// listener      - A set of callbacks notified when remote endpoints request a
+			//                 connection to this endpoint.
+			// ByteArray endpoint_info;
+			const char* endpoint_info;
+			size_t endpoint_info_size;
+			ConnectionListenerW& listener;
+		};
 
-}  // extern "C"
+	}  // extern "C"
 }  // namespace nearby::windows
 
 #endif  // THIRD_PARTY_NEARBY_CONNECTIONS_C_PARAMS_W_H_
