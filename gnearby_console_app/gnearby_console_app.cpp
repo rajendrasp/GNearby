@@ -18,7 +18,8 @@
 #include <algorithm>
 #include <memory>
 
-#include<AAAMyDLL/Adapter.h>
+#include <AAAMyDLL/Adapter.h>
+#include <AAAMyDLL/endpointInfo.h>
 
 using namespace nearby;
 using namespace nearby::windows;
@@ -100,8 +101,11 @@ int main()
         ListenerRejectedCB, ListenerDisconnectedCB,
         ListenerBandwidthChangedCB);
 
-    auto infoo = "Rajendra Windows";
-    ConnectionRequestInfoW info{ infoo, strlen(infoo), clistener };;
+    //auto infoo = "NearbySharing";
+    
+    auto endpointInfo = CreateEndpointInfo("RajendraWindows", ShareTargetType::kLaptop);
+    std::string infoo = std::string(endpointInfo->begin(), endpointInfo->end());
+    ConnectionRequestInfoW info{ infoo.c_str(), infoo.length(), clistener};;
 
 
     //{infoo, strlen(infoo), clistener };

@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="Adapter.h" />
     <ClInclude Include="dll_config.h" />
+    <ClInclude Include="endpointInfo.h" />
     <ClInclude Include="file_w.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="listeners_w.h" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="Adapter.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="endpointInfo.cpp" />
     <ClCompile Include="file_w.cc" />
     <ClCompile Include="listeners_w.cc" />
     <ClCompile Include="payload_w.cc" />
