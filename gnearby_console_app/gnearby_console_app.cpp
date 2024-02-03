@@ -233,7 +233,8 @@ DWORD WINAPI RequestConnectionWork(LPVOID lpParam)
     connection_options.allowed.web_rtc = false;
     connection_options.allowed.wifi_lan = false;
     connection_options.allowed.wifi_direct = false;
-    connection_options.remote_bluetooth_mac_address = "ac:5f:ea:38:eb:e9";
+    //connection_options.remote_bluetooth_mac_address = "ac:5f:ea:38:eb:e9";
+    connection_options.remote_bluetooth_mac_address = nullptr;
     connection_options.enforce_topology_constraints = true;
     connection_options.auto_upgrade_bandwidth = false;
     connection_options.fast_advertisement_service_uuid = local_fast_advertisement_service_uuid;
@@ -248,9 +249,10 @@ DWORD WINAPI RequestConnectionWork(LPVOID lpParam)
     std::string infoo = std::string(endpointInfo->begin(), endpointInfo->end());
     ConnectionRequestInfoW info{ infoo.c_str(), infoo.length(), clistener };;
 
+    ResultCallbackW connectResultCallback2;
     connectResultCallback.result_cb = ResultCBMee;
 
-    RequestConnection(core, request_connection_endpoint_id.c_str(), info, connection_options, connectResultCallback);
+    RequestConnection(core, request_connection_endpoint_id.c_str(), info, connection_options, connectResultCallback2);
     
     while (true)
     {
@@ -328,47 +330,8 @@ int main()
         Sleep(10);
     }
 
-
-
-    /*auto core = Core(router.get());
-
-    AdvertisingOptions a_options;
-    a_options.strategy = Strategy::kP2pCluster;
-    a_options.device_info = "connectionsd";
-    a_options.enable_bluetooth_listening = true;
-    a_options.low_power = false;
-    a_options.allowed.ble = false;
-    a_options.allowed.web_rtc = false;
-
-    ConnectionRequestInfo con_req_info;
-    con_req_info.listener.accepted_cb = [](const std::string& endpoint_id) {
-        std::cout << "Accepted new endpoint: " << endpoint_id << std::endl;
-        };
-
-    core.StartAdvertising(
-        "com.google.nearby.connectionsd", a_options.CompatibleOptions(),
-        con_req_info, [](Status status) {
-            std::cout << "Advertising result: " << status.ToString() << std::endl;
-        });
-
-    DiscoveryOptions d_options;
-    d_options.strategy = Strategy::kP2pCluster;
-    d_options.allowed.ble = false;
-    d_options.allowed.web_rtc = false;
-
-    DiscoveryListener d_listener;
-
-    d_listener.endpoint_found_cb = [](const std::string& endpoint,
-        const ByteArray& info,
-        const std::string& service_id) {
-            std::cout << "Found endpoint " << endpoint << " on service " << service_id;
-        };
-    core.StartDiscovery(
-        "com.google.nearby.connectionsd", d_options.CompatibleOptions(),
-        d_listener, [](Status status) {
-            std::cout << "Discovery status: " << status.ToString() << std::endl;
-        });*/
-
    
     return 0;
 }
+
+

@@ -90,7 +90,7 @@ class BluetoothAdapter : public api::BluetoothAdapter {
   std::string GetNameFromComputerName() const;
 
   void SetOnScanModeChanged(ScanModeCallback callback) {
-    if (scan_mode_changed_) {
+    if (!scan_mode_changed_) {
       scan_mode_changed_ = std::move(callback);
     }
   }
