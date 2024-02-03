@@ -7,7 +7,7 @@
 
 
 static constexpr uint8_t kSaltSize = 2;
-static constexpr uint8_t kMetadataEncryptionKeyHashByteSize = 14;
+static constexpr uint8_t kMetadataEncryptionKeyHashByteSize = 4;
 
 // v1 advertisements:
 //   - ParseVersion() --> 0
@@ -75,7 +75,8 @@ bool ParseHasDeviceName(uint8_t b) {
 }
 
 std::vector<uint8_t> ToEndpointInfo(std::optional<std::string> device_name_, int version_,
-    ShareTargetType device_type_, std::vector<uint8_t> salt_, std::vector<uint8_t> encrypted_metadata_key_) {
+    ShareTargetType device_type_, std::vector<uint8_t> salt_, std::vector<uint8_t> encrypted_metadata_key_)
+{
     int size = kMinimumSize + (device_name_.has_value() ? 1 : 0) +
         (device_name_.has_value() ? device_name_->size() : 0);
 

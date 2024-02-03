@@ -270,12 +270,12 @@ void P2pClusterPcpHandler::BluetoothDeviceDiscoveredHandler(
 
             // Make sure the Bluetooth device name points to a valid
             // endpoint we're discovering.
-            /*if (!IsRecognizedBluetoothEndpoint(device_name_string, service_id,
+            if (!IsRecognizedBluetoothEndpoint(device_name_string, service_id,
                                                device_name)) {
               NEARBY_LOGS(INFO) << "Found unrecognized BluetoothDeviceName "
                                 << device_name_string;
               return;
-            }*/
+            }
 
             // Report the discovered endpoint to the client.
             NEARBY_LOGS(INFO)
@@ -467,6 +467,8 @@ void P2pClusterPcpHandler::BlePeripheralDiscoveredHandler(
               << " because we are no longer discovering.";
           return;
         }
+
+        return;
 
         // Parse the BLE advertisement bytes.
         BleAdvertisement advertisement(fast_advertisement, advertisement_bytes);

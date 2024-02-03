@@ -24,11 +24,33 @@
 using namespace nearby;
 using namespace nearby::windows;
 
+DWORD WINAPI MyThreadFunction(LPVOID lpParam);
+
+#define MAX_THREADS 5
+DWORD   dwThreadIdArray[MAX_THREADS];
+HANDLE  hThreadArray[MAX_THREADS] = {};
+
+const char* nameInEndpointIfo = "Ra";
+//const char* local_fast_advertisement_service_uuid = "0000fef3-0000-1000-8000-00805f9b34fb";
+const char* local_fast_advertisement_service_uuid = nullptr;
+
+std::string connect_endpoint_id;
+
 void ListenerEndpointFoundCB(const char* endpoint_id, const char* endpoint_info,
     size_t endpoint_info_size,
     const char* str_service_id)
 {
     std::cout << "Found endpoint " << endpoint_id << " on service " << str_service_id << std::endl;
+
+    connect_endpoint_id = endpoint_id;
+
+    hThreadArray[0] = CreateThread(
+        NULL,                   // default security attributes
+        0,                      // use default stack size  
+        MyThreadFunction,       // thread function name
+        NULL,          // argument to thread function 
+        0,                      // use default creation flags 
+        &dwThreadIdArray[0]);   // returns the thread identifier 
 }
 
 void ListenerEndpointLostCB(const char* endpoint_id)
@@ -42,7 +64,7 @@ void ListenerEndpointDistanceChangedCB(const char* endpoint_id,
     std::cout << "Device distance changed: " << endpoint_id << std::endl;
 }
 
-void ResultCB(Status status)
+void ResultCBMee(Status status)
 {
     (void)status;  // Avoid unused parameter warning
     std::cout << "Status: " << std::endl;
@@ -75,27 +97,64 @@ void ListenerBandwidthChangedCB(const char* endpoint_id, MediumW medium)
     std::cout << "Advertising bandwidth changed: " << endpoint_id << std::endl;
 }
 
+Core* core = nullptr;
+ResultCallbackW connectResultCallback;
+
+DWORD WINAPI MyThreadFunction(LPVOID lpParam)
+{
+    ConnectionOptionsW connection_options;
+    connection_options.allowed.ble = true;
+    connection_options.allowed.bluetooth = true;
+    connection_options.allowed.web_rtc = false;
+    connection_options.allowed.wifi_lan = false;
+    connection_options.allowed.wifi_direct = false;
+    connection_options.remote_bluetooth_mac_address = "ac:5f:ea:38:eb:e9";
+    connection_options.enforce_topology_constraints = false;
+    connection_options.fast_advertisement_service_uuid = local_fast_advertisement_service_uuid;
+    
+    ConnectionListenerW clistener(ListenerInitiatedCB, ListenerAcceptedCB,
+        ListenerRejectedCB, ListenerDisconnectedCB,
+        ListenerBandwidthChangedCB);
+
+    //auto infoo = "NearbySharing";
+
+    auto endpointInfo = CreateEndpointInfo(nameInEndpointIfo, ShareTargetType::kLaptop);
+    std::string infoo = std::string(endpointInfo->begin(), endpointInfo->end());
+    ConnectionRequestInfoW info{ infoo.c_str(), infoo.length(), clistener };;
+
+    connectResultCallback.result_cb = ResultCBMee;
+
+    RequestConnection(core, connect_endpoint_id.c_str(), info, connection_options, connectResultCallback);
+    
+    while (true)
+    {
+        Sleep(10);
+    }
+
+    return 0;
+}
+
 int main()
 {
     auto router = InitServiceControllerRouter();
-    auto core = InitCore(router);
+    core = InitCore(router);
 
     AdvertisingOptionsW a_options;
     a_options.strategy = StrategyW::kP2pPointToPoint;
     a_options.device_info = "connectionsd";;
     a_options.allowed.ble = true;
     a_options.allowed.bluetooth = true;
-    a_options.allowed.wifi_lan = true;
-    a_options.allowed.wifi_direct = true;
-    a_options.allowed.wifi_hotspot = true;
+    a_options.allowed.wifi_lan = false;
+    a_options.allowed.wifi_direct = false;
+    a_options.allowed.wifi_hotspot = false;
     a_options.allowed.web_rtc = false;
     a_options.low_power = false;
     a_options.auto_upgrade_bandwidth = false;
-    a_options.enforce_topology_constraints = false;
-    a_options.enable_bluetooth_listening = false;
+    a_options.enforce_topology_constraints = true;
+    a_options.enable_bluetooth_listening = true;
     
 
-    a_options.fast_advertisement_service_uuid = "0000fef3-0000-1000-8000-00805f9b34fb";
+    a_options.fast_advertisement_service_uuid = local_fast_advertisement_service_uuid;
 
     ConnectionListenerW clistener(ListenerInitiatedCB, ListenerAcceptedCB,
         ListenerRejectedCB, ListenerDisconnectedCB,
@@ -103,7 +162,7 @@ int main()
 
     //auto infoo = "NearbySharing";
     
-    auto endpointInfo = CreateEndpointInfo("RajendraWindows", ShareTargetType::kLaptop);
+    auto endpointInfo = CreateEndpointInfo(nameInEndpointIfo, ShareTargetType::kLaptop);
     std::string infoo = std::string(endpointInfo->begin(), endpointInfo->end());
     ConnectionRequestInfoW info{ infoo.c_str(), infoo.length(), clistener};;
 
@@ -111,7 +170,7 @@ int main()
     //{infoo, strlen(infoo), clistener };
 
     ResultCallbackW callback2;
-    callback2.result_cb = ResultCB;
+    callback2.result_cb = ResultCBMee;
 
     StartAdvertising(core, "NearbySharing", a_options, info, callback2);
 
@@ -119,9 +178,9 @@ int main()
     d_options.strategy = StrategyW::kP2pPointToPoint;
     d_options.allowed.ble = true;
     d_options.allowed.bluetooth = true;
-    d_options.allowed.wifi_lan = true;
-    d_options.allowed.wifi_direct = true;
-    d_options.allowed.wifi_hotspot = true;
+    d_options.allowed.wifi_lan = false;
+    d_options.allowed.wifi_direct = false;
+    d_options.allowed.wifi_hotspot = false;
     d_options.allowed.web_rtc = false;
     d_options.fast_advertisement_service_uuid = "0000fef3-0000-1000-8000-00805f9b34fb";
     d_options.is_out_of_band_connection = false;
@@ -130,11 +189,16 @@ int main()
         ListenerEndpointDistanceChangedCB);
 
     ResultCallbackW callback;
-    callback.result_cb = ResultCB;
+    callback.result_cb = ResultCBMee;
 
     StartDiscovery(core, "NearbySharing", d_options, dlistener, callback);
 
+    std::cout << "=====================================================================================================" << std::endl;
+    std::cout << "=====================================================================================================" << std::endl;
+    std::cout << "=====================================================================================================" << std::endl;
+
     while (true) {
+        WaitForMultipleObjects(MAX_THREADS, hThreadArray, TRUE, INFINITE);
         Sleep(10);
     }
 

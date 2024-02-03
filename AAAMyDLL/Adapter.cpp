@@ -3,6 +3,7 @@
 #include "connections/core.h"
 
 #include "connections/c/file_w.h"
+#include "internal/platform/bluetooth_utils.h"
 
 namespace nearby::windows
 {
@@ -147,5 +148,58 @@ namespace nearby::windows
             return;
         }
         pCore->StopDiscovery(std::move(*callback.GetImpl()));
+    }
+
+    void RequestConnection(connections::Core* pCore, const char* endpoint_id,
+        ConnectionRequestInfoW info,
+        ConnectionOptionsW connection_options_w,
+        ResultCallbackW callback)
+    {
+        if (pCore == nullptr)
+        {
+            return;
+        }
+
+        connections::ConnectionRequestInfo connectionRequestInfo =
+            connections::ConnectionRequestInfo();
+        connectionRequestInfo.endpoint_info = ByteArray(info.endpoint_info);
+        connectionRequestInfo.listener = std::move(*info.listener.GetImpl());
+
+        connections::ConnectionOptions connection_options;
+        connection_options.allowed.ble = connection_options_w.allowed.ble;
+        connection_options.allowed.bluetooth = connection_options_w.allowed.bluetooth;
+        connection_options.allowed.web_rtc = connection_options_w.allowed.web_rtc;
+        connection_options.allowed.wifi_lan = connection_options_w.allowed.wifi_lan;
+        connection_options.auto_upgrade_bandwidth =
+            connection_options_w.auto_upgrade_bandwidth;
+        connection_options.enforce_topology_constraints =
+            connection_options_w.enforce_topology_constraints;
+        if (connection_options_w.fast_advertisement_service_uuid) {
+            connection_options.fast_advertisement_service_uuid =
+                std::string(connection_options_w.fast_advertisement_service_uuid);
+        }
+        connection_options.is_out_of_band_connection =
+            connection_options_w.is_out_of_band_connection;
+        connection_options.keep_alive_interval_millis =
+            connection_options_w.keep_alive_interval_millis;
+        connection_options.keep_alive_timeout_millis =
+            connection_options_w.keep_alive_timeout_millis;
+        connection_options.low_power = connection_options_w.low_power;
+        if (connection_options_w.remote_bluetooth_mac_address) {
+            connection_options.remote_bluetooth_mac_address =
+                BluetoothUtils::FromString(
+                    connection_options_w.remote_bluetooth_mac_address);
+        }
+        if (connection_options_w.strategy == StrategyW::kNone)
+            connection_options.strategy = connections::Strategy::kNone;
+        if (connection_options_w.strategy == StrategyW::kP2pCluster)
+            connection_options.strategy = connections::Strategy::kP2pCluster;
+        if (connection_options_w.strategy == StrategyW::kP2pPointToPoint)
+            connection_options.strategy = connections::Strategy::kP2pPointToPoint;
+        if (connection_options_w.strategy == StrategyW::kP2pStar)
+            connection_options.strategy = connections::Strategy::kP2pStar;
+
+        pCore->RequestConnection(endpoint_id, connectionRequestInfo,
+            connection_options, std::move(*callback.GetImpl()));
     }
 }

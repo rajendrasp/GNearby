@@ -103,5 +103,28 @@ namespace nearby::windows {
 		//   Possible status codes include:
 		//     Status::STATUS_OK if none of the above errors occurred.
 		DLL_API void __stdcall StopDiscovery(Core*, ResultCallbackW);
+
+		// Sends a request to connect to a remote endpoint.
+		//
+		// endpoint_id - The identifier for the remote endpoint to which a
+		//               connection request will be sent. Should match the value
+		//               provided in a call to
+		//               DiscoveryListener::endpoint_found_cb()
+		// info        - Connection parameters:
+		// > name      - A human readable name for the local endpoint, to appear on
+		//               the remote endpoint.
+		// > listener  - A callback notified when the remote endpoint sends a
+		//               response to the connection request.
+		// result_cb   - to access the status of the operation when available.
+		//   Possible status codes include:
+		//     Status::STATUS_OK if the connection request was sent.
+		//     Status::STATUS_ALREADY_CONNECTED_TO_ENDPOINT if the app already
+		//         has a connection to the specified endpoint.
+		//     Status::STATUS_RADIO_ERROR if we failed to connect because of an
+		//         issue with Bluetooth/WiFi.
+		//     Status::STATUS_ERROR if we failed to connect for any other reason.
+		DLL_API void __stdcall RequestConnection(Core*, const char*,
+			ConnectionRequestInfoW,
+			ConnectionOptionsW, ResultCallbackW);
 	}
 }
