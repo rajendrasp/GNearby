@@ -126,5 +126,42 @@ namespace nearby::windows {
 		DLL_API void __stdcall RequestConnection(Core*, const char*,
 			ConnectionRequestInfoW,
 			ConnectionOptionsW, ResultCallbackW);
+
+		// Accepts a connection to a remote endpoint. This method must be called
+		// before Payloads can be exchanged with the remote endpoint.
+		//
+		// endpoint_id - The identifier for the remote endpoint. Should match the
+		//               value provided in a call to
+		//               ConnectionListener::onConnectionInitiated.
+		// listener    - A callback for payloads exchanged with the remote endpoint.
+		// result_cb   - to access the status of the operation when available.
+		//   Possible status codes include:
+		//     Status::STATUS_OK if the connection request was accepted.
+		//     Status::STATUS_ALREADY_CONNECTED_TO_ENDPOINT if the app already.
+		//         has a connection to the specified endpoint.
+		DLL_API void __stdcall AcceptConnection(Core*, const char*, PayloadListenerW,
+			ResultCallbackW);
+
+		// Sends a Payload to a remote endpoint. Payloads can only be sent to remote
+		// endpoints once a notice of connection acceptance has been delivered via
+		// ConnectionListener::onConnectionResult().
+		//
+		// endpoint_ids - Array of remote endpoint identifiers for the  to which the
+		//                payload should be sent.
+		// payload      - The Payload to be sent.
+		// result_cb    - to access the status of the operation when available.
+		//   Possible status codes include:
+		//     Status::STATUS_OUT_OF_ORDER_API_CALL if the device has not first
+		//         performed advertisement or discovery (to set the Strategy.)
+		//     Status::STATUS_ENDPOINT_UNKNOWN if there's no active (or pending)
+		//         connection to the remote endpoint.
+		//     Status::STATUS_OK if none of the above errors occurred. Note that this
+		//         indicates that Nearby Connections will attempt to send the Payload,
+		//         but not that the send has successfully completed yet. Errors might
+		//         still occur during transmission (and at different times for
+		//         different endpoints), and will be delivered via
+		//         PayloadCallback#onPayloadTransferUpdate.
+		DLL_API void __stdcall SendPayload(Core*, const char**, size_t, PayloadW,
+			ResultCallbackW);
 	}
 }

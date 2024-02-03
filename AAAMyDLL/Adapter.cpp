@@ -202,4 +202,35 @@ namespace nearby::windows
         pCore->RequestConnection(endpoint_id, connectionRequestInfo,
             connection_options, std::move(*callback.GetImpl()));
     }
+
+    void AcceptConnection(connections::Core* pCore, const char* endpoint_id,
+        PayloadListenerW listener, ResultCallbackW callback)
+    {
+        if (pCore == nullptr)
+        {
+            return;
+        }
+
+        connections::PayloadListener payload_listener =
+            std::move(*listener.GetImpl());
+        pCore->AcceptConnection(endpoint_id, std::move(payload_listener),
+            std::move(*callback.GetImpl()));
+    }
+
+    void SendPayload(connections::Core* pCore,
+        // todo(jfcarroll) this is being exported, needs to be
+        // refactored to return a plain old c type
+        const char** endpoint_ids, size_t endpoint_ids_size,
+        PayloadW payloadw, ResultCallbackW callback)
+    {
+        if (pCore == nullptr)
+        {
+            return;
+        }
+
+        std::string payloadData = std::string(*endpoint_ids);
+        absl::Span<const std::string> span{ &payloadData, 1 };
+        pCore->SendPayload(span, std::move(*payloadw.GetImpl()),
+            std::move(*callback.GetImpl()));
+    }
 }

@@ -24,7 +24,9 @@
 using namespace nearby;
 using namespace nearby::windows;
 
-DWORD WINAPI MyThreadFunction(LPVOID lpParam);
+DWORD WINAPI RequestConnectionWork(LPVOID lpParam);
+DWORD WINAPI AcceptConnectionWork(LPVOID lpParam);
+DWORD WINAPI SendPayloadWork(LPVOID lpParam);
 
 #define MAX_THREADS 5
 DWORD   dwThreadIdArray[MAX_THREADS];
@@ -34,7 +36,8 @@ const char* nameInEndpointIfo = "Ra";
 //const char* local_fast_advertisement_service_uuid = "0000fef3-0000-1000-8000-00805f9b34fb";
 const char* local_fast_advertisement_service_uuid = nullptr;
 
-std::string connect_endpoint_id;
+std::string request_connection_endpoint_id;
+std::string accept_connection_endpoint_id;
 
 void ListenerEndpointFoundCB(const char* endpoint_id, const char* endpoint_info,
     size_t endpoint_info_size,
@@ -42,12 +45,12 @@ void ListenerEndpointFoundCB(const char* endpoint_id, const char* endpoint_info,
 {
     std::cout << "Found endpoint " << endpoint_id << " on service " << str_service_id << std::endl;
 
-    connect_endpoint_id = endpoint_id;
+    request_connection_endpoint_id = endpoint_id;
 
     hThreadArray[0] = CreateThread(
         NULL,                   // default security attributes
         0,                      // use default stack size  
-        MyThreadFunction,       // thread function name
+        RequestConnectionWork,       // thread function name
         NULL,          // argument to thread function 
         0,                      // use default creation flags 
         &dwThreadIdArray[0]);   // returns the thread identifier 
@@ -75,11 +78,28 @@ void ListenerInitiatedCB(
     const ConnectionResponseInfoW& connection_response_info)
 {
     std::cout << "Advertising initiated: " << endpoint_id << std::endl;
+    accept_connection_endpoint_id = endpoint_id;
+
+    hThreadArray[1] = CreateThread(
+        NULL,                   // default security attributes
+        0,                      // use default stack size  
+        AcceptConnectionWork,       // thread function name
+        NULL,          // argument to thread function 
+        0,                      // use default creation flags 
+        &dwThreadIdArray[1]);   // returns the thread identifier 
 }
 
 void ListenerAcceptedCB(const char* endpoint_id)
 {
     std::cout << "Advertising accepted: " << endpoint_id << std::endl;
+
+    //hThreadArray[2] = CreateThread(
+    //    NULL,                   // default security attributes
+    //    0,                      // use default stack size  
+    //    SendPayloadWork,       // thread function name
+    //    NULL,          // argument to thread function 
+    //    0,                      // use default creation flags 
+    //    &dwThreadIdArray[2]);   // returns the thread identifier 
 }
 
 void ListenerRejectedCB(const char* endpoint_id, connections::Status status)
@@ -97,10 +117,115 @@ void ListenerBandwidthChangedCB(const char* endpoint_id, MediumW medium)
     std::cout << "Advertising bandwidth changed: " << endpoint_id << std::endl;
 }
 
+void ListenerPayloadCB(const char* endpoint_id, PayloadW& payload)
+{
+    std::cout << "Payload callback called. id: " << endpoint_id << "payload_id: " << payload.GetId() << "type: " << (int)payload.GetType() << "offset : " << payload.GetOffset() << std::endl;
+
+    switch (payload.GetType())
+    {
+    case nearby::connections::PayloadType::kBytes:
+    {
+        const char* bytes = nullptr;
+        size_t bytes_size;
+
+        if (!payload.AsBytes(bytes, bytes_size))
+        {
+            std::cout << "Failed to get the payload as bytes." << std::endl;
+            return;
+        }
+        else
+        {
+            std::cout << bytes << std::endl;
+        }
+
+        return;
+    }
+    case nearby::connections::PayloadType::kStream: {
+        return;
+    }
+    case nearby::connections::PayloadType::kFile: {
+        std::string path = payload.GetFileName();
+        std::cout << path << std::endl;
+        return;
+    }
+    default:
+        std::cout << "Invalid payload type." << std::endl;
+        return;
+    }
+}
+
+void ListenerPayloadProgressCB(
+    const char* endpoint_id,
+    const PayloadProgressInfoW& payload_progress_info)
+{
+    std::cout << "Payload progress callback called. id: " << endpoint_id << "payload_id: " << payload_progress_info.payload_id
+        << "bytes transferred: " << payload_progress_info.bytes_transferred << "total: " << payload_progress_info.total_bytes
+        << "status: " << (int)payload_progress_info.status << std::endl;
+}
+
 Core* core = nullptr;
 ResultCallbackW connectResultCallback;
+ResultCallbackW acceptResultCallback;
+ResultCallbackW payloadResultCallback;
 
-DWORD WINAPI MyThreadFunction(LPVOID lpParam)
+constexpr uint8_t kPayload[] = { 0x0f, 0x0a, 0x0c, 0x0e };
+
+DWORD WINAPI AcceptConnectionWork(LPVOID lpParam)
+{
+    PayloadListenerW listener(ListenerPayloadCB, ListenerPayloadProgressCB);
+
+    ResultCallbackW acceptResultCallbacktmp;
+    acceptResultCallbacktmp.result_cb = ResultCBMee;
+
+    AcceptConnection(core, accept_connection_endpoint_id.c_str(), listener, acceptResultCallback);
+
+    std::cout << "accepting part is done by Rajendra" << std::endl;
+
+    while (true)
+    {
+        Sleep(10);
+    }
+
+    return 0;
+}
+
+DWORD WINAPI SendPayloadWork(LPVOID lpParam)
+{
+    std::cout << "sending payload Rajendra" << std::endl;
+
+    std::vector<std::string> endpoint_ids = { std::string(accept_connection_endpoint_id) };
+
+    const std::vector<uint8_t> expected_payload(std::begin(kPayload),
+        std::end(kPayload));
+
+    std::string payloadStr = std::string(expected_payload.begin(), expected_payload.end());
+
+    PayloadW payload(payloadStr.c_str(), payloadStr.size());
+
+    std::vector<const char*> c_string_array;
+
+    std::transform(endpoint_ids.begin(), endpoint_ids.end(),
+        std::back_inserter(c_string_array),
+        [](const std::string& s) {
+            char* pc = new char[s.size() + 1];
+            strncpy(pc, s.c_str(), s.size() + 1);
+            return pc;
+        });
+
+    payloadResultCallback.result_cb = ResultCBMee;
+
+    SendPayload(core, c_string_array.data(), c_string_array.size(),
+        std::move(payload), payloadResultCallback);
+
+    while (true)
+    {
+        Sleep(10);
+    }
+
+    return 0;
+}
+
+DWORD WINAPI RequestConnectionWork(LPVOID lpParam)
 {
     ConnectionOptionsW connection_options;
     connection_options.allowed.ble = true;
@@ -109,7 +234,8 @@ DWORD WINAPI MyThreadFunction(LPVOID lpParam)
     connection_options.allowed.wifi_lan = false;
     connection_options.allowed.wifi_direct = false;
     connection_options.remote_bluetooth_mac_address = "ac:5f:ea:38:eb:e9";
-    connection_options.enforce_topology_constraints = false;
+    connection_options.enforce_topology_constraints = true;
+    connection_options.auto_upgrade_bandwidth = false;
     connection_options.fast_advertisement_service_uuid = local_fast_advertisement_service_uuid;
     
     ConnectionListenerW clistener(ListenerInitiatedCB, ListenerAcceptedCB,
@@ -124,7 +250,7 @@ DWORD WINAPI MyThreadFunction(LPVOID lpParam)
 
     connectResultCallback.result_cb = ResultCBMee;
 
-    RequestConnection(core, connect_endpoint_id.c_str(), info, connection_options, connectResultCallback);
+    RequestConnection(core, request_connection_endpoint_id.c_str(), info, connection_options, connectResultCallback);
     
     while (true)
     {
