@@ -32,6 +32,13 @@ DWORD WINAPI SendPayloadWork(LPVOID lpParam);
 DWORD   dwThreadIdArray[MAX_THREADS];
 HANDLE  hThreadArray[MAX_THREADS] = {};
 
+Core* core = nullptr;
+ResultCallbackW connectResultCallback;
+ResultCallbackW acceptResultCallback;
+ResultCallbackW payloadResultCallback;
+
+constexpr uint8_t kPayload[] = { 0x0f, 0x0a, 0x0c, 0x0e };
+
 const char* nameInEndpointIfo = "Ra";
 //const char* local_fast_advertisement_service_uuid = "0000fef3-0000-1000-8000-00805f9b34fb";
 const char* local_fast_advertisement_service_uuid = nullptr;
@@ -162,13 +169,6 @@ void ListenerPayloadProgressCB(
         << "bytes transferred: " << payload_progress_info.bytes_transferred << "total: " << payload_progress_info.total_bytes
         << "status: " << (int)payload_progress_info.status << std::endl;
 }
-
-Core* core = nullptr;
-ResultCallbackW connectResultCallback;
-ResultCallbackW acceptResultCallback;
-ResultCallbackW payloadResultCallback;
-
-constexpr uint8_t kPayload[] = { 0x0f, 0x0a, 0x0c, 0x0e };
 
 DWORD WINAPI AcceptConnectionWork(LPVOID lpParam)
 {

@@ -68,3 +68,4 @@ build/proto
 build/internal/proto
 build/connections/implementation/proto
 generate.stamp
+Generated Files
