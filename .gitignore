@@ -64,3 +64,6 @@ compile_commands.json
 
 CMakeFiles
 Debug
+internal/platform/implementation/out/build/x64-Debug
+Generated Files
+build/packages
