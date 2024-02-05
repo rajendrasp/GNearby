@@ -620,6 +620,22 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
+    <ProjectReference Include="D:\Code\GNearby\GNearbyCmake\GNearby\build\internal\platform\implementation\windows\internal_platform_implementation_windows.vcxproj">
+      <Project>{E0F94455-8B63-33BA-9811-D54CEF912B58}</Project>
+      <Name>internal_platform_implementation_windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Code\GNearby\GNearbyCmake\GNearby\build\internal\platform\implementation\windows\internal_platform_implementation_windows_comm.vcxproj">
+      <Project>{B60D0B13-5140-3942-9E85-2388BB608EBA}</Project>
+      <Name>internal_platform_implementation_windows_comm</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Code\GNearby\GNearbyCmake\GNearby\build\internal\platform\implementation\windows\internal_platform_implementation_windows_crypto.vcxproj">
+      <Project>{D7FC7BD3-3F21-3540-B61F-DE41A187B37B}</Project>
+      <Name>internal_platform_implementation_windows_crypto</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Code\GNearby\GNearbyCmake\GNearby\build\internal\platform\implementation\windows\internal_platform_implementation_windows_types.vcxproj">
+      <Project>{346D4B3C-4DF7-34FC-8B34-4C060B16BC97}</Project>
+      <Name>internal_platform_implementation_windows_types</Name>
+    </ProjectReference>
     <ProjectReference Include="D:\Code\GNearby\GNearbyCmake\GNearby\build\internal\platform\internal_platform_logging.vcxproj">
       <Project>{432CADF6-3832-3508-A84F-54D9A427C08E}</Project>
       <Name>internal_platform_logging</Name>

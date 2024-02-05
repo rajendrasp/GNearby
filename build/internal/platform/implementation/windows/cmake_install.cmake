@@ -1,4 +1,4 @@
-# Install script for directory: D:/Code/GNearby/GNearbyCmake/GNearby/internal/platform/implementation
+# Install script for directory: D:/Code/GNearby/GNearbyCmake/GNearby/internal/platform/implementation/windows
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -30,15 +30,5 @@ endif()
 # Is this installation the result of a crosscompile?
 if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("D:/Code/GNearby/GNearbyCmake/GNearby/build/internal/platform/implementation/shared/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("D:/Code/GNearby/GNearbyCmake/GNearby/build/internal/platform/implementation/windows/cmake_install.cmake")
 endif()
 
