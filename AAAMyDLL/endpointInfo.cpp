@@ -4,6 +4,7 @@
 #include <optional>
 
 #include "endpointInfo.h"
+#include "internal/crypto_cros/random.h"
 
 
 static constexpr uint8_t kSaltSize = 2;
@@ -98,11 +99,6 @@ std::vector<uint8_t> ToEndpointInfo(std::optional<std::string> device_name_, int
 
     return endpoint_info;
 }
-
-
-
-
-#include "internal/crypto_cros/random.h"
 
 std::vector<uint8_t> GenerateRandomBytes(size_t num_bytes) {
     std::vector<uint8_t> bytes(num_bytes);

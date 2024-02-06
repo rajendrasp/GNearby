@@ -25,8 +25,8 @@
 //   default-initialized.
 // - callbacks may be initialized with lambdas; lambda definitions are concize.
 
-#include "connections/c/medium_selector_w.h"
-#include "connections/c/payload_w.h"
+#include "medium_selector_w.h"
+#include "payload_w.h"
 #include "connections/status.h"
 #include "internal/platform/payload_id.h"
 

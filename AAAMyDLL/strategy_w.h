@@ -16,7 +16,7 @@
 
 #include <string>
 
-#include "connections/c/dll_config.h"
+#include "dll_config.h"
 
 namespace nearby::windows {
 

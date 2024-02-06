@@ -143,17 +143,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Adapter.h" />
+    <ClInclude Include="advertising_options_w.h" />
+    <ClInclude Include="compatible_u8_string.h" />
+    <ClInclude Include="connection_options_w.h" />
+    <ClInclude Include="discovery_options_w.h" />
     <ClInclude Include="dll_config.h" />
     <ClInclude Include="endpointInfo.h" />
     <ClInclude Include="file_w.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="listeners_w.h" />
+    <ClInclude Include="medium_selector_w.h" />
     <ClInclude Include="medium_w.h" />
+    <ClInclude Include="params.h" />
+    <ClInclude Include="params_w.h" />
     <ClInclude Include="payload_w.h" />
     <ClInclude Include="strategy_w.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Adapter.cpp" />
+    <ClCompile Include="advertising_options_w.cc" />
+    <ClCompile Include="connection_options_w.cc" />
+    <ClCompile Include="discovery_options_w.cc" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="endpointInfo.cpp" />
     <ClCompile Include="file_w.cc" />

@@ -40,6 +40,8 @@ ResultCallbackW payloadResultCallback;
 constexpr uint8_t kPayload[] = { 0x0f, 0x0a, 0x0c, 0x0e };
 
 const char* nameInEndpointIfo = "Ra";
+const char* kServiceId = "NearbySharing";
+
 //const char* local_fast_advertisement_service_uuid = "0000fef3-0000-1000-8000-00805f9b34fb";
 const char* local_fast_advertisement_service_uuid = nullptr;
 
@@ -243,8 +245,6 @@ DWORD WINAPI RequestConnectionWork(LPVOID lpParam)
         ListenerRejectedCB, ListenerDisconnectedCB,
         ListenerBandwidthChangedCB);
 
-    //auto infoo = "NearbySharing";
-
     auto endpointInfo = CreateEndpointInfo(nameInEndpointIfo, ShareTargetType::kLaptop);
     std::string infoo = std::string(endpointInfo->begin(), endpointInfo->end());
     ConnectionRequestInfoW info{ infoo.c_str(), infoo.length(), clistener };;
@@ -288,8 +288,6 @@ int main()
         ListenerRejectedCB, ListenerDisconnectedCB,
         ListenerBandwidthChangedCB);
 
-    //auto infoo = "NearbySharing";
-    
     auto endpointInfo = CreateEndpointInfo(nameInEndpointIfo, ShareTargetType::kLaptop);
     std::string infoo = std::string(endpointInfo->begin(), endpointInfo->end());
     ConnectionRequestInfoW info{ infoo.c_str(), infoo.length(), clistener};;
@@ -300,7 +298,7 @@ int main()
     ResultCallbackW callback2;
     callback2.result_cb = ResultCBMee;
 
-    StartAdvertising(core, "NearbySharing", a_options, info, callback2);
+    StartAdvertising(core, kServiceId, a_options, info, callback2);
 
     DiscoveryOptionsW d_options;
     d_options.strategy = StrategyW::kP2pPointToPoint;
@@ -319,7 +317,7 @@ int main()
     ResultCallbackW callback;
     callback.result_cb = ResultCBMee;
 
-    StartDiscovery(core, "NearbySharing", d_options, dlistener, callback);
+    StartDiscovery(core, kServiceId, d_options, dlistener, callback);
 
     std::cout << "=====================================================================================================" << std::endl;
     std::cout << "=====================================================================================================" << std::endl;

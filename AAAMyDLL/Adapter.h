@@ -2,10 +2,10 @@
 
 #include "dll_config.h"
 
-#include "connections/c/advertising_options_w.h"
-#include "connections/c/params_w.h"
-#include "connections/c/discovery_options_w.h"
-#include "connections/c/connection_options_w.h"
+#include "advertising_options_w.h"
+#include "params_w.h"
+#include "discovery_options_w.h"
+#include "connection_options_w.h"
 
 namespace nearby::connections {
 	class Core;

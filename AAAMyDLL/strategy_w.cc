@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "connections/c/strategy_w.h"
+#include "strategy_w.h"
 
 #include <string>
 

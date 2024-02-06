@@ -17,7 +17,7 @@
 #include <memory>
 #include <string>
 
-#include "connections/c/dll_config.h"
+#include "dll_config.h"
 #include "internal/platform/payload_id.h"
 
 namespace nearby {

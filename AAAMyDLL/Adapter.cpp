@@ -2,7 +2,7 @@
 #include "Adapter.h"
 #include "connections/core.h"
 
-#include "connections/c/file_w.h"
+#include "file_w.h"
 #include "internal/platform/bluetooth_utils.h"
 
 namespace nearby::windows

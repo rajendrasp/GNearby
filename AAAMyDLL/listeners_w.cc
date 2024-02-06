@@ -15,7 +15,7 @@
 #include <memory>
 #include <utility>
 
-#include "connections/c/listeners_w.h"
+#include "listeners_w.h"
 
 #include "connections/listeners.h"
 

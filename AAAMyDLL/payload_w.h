@@ -19,11 +19,16 @@
 #include <functional>
 #include <memory>
 #include <utility>
+#include <filesystem>  // NOLINT(build/c++17)
 
-#include "connections/c/dll_config.h"
+#include "dll_config.h"
 #include "connections/c/file_w.h"
 #include "connections/payload_type.h"
 #include "internal/platform/payload_id.h"
+#include "absl/strings/string_view.h"
+#include "compatible_u8_string.h"
+#include "internal/crypto_cros/random.h"
+
 
 namespace nearby {
 namespace connections {
@@ -34,6 +39,8 @@ struct PayloadDeleter {
 };
 }  // namespace connections
 }  // namespace nearby
+
+nearby::connections::Payload ConvertToServicePayload(PayloadS payload);
 
 namespace nearby {
 
@@ -46,6 +53,8 @@ namespace nearby {
 namespace windows {
 
 extern "C" {
+
+    
 
 // Payload is default-constructible, and moveable, but not copyable container
 // that holds at most one instance of one of:
