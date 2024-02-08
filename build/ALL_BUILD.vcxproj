@@ -914,9 +914,17 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{CAB33065-DC8D-31D6-BFBF-6008CE6269DD}</Project>
       <Name>set_test</Name>
     </ProjectReference>
+    <ProjectReference Include="D:\Code\GNearby\GNearbyCmake\GNearby\build\sharing\proto\share_cc_proto.vcxproj">
+      <Project>{6F74BF1B-2A08-35E3-B8B0-A5E36B12E2E9}</Project>
+      <Name>share_cc_proto</Name>
+    </ProjectReference>
     <ProjectReference Include="D:\Code\GNearby\GNearbyCmake\GNearby\build\proto\sharing_enums_cc_proto.vcxproj">
       <Project>{23A914DA-DEB8-3A3C-AD70-C62BF6B63F08}</Project>
       <Name>sharing_enums_cc_proto</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Code\GNearby\GNearbyCmake\GNearby\build\sharing\proto\analytics\sharing_log_cc_proto.vcxproj">
+      <Project>{090C2BB0-1A34-3BBB-915A-6AFE0FB7C791}</Project>
+      <Name>sharing_log_cc_proto</Name>
     </ProjectReference>
     <ProjectReference Include="D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\re2-build\simplify_test.vcxproj">
       <Project>{E168BC38-5EC0-39CD-B7F6-57E63975DD2E}</Project>
