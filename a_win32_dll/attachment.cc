@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "sharing/attachment.h"
+#include "attachment.h"
 
 #include <stdint.h>
 

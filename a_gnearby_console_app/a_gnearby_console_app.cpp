@@ -65,6 +65,23 @@ public:
         std::vector<uint8_t> infoV(infoStr.begin(), infoStr.end());
         std::unique_ptr<Advertisement> advertisement =
             decoder_.DecodeAdvertisement(infoV);
+
+        ReceiveIntroduction();
+    }
+
+    void ReceiveIntroduction()
+    {
+        ReadFrame();
+    }
+
+    void ReadFrame()
+    {
+        Read();
+    }
+
+    void Read()
+    {
+
     }
 
     std::unordered_map<std::string, ConnectionResponseInfoW> connection_info_map_;

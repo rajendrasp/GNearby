@@ -148,34 +148,45 @@
     <ClInclude Include="Adapter.h" />
     <ClInclude Include="advertisement.h" />
     <ClInclude Include="advertising_options_w.h" />
+    <ClInclude Include="attachment.h" />
     <ClInclude Include="compatible_u8_string.h" />
     <ClInclude Include="connection_options_w.h" />
     <ClInclude Include="discovery_options_w.h" />
     <ClInclude Include="dll_config.h" />
     <ClInclude Include="endpointInfo.h" />
+    <ClInclude Include="file_attachment.h" />
     <ClInclude Include="file_w.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="listeners_w.h" />
+    <ClInclude Include="logging.h" />
     <ClInclude Include="medium_selector_w.h" />
     <ClInclude Include="medium_w.h" />
+    <ClInclude Include="mime.h" />
+    <ClInclude Include="nearby_share_enums.h" />
     <ClInclude Include="nearby_sharing_decoder_impl.h" />
     <ClInclude Include="options_base_w.h" />
     <ClInclude Include="params.h" />
     <ClInclude Include="params_w.h" />
     <ClInclude Include="payload_w.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="share_target.h" />
     <ClInclude Include="strategy_w.h" />
+    <ClInclude Include="text_attachment.h" />
+    <ClInclude Include="wifi_credentials_attachment.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Adapter.cpp" />
     <ClCompile Include="advertisement.cc" />
     <ClCompile Include="advertising_options_w.cc" />
+    <ClCompile Include="attachment.cc" />
     <ClCompile Include="connection_options_w.cc" />
     <ClCompile Include="discovery_options_w.cc" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="endpointInfo.cpp" />
+    <ClCompile Include="file_attachment.cc" />
     <ClCompile Include="file_w.cc" />
     <ClCompile Include="listeners_w.cc" />
+    <ClCompile Include="mime.cc" />
     <ClCompile Include="nearby_sharing_decoder_impl.cc" />
     <ClCompile Include="payload_w.cc" />
     <ClCompile Include="pch.cpp">
@@ -184,11 +195,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="share_target.cc" />
     <ClCompile Include="strategy_w.cc" />
+    <ClCompile Include="text_attachment.cc" />
+    <ClCompile Include="wifi_credentials_attachment.cc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\build\connections\connections_core.vcxproj">
       <Project>{a1074f4d-6117-3e64-ac59-1713430310fc}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\build\internal\network\internal_network_types.vcxproj">
+      <Project>{6b021a84-ec8a-3e4a-974a-6532799abc0a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\build\internal\platform\implementation\windows\internal_platform_implementation_windows.vcxproj">
       <Project>{e0f94455-8b63-33ba-9811-d54cef912b58}</Project>

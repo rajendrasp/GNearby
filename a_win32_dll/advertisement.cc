@@ -23,8 +23,8 @@
 #include <vector>
 
 #include "absl/types/span.h"
-#include "sharing/common/nearby_share_enums.h"
-#include "sharing/internal/public/logging.h"
+#include "nearby_share_enums.h"
+#include "logging.h"
 
 namespace nearby {
 namespace sharing {

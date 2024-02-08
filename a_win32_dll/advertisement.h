@@ -24,7 +24,7 @@
 
 #include "dll_config.h"
 #include "absl/types/span.h"
-#include "sharing/common/nearby_share_enums.h"
+#include "nearby_share_enums.h"
 
 namespace nearby {
     namespace sharing {

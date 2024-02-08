@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,23 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef THIRD_PARTY_NEARBY_SHARING_COMMON_COMPATIBLE_U8_STRING_H_
-#define THIRD_PARTY_NEARBY_SHARING_COMMON_COMPATIBLE_U8_STRING_H_
+#ifndef THIRD_PARTY_NEARBY_SHARING_INTERNAL_BASE_MIME_H_
+#define THIRD_PARTY_NEARBY_SHARING_INTERNAL_BASE_MIME_H_
 
 #include <string>
 
+#include "absl/strings/string_view.h"
+
 namespace nearby {
-namespace sharing {
+namespace utils {
 
-#if defined(__cpp_lib_char8_t)
-inline std::string GetCompatibleU8String(std::u8string str) {
-  return reinterpret_cast<const char*>(str.c_str());
-}
-#else
-inline std::string GetCompatibleU8String(std::string str) { return str; }
-#endif
+std::string GetWellKnownMimeTypeFromExtension(absl::string_view extension);
 
-}  // namespace sharing
+}  // namespace utils
 }  // namespace nearby
 
-#endif  // THIRD_PARTY_NEARBY_SHARING_COMMON_COMPATIBLE_U8_STRING_H_
+#endif  // THIRD_PARTY_NEARBY_SHARING_INTERNAL_BASE_MIME_H_

@@ -27,9 +27,6 @@
     <ClInclude Include="advertising_options_w.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="compatible_u8_string.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="connection_options_w.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -75,6 +72,33 @@
     <ClInclude Include="options_base_w.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="share_target.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="attachment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="file_attachment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="text_attachment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wifi_credentials_attachment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nearby_share_enums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="compatible_u8_string.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -114,6 +138,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="nearby_sharing_decoder_impl.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="share_target.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="attachment.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file_attachment.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="text_attachment.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wifi_credentials_attachment.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mime.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
