@@ -15,9 +15,9 @@
 #define THIRD_PARTY_NEARBY_CONNECTIONS_C_CONNECTION_OPTIONS_W_H_
 #include <string>
 
-#include "connections/c/dll_config.h"
-#include "connections/c/medium_selector_w.h"
-#include "connections/c/options_base_w.h"
+#include "dll_config.h"
+#include "medium_selector_w.h"
+#include "options_base_w.h"
 
 namespace nearby::windows {
 

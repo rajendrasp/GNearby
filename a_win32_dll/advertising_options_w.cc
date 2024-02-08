@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "connections/c/advertising_options_w.h"
+#include "advertising_options_w.h"
 
 #include <string>
 

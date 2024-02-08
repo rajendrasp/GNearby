@@ -17,7 +17,7 @@
 
 #include <string>
 
-#include "connections/c/listeners_w.h"
+#include "listeners_w.h"
 
 namespace nearby::windows {
 

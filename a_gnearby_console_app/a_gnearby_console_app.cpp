@@ -20,8 +20,10 @@
 #include <memory>
 #include <iostream>
 
-#include "../a_win32_dll/Adapter.h"
-#include "../a_win32_dll/endpointInfo.h"
+#include "a_win32_dll/Adapter.h"
+#include "a_win32_dll/endpointInfo.h"
+//#include "nearby_manager.h"
+#include "a_win32_dll/nearby_sharing_decoder_impl.h"
 
 using namespace nearby;
 using namespace nearby::windows;
@@ -49,6 +51,30 @@ const char* local_fast_advertisement_service_uuid = nullptr;
 
 std::string request_connection_endpoint_id;
 std::string accept_connection_endpoint_id;
+
+
+using namespace nearby::sharing;
+
+class NearbyConnectionsManagerImpl
+{
+public:
+
+    void OnIncomingConnection(std::string, const char* info, size_t size)
+    {
+        std::string infoStr(info, size);
+        std::vector<uint8_t> infoV(infoStr.begin(), infoStr.end());
+        std::unique_ptr<Advertisement> advertisement =
+            decoder_.DecodeAdvertisement(infoV);
+    }
+
+    std::unordered_map<std::string, ConnectionResponseInfoW> connection_info_map_;
+    NearbySharingDecoderImpl decoder_;
+};
+
+NearbyConnectionsManagerImpl manager;
+
+
+
 
 void ListenerEndpointFoundCB(const char* endpoint_id, const char* endpoint_info,
     size_t endpoint_info_size,
@@ -91,6 +117,8 @@ void ListenerInitiatedCB(
     std::cout << "Advertising initiated: " << endpoint_id << std::endl;
     accept_connection_endpoint_id = endpoint_id;
 
+    manager.connection_info_map_.emplace(endpoint_id, connection_response_info);
+
     hThreadArray[1] = CreateThread(
         NULL,                   // default security attributes
         0,                      // use default stack size  
@@ -103,6 +131,15 @@ void ListenerInitiatedCB(
 void ListenerAcceptedCB(const char* endpoint_id)
 {
     std::cout << "Advertising accepted: " << endpoint_id << std::endl;
+
+    auto it = manager.connection_info_map_.find(endpoint_id);
+    if (it == manager.connection_info_map_.end()) return;
+
+    if (it->second.is_incoming_connection)
+    {
+        manager.OnIncomingConnection(endpoint_id, it->second.remote_endpoint_info, it->second.remote_endpoint_info_size);
+    }
+
 
     //hThreadArray[2] = CreateThread(
     //    NULL,                   // default security attributes
@@ -247,7 +284,7 @@ DWORD WINAPI RequestConnectionWork(LPVOID lpParam)
         ListenerRejectedCB, ListenerDisconnectedCB,
         ListenerBandwidthChangedCB);
 
-    auto endpointInfo = CreateEndpointInfo(nameInEndpointIfo, ShareTargetType::kLaptop);
+    auto endpointInfo = CreateEndpointInfo(nameInEndpointIfo, nearby::endpoint::ShareTargetType::kLaptop);
     std::string infoo = std::string(endpointInfo->begin(), endpointInfo->end());
     ConnectionRequestInfoW info{ infoo.c_str(), infoo.length(), clistener };;
 
@@ -290,7 +327,7 @@ int main()
         ListenerRejectedCB, ListenerDisconnectedCB,
         ListenerBandwidthChangedCB);
 
-    auto endpointInfo = CreateEndpointInfo(nameInEndpointIfo, ShareTargetType::kLaptop);
+    auto endpointInfo = nearby::endpoint::CreateEndpointInfo(nameInEndpointIfo, nearby::endpoint::ShareTargetType::kLaptop);
     std::string infoo = std::string(endpointInfo->begin(), endpointInfo->end());
     ConnectionRequestInfoW info{ infoo.c_str(), infoo.length(), clistener };;
 

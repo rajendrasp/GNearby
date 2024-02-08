@@ -22,7 +22,7 @@
 #include <filesystem>  // NOLINT(build/c++17)
 
 #include "dll_config.h"
-#include "connections/c/file_w.h"
+#include "file_w.h"
 #include "connections/payload_type.h"
 #include "internal/platform/payload_id.h"
 #include "absl/strings/string_view.h"

@@ -18,7 +18,7 @@
 #include <memory>
 #include <utility>
 
-#include "connections/c/file_w.h"
+#include "file_w.h"
 #include "connections/payload.h"
 #include "connections/payload_type.h"
 #include "internal/platform/byte_array.h"

@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Adapter.h" />
+    <ClInclude Include="advertisement.h" />
     <ClInclude Include="advertising_options_w.h" />
     <ClInclude Include="compatible_u8_string.h" />
     <ClInclude Include="connection_options_w.h" />
@@ -157,6 +158,8 @@
     <ClInclude Include="listeners_w.h" />
     <ClInclude Include="medium_selector_w.h" />
     <ClInclude Include="medium_w.h" />
+    <ClInclude Include="nearby_sharing_decoder_impl.h" />
+    <ClInclude Include="options_base_w.h" />
     <ClInclude Include="params.h" />
     <ClInclude Include="params_w.h" />
     <ClInclude Include="payload_w.h" />
@@ -165,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Adapter.cpp" />
+    <ClCompile Include="advertisement.cc" />
     <ClCompile Include="advertising_options_w.cc" />
     <ClCompile Include="connection_options_w.cc" />
     <ClCompile Include="discovery_options_w.cc" />
@@ -172,6 +176,7 @@
     <ClCompile Include="endpointInfo.cpp" />
     <ClCompile Include="file_w.cc" />
     <ClCompile Include="listeners_w.cc" />
+    <ClCompile Include="nearby_sharing_decoder_impl.cc" />
     <ClCompile Include="payload_w.cc" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -187,6 +192,12 @@
     </ProjectReference>
     <ProjectReference Include="..\build\internal\platform\implementation\windows\internal_platform_implementation_windows.vcxproj">
       <Project>{e0f94455-8b63-33ba-9811-d54cef912b58}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\build\proto\sharing_enums_cc_proto.vcxproj">
+      <Project>{23a914da-deb8-3a3c-ad70-c62bf6b63f08}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\build\sharing\proto\share_cc_proto.vcxproj">
+      <Project>{6f74bf1b-2a08-35e3-b8b0-a5e36b12e2e9}</Project>
     </ProjectReference>
     <ProjectReference Include="..\build\_deps\securemessage-build\cpp\src\securemessage\securemessage.vcxproj">
       <Project>{a7956129-08a9-3ab2-a0a7-4b013ba63aad}</Project>

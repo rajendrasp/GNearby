@@ -66,6 +66,15 @@
     <ClInclude Include="strategy_w.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="advertisement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nearby_sharing_decoder_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="options_base_w.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -99,6 +108,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="endpointInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="advertisement.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nearby_sharing_decoder_impl.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

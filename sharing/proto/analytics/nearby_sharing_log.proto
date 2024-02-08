@@ -16,7 +16,7 @@ syntax = "proto2";
 
 package nearby.sharing.analytics.proto;
 
-import "google/protobuf/duration.proto";
+import "D:/Code/GNearby/GNearbyCmake/GNearby/build/_deps/protobuf-src/src/google/protobuf/duration.proto";
 
 // import "storage/datapol/annotations/proto/semantic_annotations.proto";
 import "proto/sharing_enums.proto";

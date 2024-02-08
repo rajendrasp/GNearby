@@ -15,7 +15,7 @@
 #define THIRD_PARTY_NEARBY_CONNECTIONS_C_DISCOVERY_OPTIONS_W_H_
 #include <string>
 
-#include "connections/c/options_base_w.h"
+#include "options_base_w.h"
 
 namespace nearby::windows {
 

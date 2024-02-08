@@ -14,7 +14,7 @@
 #ifndef THIRD_PARTY_NEARBY_CONNECTIONS_C_ADVERTISING_OPTIONS_W_H_
 #define THIRD_PARTY_NEARBY_CONNECTIONS_C_ADVERTISING_OPTIONS_W_H_
 
-#include "connections/c/options_base_w.h"
+#include "options_base_w.h"
 
 namespace nearby::windows {
 
