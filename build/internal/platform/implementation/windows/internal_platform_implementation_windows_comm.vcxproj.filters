@@ -112,4 +112,7 @@
       <UniqueIdentifier>{40C6ABED-705F-3C2D-AAC7-87F3D3366D23}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="placeholder_file.cpp" />
+  </ItemGroup>
 </Project>

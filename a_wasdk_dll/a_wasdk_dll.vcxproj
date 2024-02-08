@@ -76,8 +76,10 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <PreprocessorDefinitions>_WINRT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -94,6 +96,7 @@
       <PreprocessorDefinitions>CORE_ADAPTER_DLL;GLOG_NO_ABBREVIATED_SEVERITIES;_CRT_SECURE_NO_WARNINGS;NOMINMAX;NO_WEBRTC;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Code\GNearby\GNearbyCmake\GNearby;D:\Code\GNearby\GNearbyCmake\GNearby\build;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\protobuf-src\src;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\absl-src;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\boringssl-src\include;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\nlohmann_json-src\include;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\glog-build;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\glog-src\src;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\glog-src\src\windows;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\smhasher-src;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\ukey2-src\src\main\cpp\include;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto\..;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\ukey2-build\src\main\proto;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto\..;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\securemessage-build\proto;D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\securemessage-src\cpp\include;D:\Code\vcpkg\vcpkg\installed\x64-windows\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libssl.lib;libcrypto.lib;dnsapi.lib;Wlanapi.lib;Ws2_32.lib;Wininet.lib;Wtsapi32.lib;Setupapi.lib;Cfgmgr32.lib;shlwapi.lib;connections_core.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
@@ -112,16 +115,12 @@
   <ItemGroup>
     <ClInclude Include="Adapter.h" />
     <ClInclude Include="dll_config.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="Class.h">
       <DependentUpon>Class.cpp</DependentUpon>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Adapter.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
@@ -143,6 +142,9 @@
   <ItemGroup>
     <ProjectReference Include="..\build\connections\connections_core.vcxproj">
       <Project>{a1074f4d-6117-3e64-ac59-1713430310fc}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\build\internal\platform\implementation\windows\internal_platform_implementation_windows.vcxproj">
+      <Project>{e0f94455-8b63-33ba-9811-d54cef912b58}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
