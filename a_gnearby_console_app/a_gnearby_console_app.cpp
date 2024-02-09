@@ -24,6 +24,7 @@
 #include "a_win32_dll/endpointInfo.h"
 //#include "nearby_manager.h"
 #include "a_win32_dll/nearby_sharing_decoder_impl.h"
+#include "a_win32_dll/nearby_connection_impl.h"
 
 using namespace nearby;
 using namespace nearby::windows;
@@ -71,21 +72,12 @@ public:
 
     void ReceiveIntroduction()
     {
-        ReadFrame();
-    }
-
-    void ReadFrame()
-    {
-        Read();
-    }
-
-    void Read()
-    {
-
+        connection_->ReceiveIntroduction();
     }
 
     std::unordered_map<std::string, ConnectionResponseInfoW> connection_info_map_;
     NearbySharingDecoderImpl decoder_;
+    std::unique_ptr<NearbyConnectionImpl> connection_;
 };
 
 NearbyConnectionsManagerImpl manager;
@@ -135,6 +127,7 @@ void ListenerInitiatedCB(
     accept_connection_endpoint_id = endpoint_id;
 
     manager.connection_info_map_.emplace(endpoint_id, connection_response_info);
+    manager.connection_ = std::make_unique<NearbyConnectionImpl>(endpoint_id);
 
     hThreadArray[1] = CreateThread(
         NULL,                   // default security attributes

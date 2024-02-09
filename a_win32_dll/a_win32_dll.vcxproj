@@ -162,6 +162,8 @@
     <ClInclude Include="medium_selector_w.h" />
     <ClInclude Include="medium_w.h" />
     <ClInclude Include="mime.h" />
+    <ClInclude Include="nearby_connection.h" />
+    <ClInclude Include="nearby_connection_impl.h" />
     <ClInclude Include="nearby_share_enums.h" />
     <ClInclude Include="nearby_sharing_decoder_impl.h" />
     <ClInclude Include="options_base_w.h" />
@@ -187,6 +189,7 @@
     <ClCompile Include="file_w.cc" />
     <ClCompile Include="listeners_w.cc" />
     <ClCompile Include="mime.cc" />
+    <ClCompile Include="nearby_connection_impl.cc" />
     <ClCompile Include="nearby_sharing_decoder_impl.cc" />
     <ClCompile Include="payload_w.cc" />
     <ClCompile Include="pch.cpp">
