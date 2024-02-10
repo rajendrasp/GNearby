@@ -8,7 +8,7 @@
 
 
 static constexpr uint8_t kSaltSize = 2;
-static constexpr uint8_t kMetadataEncryptionKeyHashByteSize = 4;
+static constexpr uint8_t kMetadataEncryptionKeyHashByteSize = 14;
 
 // v1 advertisements:
 //   - ParseVersion() --> 0

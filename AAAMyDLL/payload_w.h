@@ -40,8 +40,6 @@ struct PayloadDeleter {
 }  // namespace connections
 }  // namespace nearby
 
-nearby::connections::Payload ConvertToServicePayload(PayloadS payload);
-
 namespace nearby {
 
 class InputFile;

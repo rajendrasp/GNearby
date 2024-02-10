@@ -39,7 +39,7 @@ ResultCallbackW payloadResultCallback;
 
 constexpr uint8_t kPayload[] = { 0x0f, 0x0a, 0x0c, 0x0e };
 
-const char* nameInEndpointIfo = "Ra";
+const char* nameInEndpointIfo = "RajWindows";
 const char* kServiceId = "NearbySharing";
 
 //const char* local_fast_advertisement_service_uuid = "0000fef3-0000-1000-8000-00805f9b34fb";
@@ -308,7 +308,7 @@ int main()
     d_options.allowed.wifi_direct = false;
     d_options.allowed.wifi_hotspot = false;
     d_options.allowed.web_rtc = false;
-    d_options.fast_advertisement_service_uuid = "0000fef3-0000-1000-8000-00805f9b34fb";
+    d_options.fast_advertisement_service_uuid = local_fast_advertisement_service_uuid;
     d_options.is_out_of_band_connection = false;
 
     DiscoveryListenerW dlistener(ListenerEndpointFoundCB, ListenerEndpointLostCB,
