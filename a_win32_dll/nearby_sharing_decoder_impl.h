@@ -19,23 +19,23 @@
 
 #include <memory>
 
-#include "dll_config.h"
+#include "absl/types/span.h"
 #include "advertisement.h"
+#include "nearby_sharing_decoder.h"
 #include "sharing/proto/wire_format.pb.h"
 
 namespace nearby {
-    namespace sharing {
-        extern "C" {
-            class DLL_API NearbySharingDecoderImpl{
-            public:
-                std::unique_ptr<Advertisement> DecodeAdvertisement(
-                    std::vector<uint8_t> data);
-                std::unique_ptr<nearby::sharing::service::proto::Frame> DecodeFrame(
-                    std::vector<uint8_t> data);
-            };
+namespace sharing {
 
-        }  // namespace sharing
-    }  // namespace nearby
-}
+class NearbySharingDecoderImpl : public NearbySharingDecoder {
+ public:
+  std::unique_ptr<Advertisement> DecodeAdvertisement(
+      absl::Span<const uint8_t> data) override;
+  std::unique_ptr<nearby::sharing::service::proto::Frame> DecodeFrame(
+      absl::Span<const uint8_t> data) override;
+};
+
+}  // namespace sharing
+}  // namespace nearby
 
 #endif  // THIRD_PARTY_NEARBY_SHARING_NEARBY_SHARING_DECODER_IMPL_H_

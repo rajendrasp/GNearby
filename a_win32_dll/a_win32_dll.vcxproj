@@ -149,31 +149,55 @@
     <ClInclude Include="advertisement.h" />
     <ClInclude Include="advertising_options_w.h" />
     <ClInclude Include="attachment.h" />
+    <ClInclude Include="attachment_info.h" />
     <ClInclude Include="compatible_u8_string.h" />
     <ClInclude Include="connection_options_w.h" />
+    <ClInclude Include="constants.h" />
     <ClInclude Include="discovery_options_w.h" />
     <ClInclude Include="dll_config.h" />
     <ClInclude Include="endpointInfo.h" />
     <ClInclude Include="file_attachment.h" />
     <ClInclude Include="file_w.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="hardcoded.h" />
+    <ClInclude Include="incoming_frames_reader.h" />
+    <ClInclude Include="incoming_share_target_info.h" />
     <ClInclude Include="listeners_w.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="medium_selector_w.h" />
     <ClInclude Include="medium_w.h" />
     <ClInclude Include="mime.h" />
     <ClInclude Include="nearby_connection.h" />
+    <ClInclude Include="nearby_connections_manager.h" />
+    <ClInclude Include="nearby_connections_manager_impl.h" />
+    <ClInclude Include="nearby_connections_service.h" />
+    <ClInclude Include="nearby_connections_service_impl.h" />
+    <ClInclude Include="nearby_connections_types.h" />
     <ClInclude Include="nearby_connection_impl.h" />
+    <ClInclude Include="nearby_file_handler.h" />
     <ClInclude Include="nearby_share_enums.h" />
+    <ClInclude Include="nearby_sharing_decoder.h" />
     <ClInclude Include="nearby_sharing_decoder_impl.h" />
+    <ClInclude Include="nearby_sharing_service.h" />
+    <ClInclude Include="nearby_sharing_service_impl.h" />
+    <ClInclude Include="nearby_sharing_util.h" />
     <ClInclude Include="options_base_w.h" />
+    <ClInclude Include="outgoing_share_target_info.h" />
     <ClInclude Include="params.h" />
     <ClInclude Include="params_w.h" />
+    <ClInclude Include="payload_tracker.h" />
     <ClInclude Include="payload_w.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="sending_payload.h" />
     <ClInclude Include="share_target.h" />
+    <ClInclude Include="share_target_discovered_callback.h" />
+    <ClInclude Include="share_target_info.h" />
     <ClInclude Include="strategy_w.h" />
     <ClInclude Include="text_attachment.h" />
+    <ClInclude Include="transfer_manager.h" />
+    <ClInclude Include="transfer_metadata.h" />
+    <ClInclude Include="transfer_metadata_builder.h" />
+    <ClInclude Include="transfer_update_callback.h" />
     <ClInclude Include="wifi_credentials_attachment.h" />
   </ItemGroup>
   <ItemGroup>
@@ -181,16 +205,29 @@
     <ClCompile Include="advertisement.cc" />
     <ClCompile Include="advertising_options_w.cc" />
     <ClCompile Include="attachment.cc" />
+    <ClCompile Include="attachment_info.cc" />
     <ClCompile Include="connection_options_w.cc" />
     <ClCompile Include="discovery_options_w.cc" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="endpointInfo.cpp" />
     <ClCompile Include="file_attachment.cc" />
     <ClCompile Include="file_w.cc" />
+    <ClCompile Include="incoming_frames_reader.cc" />
+    <ClCompile Include="incoming_share_target_info.cc" />
     <ClCompile Include="listeners_w.cc" />
     <ClCompile Include="mime.cc" />
+    <ClCompile Include="nearby_connections_manager.cc" />
+    <ClCompile Include="nearby_connections_manager_impl.cc" />
+    <ClCompile Include="nearby_connections_service.cc" />
+    <ClCompile Include="nearby_connections_service_impl.cc" />
     <ClCompile Include="nearby_connection_impl.cc" />
+    <ClCompile Include="nearby_file_handler.cc" />
     <ClCompile Include="nearby_sharing_decoder_impl.cc" />
+    <ClCompile Include="nearby_sharing_service.cc" />
+    <ClCompile Include="nearby_sharing_service_impl.cc" />
+    <ClCompile Include="nearby_sharing_util.cc" />
+    <ClCompile Include="outgoing_share_target_info.cc" />
+    <ClCompile Include="payload_tracker.cc" />
     <ClCompile Include="payload_w.cc" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -198,9 +235,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="sending_payload.cpp" />
     <ClCompile Include="share_target.cc" />
+    <ClCompile Include="share_target_info.cc" />
     <ClCompile Include="strategy_w.cc" />
     <ClCompile Include="text_attachment.cc" />
+    <ClCompile Include="transfer_manager.cc" />
+    <ClCompile Include="transfer_metadata.cc" />
+    <ClCompile Include="transfer_metadata_builder.cc" />
     <ClCompile Include="wifi_credentials_attachment.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +260,15 @@
     </ProjectReference>
     <ProjectReference Include="..\build\sharing\proto\share_cc_proto.vcxproj">
       <Project>{6f74bf1b-2a08-35e3-b8b0-a5e36b12e2e9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\build\_deps\absl-build\absl\random\random_internal_pool_urbg.vcxproj">
+      <Project>{9d4ce449-4550-368d-aae8-6667f6ba710a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\build\_deps\absl-build\absl\random\random_internal_randen_hwaes_impl.vcxproj">
+      <Project>{b227f07b-fe6c-3fc7-8640-23dbe085e2bd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\build\_deps\absl-build\absl\random\random_internal_randen_slow.vcxproj">
+      <Project>{04420b96-3a71-3953-a8b8-a3547f9ff97e}</Project>
     </ProjectReference>
     <ProjectReference Include="..\build\_deps\securemessage-build\cpp\src\securemessage\securemessage.vcxproj">
       <Project>{a7956129-08a9-3ab2-a0a7-4b013ba63aad}</Project>

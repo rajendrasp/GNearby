@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "nearby_sharing_decoder_impl.h"
+#ifndef THIRD_PARTY_NEARBY_SHARING_NEARBY_SHARING_DECODER_H_
+#define THIRD_PARTY_NEARBY_SHARING_NEARBY_SHARING_DECODER_H_
 
 #include <stdint.h>
 
@@ -25,23 +26,17 @@
 namespace nearby {
 namespace sharing {
 
-using Frame = ::nearby::sharing::service::proto::Frame;
+class NearbySharingDecoder {
+ public:
+  virtual ~NearbySharingDecoder() = default;
 
-std::unique_ptr<Advertisement> NearbySharingDecoderImpl::DecodeAdvertisement(
-    absl::Span<const uint8_t> data) {
-  return Advertisement::FromEndpointInfo(data);
-}
-
-std::unique_ptr<Frame> NearbySharingDecoderImpl::DecodeFrame(
-    absl::Span<const uint8_t> data) {
-  auto frame = std::make_unique<Frame>();
-
-  if (frame->ParseFromArray(data.data(), data.size())) {
-    return frame;
-  } else {
-    return nullptr;
-  }
-}
+  virtual std::unique_ptr<Advertisement> DecodeAdvertisement(
+      absl::Span<const uint8_t> data) = 0;
+  virtual std::unique_ptr<nearby::sharing::service::proto::Frame> DecodeFrame(
+      absl::Span<const uint8_t> data) = 0;
+};
 
 }  // namespace sharing
 }  // namespace nearby
+
+#endif  // THIRD_PARTY_NEARBY_SHARING_NEARBY_SHARING_DECODER_H_

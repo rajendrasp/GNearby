@@ -12,36 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "nearby_sharing_decoder_impl.h"
+#include "share_target_info.h"
 
-#include <stdint.h>
+#include <string>
 
-#include <memory>
-
-#include "absl/types/span.h"
-#include "advertisement.h"
-#include "sharing/proto/wire_format.pb.h"
+#include "absl/time/time.h"
+//#include "sharing/certificates/nearby_share_decrypted_public_certificate.h"
+#include "incoming_frames_reader.h"
+//#include "sharing/paired_key_verification_runner.h"
+#include "transfer_update_callback.h"
 
 namespace nearby {
 namespace sharing {
 
-using Frame = ::nearby::sharing::service::proto::Frame;
+ShareTargetInfo::ShareTargetInfo() = default;
 
-std::unique_ptr<Advertisement> NearbySharingDecoderImpl::DecodeAdvertisement(
-    absl::Span<const uint8_t> data) {
-  return Advertisement::FromEndpointInfo(data);
-}
+ShareTargetInfo::ShareTargetInfo(ShareTargetInfo&&) = default;
 
-std::unique_ptr<Frame> NearbySharingDecoderImpl::DecodeFrame(
-    absl::Span<const uint8_t> data) {
-  auto frame = std::make_unique<Frame>();
+ShareTargetInfo& ShareTargetInfo::operator=(ShareTargetInfo&&) = default;
 
-  if (frame->ParseFromArray(data.data(), data.size())) {
-    return frame;
-  } else {
-    return nullptr;
-  }
-}
+ShareTargetInfo::~ShareTargetInfo() = default;
 
 }  // namespace sharing
 }  // namespace nearby

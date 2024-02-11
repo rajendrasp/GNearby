@@ -12,36 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "nearby_sharing_decoder_impl.h"
+#ifndef THIRD_PARTY_NEARBY_SHARING_ATTACHMENT_INFO_H_
+#define THIRD_PARTY_NEARBY_SHARING_ATTACHMENT_INFO_H_
 
 #include <stdint.h>
 
-#include <memory>
-
-#include "absl/types/span.h"
-#include "advertisement.h"
-#include "sharing/proto/wire_format.pb.h"
+#include <filesystem>  // NOLINT(build/c++17)
+#include <optional>
+#include <string>
 
 namespace nearby {
 namespace sharing {
 
-using Frame = ::nearby::sharing::service::proto::Frame;
+// Ties associated information to an Attachment.
+struct AttachmentInfo {
+  AttachmentInfo();
+  ~AttachmentInfo();
 
-std::unique_ptr<Advertisement> NearbySharingDecoderImpl::DecodeAdvertisement(
-    absl::Span<const uint8_t> data) {
-  return Advertisement::FromEndpointInfo(data);
-}
+  AttachmentInfo(AttachmentInfo&&);
+  AttachmentInfo& operator=(AttachmentInfo&&);
 
-std::unique_ptr<Frame> NearbySharingDecoderImpl::DecodeFrame(
-    absl::Span<const uint8_t> data) {
-  auto frame = std::make_unique<Frame>();
-
-  if (frame->ParseFromArray(data.data(), data.size())) {
-    return frame;
-  } else {
-    return nullptr;
-  }
-}
+  std::optional<int64_t> payload_id;
+  std::string text_body;
+  std::filesystem::path file_path;
+};
 
 }  // namespace sharing
 }  // namespace nearby
+
+#endif  // THIRD_PARTY_NEARBY_SHARING_ATTACHMENT_INFO_H_
