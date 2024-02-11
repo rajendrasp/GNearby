@@ -29,7 +29,6 @@
 #include "absl/time/time.h"
 #include "absl/types/span.h"
 #include "internal/platform/mutex_lock.h"
-//#include "sharing/internal/public/context.h"
 #include "logging.h"
 #include "nearby_connection.h"
 #include "nearby_sharing_decoder.h"

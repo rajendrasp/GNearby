@@ -22,13 +22,6 @@
 
 #include "absl/strings/string_view.h"
 #include "internal/network/url.h"
-//#include "sharing/attachment.h"
-//#include "sharing/internal/api/sharing_rpc_notifier.h"
-//#include "sharing/local_device_data/nearby_share_local_device_data_manager.h"
-//#include "sharing/nearby_sharing_settings.h"
-//#include "sharing/share_target.h"
-//#include "sharing/share_target_discovered_callback.h"
-//#include "sharing/transfer_update_callback.h"
 
 #include "share_target.h"
 #include "attachment.h"

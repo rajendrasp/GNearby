@@ -23,21 +23,6 @@
 #include <string>
 #include <vector>
 
-//#include "absl/base/thread_annotations.h"
-//#include "absl/container/flat_hash_map.h"
-//#include "absl/container/flat_hash_set.h"
-//#include "absl/strings/string_view.h"
-//#include "internal/platform/device_info.h"
-//#include "internal/platform/mutex.h"
-//#include "sharing/common/nearby_share_enums.h"
-//#include "sharing/internal/public/connectivity_manager.h"
-//#include "sharing/internal/public/context.h"
-//#include "sharing/nearby_connection_impl.h"
-//#include "sharing/nearby_connections_manager.h"
-//#include "sharing/nearby_connections_service.h"
-//#include "sharing/nearby_connections_types.h"
-//#include "sharing/transfer_manager.h"
-
 #include "nearby_connections_manager.h"
 #include "nearby_connections_service.h"
 #include "internal/platform/mutex.h"

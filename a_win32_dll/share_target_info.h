@@ -23,11 +23,9 @@
 
 #include "absl/time/time.h"
 #include "proto/sharing_enums.pb.h"
-//#include "sharing/certificates/nearby_share_decrypted_public_certificate.h"
 #include "incoming_frames_reader.h"
 #include "nearby_connection.h"
 #include "nearby_connections_manager.h"
-//#include "sharing/paired_key_verification_runner.h"
 #include "payload_tracker.h"
 #include "transfer_update_callback.h"
 

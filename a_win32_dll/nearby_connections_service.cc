@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "sharing/nearby_connections_service.h"
+#include "nearby_connections_service.h"
 
 #include <algorithm>
 #include <cstdint>

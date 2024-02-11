@@ -25,7 +25,6 @@
 #include "internal/platform/device_info.h"
 #include "proto/sharing_enums.pb.h"
 #include "advertisement.h"
-//#include "sharing/certificates/nearby_share_decrypted_public_certificate.h"
 #include "nearby_share_enums.h"
 #include "nearby_connections_types.h"
 #include "nearby_sharing_service.h"

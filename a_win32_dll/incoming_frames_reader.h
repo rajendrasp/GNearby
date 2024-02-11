@@ -27,7 +27,6 @@
 #include "absl/time/time.h"
 #include "internal/platform/mutex.h"
 #include "internal/platform/timer.h"
-//#include "sharing/internal/public/context.h"
 #include "nearby_connection.h"
 #include "nearby_sharing_decoder.h"
 #include "sharing/proto/wire_format.pb.h"

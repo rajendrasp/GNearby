@@ -17,9 +17,7 @@
 #include <string>
 
 #include "absl/time/time.h"
-//#include "sharing/certificates/nearby_share_decrypted_public_certificate.h"
 #include "incoming_frames_reader.h"
-//#include "sharing/paired_key_verification_runner.h"
 #include "transfer_update_callback.h"
 
 namespace nearby {

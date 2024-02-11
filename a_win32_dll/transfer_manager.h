@@ -24,7 +24,6 @@
 #include "absl/strings/string_view.h"
 #include "absl/synchronization/mutex.h"
 #include "absl/time/time.h"
-//#include "sharing/internal/public/context.h"
 #include "nearby_connections_types.h"
 #include "internal/platform/timer.h"
 

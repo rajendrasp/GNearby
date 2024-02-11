@@ -26,7 +26,6 @@
 #include "absl/container/flat_hash_map.h"
 #include "absl/time/time.h"
 #include "attachment_info.h"
-//#include "sharing/internal/public/context.h"
 #include "nearby_connections_manager.h"
 #include "nearby_connections_types.h"
 #include "share_target.h"

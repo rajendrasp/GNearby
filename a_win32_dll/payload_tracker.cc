@@ -28,7 +28,6 @@
 #include "attachment_info.h"
 #include "constants.h"
 #include "file_attachment.h"
-//#include "sharing/internal/public/context.h"
 #include "logging.h"
 #include "nearby_connections_types.h"
 #include "share_target.h"
