@@ -44,6 +44,7 @@
 #include "nearby_connections_service.h"
 #include "nearby_connections_types.h"
 #include "transfer_manager.h"
+#include "hardcoded.h"
 
 namespace nearby {
 namespace sharing {
@@ -290,8 +291,8 @@ void NearbyConnectionsManagerImpl::OnConnectionRequested(
     auto it = pending_outgoing_connections_.find(endpoint_id);
     if (it == pending_outgoing_connections_.end()) return;
     if (status != ConnectionsStatus::kSuccess) {
-        NL_LOG(ERROR) << "Failed to connect to the remote shareTarget: "
-            << ConnectionsStatusToString(status);
+        /*NL_LOG(ERROR) << "Failed to connect to the remote shareTarget: "
+            << ConnectionsStatusToString(status);*/
         auto info_it = connection_info_map_.find(endpoint_id);
         if (info_it != connection_info_map_.end()) {
             info_it->second.connection_layer_status = status;
@@ -502,6 +503,204 @@ NearbyConnectionsManagerImpl::GetRawAuthenticationToken(
     if (it == connection_info_map_.end()) return std::nullopt;
 
     return it->second.raw_authentication_token;
+}
+
+void NearbyConnectionsManagerImpl::StartDiscovery(
+    DiscoveryListener* listener, DataUsage data_usage,
+    ConnectionsCallback callback) {
+    NL_DCHECK(listener);
+
+    if (!nearby_connections_service_) {
+        std::move(callback)(ConnectionsStatus::kError);
+        return;
+    }
+
+    MediumSelection allowed_mediums = MediumSelection(
+        /*bluetooth=*/true,
+        /*ble=*/true,
+        /*web_rtc=*/
+        false,
+        /*wifi_lan=*/
+        false,
+        /*wifi_hotspot=*/true);
+    NL_VLOG(1) << __func__ << ": "
+        << "data_usage=" << static_cast<int>(data_usage)
+        << ", allowed_mediums="
+        << MediumSelectionToString(allowed_mediums);
+
+    discovery_listener_ = listener;
+
+    NearbyConnectionsService::DiscoveryListener service_discovery_listener;
+    service_discovery_listener.endpoint_found_cb =
+        [&](absl::string_view endpoint_id, const DiscoveredEndpointInfo& info) {
+        OnEndpointFound(endpoint_id, info);
+        };
+    service_discovery_listener.endpoint_lost_cb =
+        [&](absl::string_view endpoint_id) { OnEndpointLost(endpoint_id); };
+
+    nearby_connections_service_->StartDiscovery(
+        kServiceId,
+        DiscoveryOptions(kStrategy, std::move(allowed_mediums),
+            Uuid(kFastAdvertisementServiceUuid),
+            /*is_out_of_band_connection=*/false),
+        std::move(service_discovery_listener), std::move(callback));
+}
+
+void NearbyConnectionsManagerImpl::OnEndpointFound(
+    absl::string_view endpoint_id, const DiscoveredEndpointInfo& info) {
+    MutexLock lock(&mutex_);
+    if (!discovery_listener_) {
+        /*NL_LOG(INFO) << "Ignoring discovered endpoint "
+            << nearby::utils::HexEncode(info.endpoint_info)
+            << " because we're no longer "
+            "in discovery mode";*/
+        return;
+    }
+
+    auto result = discovered_endpoints_.insert(std::string(endpoint_id));
+    if (!result.second) {
+        /*NL_LOG(INFO) << "Ignoring discovered endpoint "
+            << nearby::utils::HexEncode(info.endpoint_info)
+            << " because we've already "
+            "reported this endpoint";*/
+        return;
+    }
+
+    discovery_listener_->OnEndpointDiscovered(endpoint_id, info.endpoint_info);
+    /*NL_LOG(INFO) << "Discovered " << nearby::utils::HexEncode(info.endpoint_info)
+        << " over Nearby Connections";*/
+}
+
+void NearbyConnectionsManagerImpl::OnEndpointLost(
+    absl::string_view endpoint_id) {
+    MutexLock lock(&mutex_);
+    if (!discovered_endpoints_.erase(endpoint_id)) {
+        NL_LOG(INFO) << "Ignoring lost endpoint " << endpoint_id
+            << " because we haven't reported this endpoint";
+        return;
+    }
+
+    if (!discovery_listener_) {
+        NL_LOG(INFO) << "Ignoring lost endpoint " << endpoint_id
+            << " because we're no longer in discovery mode";
+        return;
+    }
+
+    discovery_listener_->OnEndpointLost(endpoint_id);
+    NL_LOG(INFO) << "Endpoint " << endpoint_id << " lost over Nearby Connections";
+}
+
+void NearbyConnectionsManagerImpl::StartAdvertising(
+    std::vector<uint8_t> endpoint_info, IncomingConnectionListener* listener,
+    PowerLevel power_level, DataUsage data_usage,
+    ConnectionsCallback callback) {
+    NL_DCHECK(listener);
+    NL_DCHECK(!incoming_connection_listener_);
+
+    if (!nearby_connections_service_) {
+        std::move(callback)(ConnectionsStatus::kError);
+        return;
+    }
+
+    bool is_high_power = power_level == PowerLevel::kHighPower;
+    bool use_ble = true;
+
+    MediumSelection allowed_mediums = MediumSelection(
+        /*bluetooth=*/is_high_power, /*ble=*/use_ble,
+        // Using kHighPower here rather than power_level to signal that power
+        // level isn't a factor when deciding whether to allow WebRTC
+        // upgrades from this advertisement.
+        false,
+        /*wifi_lan=*/
+        false,
+        /*wifi_hotspot=*/true);
+    //NL_VLOG(1) << __func__ << ": "
+    //    << "is_high_power=" << (is_high_power ? "yes" : "no")
+    //    << ", data_usage=" << static_cast<int>(data_usage)
+    //    << ", allowed_mediums="
+    //    << MediumSelectionToString(allowed_mediums);
+
+    // Nearby Sharing manually controls Wi-Fi/Bluetooth upgrade. Frequent
+    // Bluetooth connection drops were observed during upgrades for Bluetooth
+    // transfers. Android has similar logic to handle upgrades, please check
+    // b/161880863 for more information.
+    bool auto_upgrade_bandwidth = false;
+
+    incoming_connection_listener_ = listener;
+
+    NearbyConnectionsService::ConnectionListener connection_listener;
+    connection_listener.initiated_cb =
+        [&](absl::string_view endpoint_id,
+            const ConnectionInfo& connection_info) {
+                OnConnectionInitiated(endpoint_id, connection_info);
+        };
+    connection_listener.accepted_cb = [&](absl::string_view endpoint_id) {
+        OnConnectionAccepted(endpoint_id);
+        };
+    connection_listener.rejected_cb = [&](absl::string_view endpoint_id,
+        Status status) {
+            OnConnectionRejected(endpoint_id, status);
+        };
+    connection_listener.disconnected_cb = [&](absl::string_view endpoint_id) {
+        OnDisconnected(endpoint_id);
+        };
+    connection_listener.bandwidth_changed_cb = [&](absl::string_view endpoint_id,
+        Medium medium) {
+            OnBandwidthChanged(endpoint_id, medium);
+        };
+
+    // Check if BLE hardware supports Extended Advertising
+    bool extended_advertising_supported = IsExtendedAdvertisingSupported();
+
+    Uuid fast_advertisement_service_uuid;
+
+    if (true/*NearbyFlags::GetInstance().GetBoolFlag(
+        config_package_nearby::nearby_sharing_feature::kEnableBleV2)*/) {
+        NL_LOG(INFO) << __func__
+            << ": Nearby Sharing flag kEnableBleV2 is enabled.";
+        // Uses fast advertisement when advertisement data size is less than
+        // kMinimumAdvertisementSize. Nearby Connections will decide whether to use
+        // GATT server with this information.
+        if (endpoint_info.size() > kMinimumAdvertisementSize) {
+            fast_advertisement_service_uuid = Uuid("");
+        }
+        else {
+            fast_advertisement_service_uuid = Uuid(kFastAdvertisementServiceUuid);
+        }
+    }
+    else {
+        NL_LOG(INFO) << __func__
+            << ": Nearby Sharing flag kEnableBleV2 is disabled.";
+        // Only use Fast Advertisement if Extended Advertising is not supported
+        if (extended_advertising_supported) {
+            // Empty string to instruct Nearby Connection BLE not to use Fast
+            // Advertisement
+            fast_advertisement_service_uuid = Uuid("");
+        }
+        else {
+            // Handle advertisement on device without BLE advertisement extension.
+            if (endpoint_info.size() > kMinimumAdvertisementSize) {
+                // cannot use Fast Advertisement, because the endpoint info size exceeds
+                // the limitation of Fast Advertisement.
+                fast_advertisement_service_uuid = Uuid("");
+            }
+            else {
+                fast_advertisement_service_uuid = Uuid(kFastAdvertisementServiceUuid);
+            }
+        }
+    }
+
+    nearby_connections_service_->StartAdvertising(
+        kServiceId, endpoint_info,
+        AdvertisingOptions(
+            kStrategy, std::move(allowed_mediums), auto_upgrade_bandwidth,
+            /*enforce_topology_constraints=*/true,
+            /*enable_bluetooth_listening=*/use_ble,
+            /*enable_webrtc_listening=*/
+            false,
+            /*fast_advertisement_service_uuid=*/
+            fast_advertisement_service_uuid),
+        std::move(connection_listener), std::move(callback));
 }
 
 }  // namespace sharing

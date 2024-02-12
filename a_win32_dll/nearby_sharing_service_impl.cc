@@ -28,6 +28,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <thread>
 
 #include "absl/algorithm/container.h"
 #include "absl/container/flat_hash_map.h"
@@ -48,6 +49,7 @@
 #include "payload_tracker.h"
 #include "constants.h"
 #include "hardcoded.h"
+#include "nearby_share_encrypted_metadata_key.h"
 
 namespace nearby {
 namespace sharing {
@@ -133,21 +135,26 @@ NearbySharingServiceImpl::~NearbySharingServiceImpl() = default;
 
 DWORD WINAPI SendPayloadWork(LPVOID lpParam)
 {
-    std::function<void()>* task = (std::function<void()>*)(lpParam);
-    (*task)();
+    /*std::function<void()> task = *(std::function<void()>*)(lpParam);
+    task();*/
     return 0;
 }
 
 void NearbySharingServiceImpl::RunOnNearbySharingServiceThread(
     absl::string_view task_name, std::function<void()> task)
 {
-    hThreadArray[0] = CreateThread(
-        NULL,                   // default security attributes
-        0,                      // use default stack size  
-        SendPayloadWork,       // thread function name
-        &task,          // argument to thread function 
-        0,                      // use default creation flags 
-        &dwThreadIdArray[0]);   // returns the thread identifier 
+    std::thread([task]() {
+        task();
+        }).detach();
+
+
+    //hThreadArray[0] = CreateThread(
+    //    NULL,                   // default security attributes
+    //    0,                      // use default stack size  
+    //    SendPayloadWork,       // thread function name
+    //    &task,          // argument to thread function 
+    //    0,                      // use default creation flags 
+    //    &dwThreadIdArray[0]);   // returns the thread identifier 
 }
 
 ShareTargetInfo* NearbySharingServiceImpl::GetShareTargetInfo(
@@ -1910,6 +1917,246 @@ void NearbySharingServiceImpl::SendIntroduction(
         .set_status(TransferMetadata::Status::kAwaitingLocalConfirmation)
         .set_token(four_digit_token)
         .build());
+}
+
+void NearbySharingServiceImpl::StartScanning()
+{
+    is_scanning_ = true;
+
+    scanning_session_id_ = GenerateNextId();
+
+    nearby_connections_manager_->StartDiscovery(
+        /*listener=*/this, GetDataUsage(), [&](Status status) {
+            // Log analytics event of starting discovery.
+            //analytics::AnalyticsInformation analytics_information;
+            //analytics_information.send_surface_state =
+            //    foreground_send_discovery_callbacks_.empty()
+            //    ? analytics::SendSurfaceState::kBackground
+            //    : analytics::SendSurfaceState::kForeground;
+            //analytics_recorder_->NewScanForShareTargetsStart(
+            //    scanning_session_id_,
+            //    status == Status::kSuccess ? SessionStatus::SUCCEEDED_SESSION_STATUS
+            //    : SessionStatus::FAILED_SESSION_STATUS,
+            //    analytics_information,
+            //    /*flow_id=*/1, /*referrer_package=*/std::nullopt);
+
+            OnStartDiscoveryResult(status);
+        });
+}
+
+void NearbySharingServiceImpl::OnStartDiscoveryResult(Status status) {
+   
+}
+
+// NearbyConnectionsManager::DiscoveryListener:
+void NearbySharingServiceImpl::OnEndpointDiscovered(
+    absl::string_view endpoint_id, absl::Span<const uint8_t> endpoint_info) {
+    // The calling thread may already be completed when calling lambda. We
+    // make a local copy of calling parameter to avoid possible memory
+    // issue.
+    std::vector<uint8_t> endpoint_info_copy{ endpoint_info.begin(),
+                                            endpoint_info.end() };
+    RunOnNearbySharingServiceThread(
+        "on_endpoint_discovered",
+        [&, endpoint_id = std::string(endpoint_id),
+        endpoint_info_copy = std::move(endpoint_info_copy)]() {
+            AddEndpointDiscoveryEvent([&, endpoint_id, endpoint_info_copy]() {
+                HandleEndpointDiscovered(endpoint_id, endpoint_info_copy);
+                });
+        });
+}
+
+void NearbySharingServiceImpl::OnEndpointLost(absl::string_view endpoint_id) {
+    RunOnNearbySharingServiceThread(
+        "on_endpoint_lost", [&, endpoint_id = std::string(endpoint_id)]() {
+            AddEndpointDiscoveryEvent(
+                [&, endpoint_id]() { HandleEndpointLost(endpoint_id); });
+        });
+}
+
+// Processes endpoint discovered/lost events. We queue up the events to ensure
+// each discovered or lost event is fully handled before the next is run. For
+// example, we don't want to start processing an endpoint-lost event before
+// the corresponding endpoint-discovered event is finished. This is especially
+// important because of the asynchronous steps required to process an
+// endpoint-discovered event.
+void NearbySharingServiceImpl::AddEndpointDiscoveryEvent(
+    std::function<void()> event) {
+    endpoint_discovery_events_.push(std::move(event));
+    if (endpoint_discovery_events_.size() == 1u) {
+        auto discovery_event = std::move(endpoint_discovery_events_.front());
+        discovery_event();
+    }
+}
+
+void NearbySharingServiceImpl::HandleEndpointDiscovered(
+    absl::string_view endpoint_id, absl::Span<const uint8_t> endpoint_info) {
+    //NL_VLOG(1) << __func__ << ": endpoint_id=" << endpoint_id
+    //    << ", endpoint_info=" << nearby::utils::HexEncode(endpoint_info);
+    if (!is_scanning_) {
+        //NL_VLOG(1)
+        //    << __func__
+        //    << ": Ignoring discovered endpoint because we're no longer scanning";
+        FinishEndpointDiscoveryEvent();
+        return;
+    }
+
+    std::unique_ptr<Advertisement> advertisement =
+        decoder_->DecodeAdvertisement(endpoint_info);
+    OnOutgoingAdvertisementDecoded(endpoint_id, endpoint_info,
+        std::move(advertisement));
+}
+
+void NearbySharingServiceImpl::HandleEndpointLost(
+    absl::string_view endpoint_id) {
+    //NL_VLOG(1) << __func__ << ": endpoint_id=" << endpoint_id;
+
+    if (!is_scanning_) {
+        //NL_VLOG(1) << __func__
+        //    << ": Ignoring lost endpoint because we're no longer scanning";
+        FinishEndpointDiscoveryEvent();
+        return;
+    }
+
+    /*discovered_advertisements_to_retry_map_.erase(endpoint_id);
+    discovered_advertisements_retried_set_.erase(endpoint_id);
+    RemoveOutgoingShareTargetWithEndpointId(endpoint_id);*/
+    FinishEndpointDiscoveryEvent();
+}
+
+void NearbySharingServiceImpl::FinishEndpointDiscoveryEvent() {
+    NL_DCHECK(!endpoint_discovery_events_.empty());
+    NL_DCHECK(endpoint_discovery_events_.front() == nullptr);
+    endpoint_discovery_events_.pop();
+
+    // Handle the next queued up endpoint discovered/lost event.
+    if (!endpoint_discovery_events_.empty()) {
+        NL_DCHECK(endpoint_discovery_events_.front() != nullptr);
+        auto discovery_event = std::move(endpoint_discovery_events_.front());
+        discovery_event();
+    }
+}
+
+void NearbySharingServiceImpl::OnOutgoingAdvertisementDecoded(
+    absl::string_view endpoint_id, absl::Span<const uint8_t> endpoint_info,
+    std::unique_ptr<Advertisement> advertisement) {
+    if (!advertisement) {
+        NL_LOG(WARNING) << __func__
+            << ": Failed to parse discovered advertisement.";
+        FinishEndpointDiscoveryEvent();
+        return;
+    }
+
+    // Now we will report endpoints met before in NearbyConnectionsManager.
+    // Check outgoingShareTargetInfoMap first and pass the same shareTarget if we
+    // found one.
+
+    // Looking for the ShareTarget based on endpoint id.
+    /*if (outgoing_share_target_map_.find(endpoint_id) !=
+        outgoing_share_target_map_.end()) {
+        FinishEndpointDiscoveryEvent();
+        return;
+    }*/
+
+    // Once we get the advertisement, the first thing to do is decrypt the
+    // certificate.
+    NearbyShareEncryptedMetadataKey encrypted_metadata_key(
+        advertisement->salt(), advertisement->encrypted_metadata_key());
+
+    std::string endpoint_id_copy = std::string(endpoint_id);
+    std::vector<uint8_t> endpoint_info_copy{ endpoint_info.begin(),
+                                            endpoint_info.end() };
+    GetCertificateManager()->GetDecryptedPublicCertificate(
+        std::move(encrypted_metadata_key),
+        [this, endpoint_id_copy, endpoint_info_copy,
+        advertisement_copy =
+        *advertisement](std::optional<NearbyShareDecryptedPublicCertificate>
+            decrypted_public_certificate) {
+                std::unique_ptr<Advertisement> advertisement =
+                    Advertisement::NewInstance(
+                        advertisement_copy.salt(),
+                        advertisement_copy.encrypted_metadata_key(),
+                        advertisement_copy.device_type(),
+                        advertisement_copy.device_name());
+                OnOutgoingDecryptedCertificate(endpoint_id_copy, endpoint_info_copy,
+                    std::move(advertisement),
+                    decrypted_public_certificate);
+        });
+}
+
+ShareTargetInfo& NearbySharingServiceImpl::GetOrCreateShareTargetInfo(
+    const ShareTarget& share_target, absl::string_view endpoint_id) {
+    if (share_target.is_incoming) {
+        auto& info = incoming_share_target_info_map_[share_target.id];
+        info.set_endpoint_id(std::string(endpoint_id));
+        return info;
+    }
+    else {
+        // We need to explicitly remove any previous share target for
+        // |endpoint_id| if one exists, notifying observers that a share target is
+        // lost.
+        const auto it = outgoing_share_target_map_.find(endpoint_id);
+        if (it != outgoing_share_target_map_.end() &&
+            it->second.id != share_target.id) {
+            RemoveOutgoingShareTargetWithEndpointId(endpoint_id);
+        }
+
+        //NL_VLOG(1) << __func__ << ": Adding (endpoint_id=" << endpoint_id
+        //    << ", share_target_id=" << share_target.id
+        //    << ") to outgoing share target map";
+        outgoing_share_target_map_.insert_or_assign(endpoint_id, share_target);
+        auto& info = outgoing_share_target_info_map_[share_target.id];
+        info.set_endpoint_id(std::string(endpoint_id));
+        info.set_connection_layer_status(Status::kUnknown);
+        return info;
+    }
+}
+
+void NearbySharingServiceImpl::RemoveOutgoingShareTargetWithEndpointId(
+    absl::string_view endpoint_id) {
+    auto it = outgoing_share_target_map_.find(endpoint_id);
+    if (it == outgoing_share_target_map_.end()) {
+        return;
+    }
+
+    //NL_VLOG(1) << __func__ << ": Removing (endpoint_id=" << it->first
+    //    << ", share_target.id=" << it->second.id
+    //    << ") from outgoing share target map";
+    ShareTarget share_target = std::move(it->second);
+    outgoing_share_target_map_.erase(it);
+
+    auto info_it = outgoing_share_target_info_map_.find(share_target.id);
+    if (info_it != outgoing_share_target_info_map_.end()) {
+        outgoing_share_target_info_map_.erase(info_it);
+    }
+    else {
+        NL_LOG(WARNING) << __func__ << ": share_target.id=" << it->second.id
+            << " not found in outgoing share target info map.";
+        return;
+    }
+
+    //for (ShareTargetDiscoveredCallback* discovery_callback :
+    //    foreground_send_discovery_callbacks_.GetObservers()) {
+    //    if (discovery_callback != nullptr) {
+    //        discovery_callback->OnShareTargetLost(share_target);
+    //    }
+    //    else {
+    //        NL_LOG(WARNING) << __func__
+    //            << "Foreground Discovery Callback is not exist";
+    //    }
+    //}
+    //for (ShareTargetDiscoveredCallback* discovery_callback :
+    //    background_send_discovery_callbacks_.GetObservers()) {
+    //    if (discovery_callback != nullptr) {
+    //        discovery_callback->OnShareTargetLost(share_target);
+    //    }
+    //    else {
+    //        NL_LOG(WARNING) << __func__
+    //            << "Background Discovery Callback is not exist";
+    //    }
+    //}
+
+    //NL_VLOG(1) << __func__ << ": Reported OnShareTargetLost";
 }
 
 }  // namespace sharing

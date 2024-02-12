@@ -67,6 +67,14 @@ class NearbyConnectionsManagerImpl : public NearbyConnectionsManager
 
   std::optional<std::vector<uint8_t>> GetRawAuthenticationToken(
       absl::string_view endpoint_id) override;
+
+  void StartDiscovery(DiscoveryListener* listener, proto::DataUsage data_usage,
+      ConnectionsCallback callback) override;
+
+  void StartAdvertising(std::vector<uint8_t> endpoint_info,
+      IncomingConnectionListener* listener,
+      PowerLevel power_level, proto::DataUsage data_usage,
+      ConnectionsCallback callback) override;
   
  private:
 
@@ -91,6 +99,11 @@ class NearbyConnectionsManagerImpl : public NearbyConnectionsManager
      void SendWithoutDelay(absl::string_view endpoint_id,
          std::unique_ptr<Payload> payload);
 
+     // EndpointDiscoveryListener:
+     void OnEndpointFound(absl::string_view endpoint_id,
+         const DiscoveredEndpointInfo& info);
+     void OnEndpointLost(absl::string_view endpoint_id);
+
      
 
   
@@ -101,6 +114,7 @@ class NearbyConnectionsManagerImpl : public NearbyConnectionsManager
 
   std::unique_ptr<NearbyConnectionsService> nearby_connections_service_ = nullptr;
   IncomingConnectionListener* incoming_connection_listener_ = nullptr;
+  DiscoveryListener* discovery_listener_ = nullptr;
 
   // A map of endpoint_id to ConnectionInfoPtr.
   absl::flat_hash_map<std::string, ConnectionInfo> connection_info_map_
@@ -136,6 +150,9 @@ class NearbyConnectionsManagerImpl : public NearbyConnectionsManager
 
   // Avoid calling to disconnect on an endpoint multiple times.
   absl::flat_hash_set<std::string> disconnecting_endpoints_
+      ABSL_GUARDED_BY(mutex_);
+
+  absl::flat_hash_set<std::string> discovered_endpoints_
       ABSL_GUARDED_BY(mutex_);
 };
 

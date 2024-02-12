@@ -47,12 +47,15 @@ class NearbyShareContactManager;
 
 // All methods should be called from the same sequence that created the service.
 class NearbySharingServiceImpl
-    : public NearbySharingService
+    : public NearbySharingService,
+      public NearbyConnectionsManager::DiscoveryListener
 {
  public:
   NearbySharingServiceImpl(NearbySharingDecoder* decoder,
       std::unique_ptr<NearbyConnectionsManager> nearby_connections_manager);
   ~NearbySharingServiceImpl() override;
+
+  void StartScanning() override;
 
   // NearbySharingService
   void SendAttachments(
@@ -189,6 +192,30 @@ class NearbySharingServiceImpl
   void SendIntroduction(const ShareTarget& share_target,
       std::optional<std::string> four_digit_token);
 
+  void OnStartDiscoveryResult(Status status);
+
+  // NearbyConnectionsManager::DiscoveryListener:
+  void OnEndpointDiscovered(absl::string_view endpoint_id,
+      absl::Span<const uint8_t> endpoint_info) override;
+  void OnEndpointLost(absl::string_view endpoint_id) override;
+
+  void AddEndpointDiscoveryEvent(std::function<void()> event);
+
+  void HandleEndpointDiscovered(absl::string_view endpoint_id,
+      absl::Span<const uint8_t> endpoint_info);
+  void HandleEndpointLost(absl::string_view endpoint_id);
+
+  void FinishEndpointDiscoveryEvent();
+
+  void OnOutgoingAdvertisementDecoded(
+      absl::string_view endpoint_id, absl::Span<const uint8_t> endpoint_info,
+      std::unique_ptr<Advertisement> advertisement);
+
+  ShareTargetInfo& GetOrCreateShareTargetInfo(const ShareTarget& share_target,
+      absl::string_view endpoint_id);
+
+  void RemoveOutgoingShareTargetWithEndpointId(absl::string_view endpoint_id);
+
 
 
 
@@ -207,6 +234,11 @@ class NearbySharingServiceImpl
   // endpoint and public certificate are related to the outgoing share target.
   absl::flat_hash_map<int64_t, OutgoingShareTargetInfo>
       outgoing_share_target_info_map_;
+
+  // A map of endpoint id to ShareTarget, where each ShareTarget entry
+  // directly corresponds to a OutgoingShareTargetInfo entry in
+  // outgoing_share_target_info_map_;
+  absl::flat_hash_map<std::string, ShareTarget> outgoing_share_target_map_;
 
   // The time attachments are sent after a share target is selected. This is
   // used to time the process from selecting a share target to writing the
@@ -227,6 +259,12 @@ class NearbySharingServiceImpl
 
   // True if we're currently sending or receiving a file.
   bool is_transferring_ = false;
+
+  // True if we are currently scanning for remote devices.
+  bool is_scanning_ = false;
+
+  // Used to identify current scanning session.
+  int64_t scanning_session_id_ = 0;
 
   // True if we're currently receiving a file.
   bool is_receiving_files_ = false;
@@ -253,6 +291,13 @@ class NearbySharingServiceImpl
 
   // Whether to update the file paths in transfer progress.
   bool update_file_paths_in_progress_ = false;
+
+  // A queue of endpoint-discovered and endpoint-lost events that ensures the
+  // events are processed sequentially, in the order received from Nearby
+  // Connections. An event is processed either immediately, if there are no
+  // other events in the queue, or as soon as the previous event processing
+  // finishes. When processing finishes, the event is removed from the queue.
+  std::queue<std::function<void()>> endpoint_discovery_events_;
 
   HANDLE  hThreadArray[MAX_THREADS] = {};
   DWORD   dwThreadIdArray[MAX_THREADS];

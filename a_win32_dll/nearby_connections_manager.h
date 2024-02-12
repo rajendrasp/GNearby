@@ -127,6 +127,20 @@ class NearbyConnectionsManager {
   // Gets the raw authentication token for the `endpoint_id`.
   virtual std::optional<std::vector<uint8_t>> GetRawAuthenticationToken(
       absl::string_view endpoint_id) = 0;
+
+  // Starts discovery through Nearby Connections. Caller is expected to ensure
+  // `listener` remains valid until StopDiscovery is called.
+  virtual void StartDiscovery(DiscoveryListener* listener,
+      proto::DataUsage data_usage,
+      ConnectionsCallback callback) = 0;
+
+  // Starts advertising through Nearby Connections. Caller is expected to ensure
+  // `listener` remains valid until StopAdvertising is called.
+  virtual void StartAdvertising(std::vector<uint8_t> endpoint_info,
+      IncomingConnectionListener* listener,
+      PowerLevel power_level,
+      proto::DataUsage data_usage,
+      ConnectionsCallback callback) = 0;
 };
 
 }  // namespace sharing

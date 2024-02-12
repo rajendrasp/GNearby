@@ -113,6 +113,8 @@ class NearbySharingService {
 
   virtual ~NearbySharingService() = default;
 
+  virtual void StartScanning() = 0;
+
   // Sends |attachments| to the remote |share_target|.
   virtual void SendAttachments(
       const ShareTarget& share_target,

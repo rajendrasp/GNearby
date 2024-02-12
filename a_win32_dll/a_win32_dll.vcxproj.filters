@@ -177,6 +177,15 @@
     <ClInclude Include="hardcoded.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="nearby_connections_manager_factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nearby_sharing_service_factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nearby_api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -291,6 +300,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="nearby_file_handler.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nearby_connections_manager_factory.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nearby_sharing_service_factory.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nearby_api.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hardcoded.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -167,8 +167,10 @@
     <ClInclude Include="medium_selector_w.h" />
     <ClInclude Include="medium_w.h" />
     <ClInclude Include="mime.h" />
+    <ClInclude Include="nearby_api.h" />
     <ClInclude Include="nearby_connection.h" />
     <ClInclude Include="nearby_connections_manager.h" />
+    <ClInclude Include="nearby_connections_manager_factory.h" />
     <ClInclude Include="nearby_connections_manager_impl.h" />
     <ClInclude Include="nearby_connections_service.h" />
     <ClInclude Include="nearby_connections_service_impl.h" />
@@ -179,6 +181,7 @@
     <ClInclude Include="nearby_sharing_decoder.h" />
     <ClInclude Include="nearby_sharing_decoder_impl.h" />
     <ClInclude Include="nearby_sharing_service.h" />
+    <ClInclude Include="nearby_sharing_service_factory.h" />
     <ClInclude Include="nearby_sharing_service_impl.h" />
     <ClInclude Include="nearby_sharing_util.h" />
     <ClInclude Include="options_base_w.h" />
@@ -212,11 +215,14 @@
     <ClCompile Include="endpointInfo.cpp" />
     <ClCompile Include="file_attachment.cc" />
     <ClCompile Include="file_w.cc" />
+    <ClCompile Include="hardcoded.cpp" />
     <ClCompile Include="incoming_frames_reader.cc" />
     <ClCompile Include="incoming_share_target_info.cc" />
     <ClCompile Include="listeners_w.cc" />
     <ClCompile Include="mime.cc" />
+    <ClCompile Include="nearby_api.cpp" />
     <ClCompile Include="nearby_connections_manager.cc" />
+    <ClCompile Include="nearby_connections_manager_factory.cc" />
     <ClCompile Include="nearby_connections_manager_impl.cc" />
     <ClCompile Include="nearby_connections_service.cc" />
     <ClCompile Include="nearby_connections_service_impl.cc" />
@@ -224,6 +230,7 @@
     <ClCompile Include="nearby_file_handler.cc" />
     <ClCompile Include="nearby_sharing_decoder_impl.cc" />
     <ClCompile Include="nearby_sharing_service.cc" />
+    <ClCompile Include="nearby_sharing_service_factory.cc" />
     <ClCompile Include="nearby_sharing_service_impl.cc" />
     <ClCompile Include="nearby_sharing_util.cc" />
     <ClCompile Include="outgoing_share_target_info.cc" />
