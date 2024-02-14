@@ -28,6 +28,7 @@
 #include "nearby_connections_manager.h"
 #include "payload_tracker.h"
 #include "transfer_update_callback.h"
+#include "paired_key_verification_runner.h"
 
 namespace nearby {
 namespace sharing {
@@ -80,14 +81,14 @@ class ShareTargetInfo {
     frames_reader_ = std::move(frames_reader);
   }
 
-  /*PairedKeyVerificationRunner* key_verification_runner() {
+  PairedKeyVerificationRunner* key_verification_runner() {
     return key_verification_runner_.get();
-  }*/
+  }
 
- /* void set_key_verification_runner(
+  void set_key_verification_runner(
       std::shared_ptr<PairedKeyVerificationRunner> key_verification_runner) {
     key_verification_runner_ = std::move(key_verification_runner);
-  }*/
+  }
 
   std::weak_ptr<NearbyConnectionsManager::PayloadStatusListener>
   payload_tracker() {
@@ -124,7 +125,7 @@ class ShareTargetInfo {
   std::unique_ptr<TransferUpdateCallback> transfer_update_callback_;
   std::optional<std::string> token_;
   std::shared_ptr<IncomingFramesReader> frames_reader_;
-  //std::shared_ptr<PairedKeyVerificationRunner> key_verification_runner_;
+  std::shared_ptr<PairedKeyVerificationRunner> key_verification_runner_;
   std::shared_ptr<PayloadTracker> payload_tracker_;
   int64_t session_id_;
   std::optional<absl::Time> connection_start_time_;

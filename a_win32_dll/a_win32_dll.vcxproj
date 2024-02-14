@@ -186,6 +186,7 @@
     <ClInclude Include="nearby_sharing_util.h" />
     <ClInclude Include="options_base_w.h" />
     <ClInclude Include="outgoing_share_target_info.h" />
+    <ClInclude Include="paired_key_verification_runner.h" />
     <ClInclude Include="params.h" />
     <ClInclude Include="params_w.h" />
     <ClInclude Include="payload_tracker.h" />
@@ -234,6 +235,7 @@
     <ClCompile Include="nearby_sharing_service_impl.cc" />
     <ClCompile Include="nearby_sharing_util.cc" />
     <ClCompile Include="outgoing_share_target_info.cc" />
+    <ClCompile Include="paired_key_verification_runner.cc" />
     <ClCompile Include="payload_tracker.cc" />
     <ClCompile Include="payload_w.cc" />
     <ClCompile Include="pch.cpp">

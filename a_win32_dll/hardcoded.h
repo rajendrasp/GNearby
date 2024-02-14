@@ -14,6 +14,7 @@
 #include "share_target.h"
 #include "sharing/proto/enums.pb.h"
 #include "advertisement.h"
+#include "internal/platform/device_info.h"
 
 
 using namespace nearby::sharing;
@@ -45,4 +46,8 @@ namespace hardcoded
 
 	std::string GetMyBluetoothMacAddress();
 	std::optional<std::array<uint8_t, 6>> GetMyBluetoothMacAddressInByteArray();
+
+	::nearby::api::DeviceInfo::OsType GetDeviceInfoOsType();
+
+	std::vector<uint8_t> GenerateRandomBytes(size_t num_bytes);
 }

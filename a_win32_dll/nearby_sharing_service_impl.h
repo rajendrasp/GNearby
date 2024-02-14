@@ -184,12 +184,14 @@ class NearbySharingServiceImpl
   void RunPairedKeyVerification(
       const ShareTarget& share_target, absl::string_view endpoint_id,
       std::function<
-      void(::location::nearby::proto::sharing::OSType)>
+      void(PairedKeyVerificationRunner::PairedKeyVerificationResult,
+          ::location::nearby::proto::sharing::OSType)>
       callback);
 
   void OnOutgoingConnectionKeyVerificationDone(
       const ShareTarget& share_target,
       std::optional<std::string> four_digit_token,
+      PairedKeyVerificationRunner::PairedKeyVerificationResult result,
       ::location::nearby::proto::sharing::OSType share_target_os_type);
 
   void SendIntroduction(const ShareTarget& share_target,

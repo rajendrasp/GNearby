@@ -223,7 +223,7 @@ void NearbyConnectionsManagerImpl::OnPayloadReceived(
 void NearbyConnectionsManagerImpl::OnPayloadTransferUpdate(
     absl::string_view endpoint_id, const PayloadTransferUpdate& update) {
     MutexLock lock(&mutex_);
-    NL_LOG(INFO) << "LOGINFO Received payload transfer update id=" << update.payload_id
+    NL_LOG(INFO) << "Received payload transfer update id=" << update.payload_id
         << ",status=" << update.status << ",total=" << update.total_bytes
         << ",bytes_transferred=" << update.bytes_transferred
         << std::endl;
@@ -259,7 +259,7 @@ void NearbyConnectionsManagerImpl::OnPayloadTransferUpdate(
     auto payload_it = incoming_payloads_.find(update.payload_id);
     if (payload_it == incoming_payloads_.end())
     {
-        NL_LOG(INFO) << "LOGINFO payload not found in incoming_payloads_ payload id =" << update.payload_id;
+        NL_LOG(INFO) << "LOGINFO looks like outgoing payload payload id =" << update.payload_id;
         return;
     }
 
@@ -272,8 +272,12 @@ void NearbyConnectionsManagerImpl::OnPayloadTransferUpdate(
 
     if (update.status != PayloadStatus::kSuccess)
     {
-        NL_LOG(INFO) << "LOGINFO payload status is not success payload id =" << update.payload_id;
+        NL_LOG(INFO) << "payload status is not success payload id =" << update.payload_id;
         return;
+    }
+    else
+    {
+        NL_LOG(INFO) << "LOGINFO payload status IS success payload id =" << update.payload_id;
     }
 
     auto connections_it = connections_.find(endpoint_id);
