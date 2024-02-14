@@ -14,6 +14,7 @@ namespace hardcoded
 {
     std::optional<std::vector<uint8_t>> GetBluetoothMacAddressForShareTarget(ShareTarget share_target)
     {
+        return std::nullopt;
         std::string mac_address =
             //certificate.unencrypted_metadata().bluetooth_mac_address();
             "sixlen";

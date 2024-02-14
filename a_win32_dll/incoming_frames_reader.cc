@@ -70,6 +70,9 @@ IncomingFramesReader::~IncomingFramesReader() {
 
 void IncomingFramesReader::ReadFrame(
     std::function<void(std::optional<V1Frame>)> callback) {
+
+    NL_LOG(INFO) << "LOGINFO ReadFrame Called.";
+
   MutexLock lock(&mutex_);
   if (!read_frame_info_queue_.empty()) {
     ReadFrameInfo read_fame_info{std::nullopt, std::move(callback),
@@ -81,6 +84,8 @@ void IncomingFramesReader::ReadFrame(
   // Check in the cache for frame.
   std::optional<V1Frame> cached_frame = GetCachedFrame(std::nullopt);
   if (cached_frame.has_value()) {
+      NL_LOG(INFO) << "LOGINFO found a cached frame.";
+
     callback(std::move(cached_frame));
     return;
   }
@@ -93,8 +98,10 @@ void IncomingFramesReader::ReadFrame(
 void IncomingFramesReader::ReadFrame(
     FrameType frame_type, std::function<void(std::optional<V1Frame>)> callback,
     absl::Duration timeout) {
+    NL_LOG(INFO) << "LOGINFO ReadFrame called with type = " << frame_type;
   MutexLock lock(&mutex_);
   if (!read_frame_info_queue_.empty()) {
+      NL_LOG(INFO) << "LOGINFO read_frame_info_queue_ was NOT empty, added this read request to the queue";
     ReadFrameInfo read_fame_info{frame_type, std::move(callback), timeout};
     read_frame_info_queue_.push(std::move(read_fame_info));
     return;
@@ -103,6 +110,7 @@ void IncomingFramesReader::ReadFrame(
   // Check in the cache for frame.
   std::optional<V1Frame> cached_frame = GetCachedFrame(frame_type);
   if (cached_frame.has_value()) {
+      NL_LOG(INFO) << "LOGINFO found a cached frame in ReadFrame method with type input";
     callback(std::move(cached_frame));
     return;
   }
@@ -128,6 +136,7 @@ void IncomingFramesReader::ReadFrame(
 }
 
 void IncomingFramesReader::ReadNextFrame() {
+    NL_LOG(INFO) << "LOGINFO ReadNextFrame called";
   connection_->Read(
       [&, reader = GetWeakPtr()](std::optional<std::vector<uint8_t>> bytes) {
         auto frame_reader = reader.lock();
@@ -135,6 +144,8 @@ void IncomingFramesReader::ReadNextFrame() {
           NL_LOG(WARNING) << "IncomingFramesReader is released before.";
           return;
         }
+
+        NL_LOG(INFO) << "LOGINFO Read callback is called inside ReadNextFrame";
 
         OnDataReadFromConnection(std::move(bytes));
       });
@@ -148,13 +159,16 @@ void IncomingFramesReader::OnTimeout() {
 
 void IncomingFramesReader::OnDataReadFromConnection(
     std::optional<std::vector<uint8_t>> bytes) {
+
+    NL_LOG(INFO) << "LOGINFO IncomingFramesReader::OnDataReadFromConnection called";
   MutexLock lock(&mutex_);
   if (read_frame_info_queue_.empty()) {
+      NL_LOG(INFO) << "LOGINFO IncomingFramesReader::OnDataReadFromConnection read_frame_info_queue_ is empty";
     return;
   }
 
   if (!bytes.has_value()) {
-    NL_LOG(WARNING) << __func__ << ": Failed to read frame";
+    NL_LOG(WARNING) << __func__ << ": LOGINFO IncomingFramesReader::OnDataReadFromConnection Failed to read frame";
     Done(std::nullopt);
     return;
   }
@@ -173,12 +187,15 @@ void IncomingFramesReader::OnDataReadFromConnection(
 }
 
 void IncomingFramesReader::OnFrameDecoded(std::optional<Frame> frame) {
+    NL_LOG(INFO) << __func__ << ": LOGINFO IncomingFramesReader::OnFrameDecoded called";
   if (!frame.has_value()) {
+      NL_LOG(INFO) << __func__ << ": LOGINFO IncomingFramesReader::OnFrameDecoded frame is null, trying to read next frame";
     ReadNextFrame();
     return;
   }
 
   if (frame->version() != Frame::V1) {
+      NL_LOG(INFO) << __func__ << ": LOGINFO IncomingFramesReader::OnFrameDecoded Frame read does not have V1Frame";
     //NL_VLOG(1) << __func__ << ": Frame read does not have V1Frame";
     ReadNextFrame();
     return;
@@ -187,10 +204,12 @@ void IncomingFramesReader::OnFrameDecoded(std::optional<Frame> frame) {
   auto v1_frame = frame->v1();
   FrameType v1_frame_type = v1_frame.type();
 
+  NL_LOG(INFO) << __func__ << ": LOGINFO IncomingFramesReader::OnFrameDecoded Frame type is " << v1_frame_type;
+
   const ReadFrameInfo& frame_info = read_frame_info_queue_.front();
   if (frame_info.frame_type.has_value() &&
       *frame_info.frame_type != v1_frame_type) {
-    NL_LOG(WARNING) << __func__ << ": Failed to read frame of type "
+    NL_LOG(WARNING) << __func__ << ": LOGINFO Failed to read frame of type "
                     << *frame_info.frame_type << ", but got frame of type "
                     << v1_frame_type << ". Cached for later.";
     cached_frames_.insert({v1_frame_type, std::move(v1_frame)});
@@ -202,7 +221,9 @@ void IncomingFramesReader::OnFrameDecoded(std::optional<Frame> frame) {
 }
 
 void IncomingFramesReader::Done(std::optional<V1Frame> frame) {
+    NL_LOG(INFO) << __func__ << ": LOGINFO IncomingFramesReader::Done called";
   if (read_frame_info_queue_.empty()) {
+      NL_LOG(INFO) << __func__ << ": LOGINFO IncomingFramesReader::Done read_frame_info_queue_ is empty";
     return;
   }
 
