@@ -33,6 +33,7 @@
 #include "nearby_connection.h"
 #include "nearby_sharing_decoder.h"
 #include "sharing/proto/wire_format.pb.h"
+#include "internal/platform/timer_impl.h"
 
 namespace nearby {
 namespace sharing {
@@ -49,12 +50,16 @@ std::ostream& operator<<(std::ostream& out, const FrameType& obj) {
 
 }  // namespace
 
+std::unique_ptr<Timer> CreateTimer() {
+    return std::make_unique<TimerImpl>();
+}
+
 IncomingFramesReader::IncomingFramesReader(NearbySharingDecoder* decoder,
                                            NearbyConnection* connection)
     : connection_(connection), decoder_(decoder) {
   NL_DCHECK(decoder);
   NL_DCHECK(connection);
-  //timeout_timer_ = context->CreateTimer();
+  timeout_timer_ = CreateTimer();
 }
 
 IncomingFramesReader::~IncomingFramesReader() {

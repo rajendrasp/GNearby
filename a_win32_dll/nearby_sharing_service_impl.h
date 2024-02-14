@@ -57,6 +57,10 @@ class NearbySharingServiceImpl
 
   void StartScanning() override;
 
+  void SendAttachments(absl::string_view endpoint_id);
+
+  void OnSendAttachments(StatusCodes status);
+
   // NearbySharingService
   void SendAttachments(
       const ShareTarget& share_target,
@@ -215,6 +219,15 @@ class NearbySharingServiceImpl
       absl::string_view endpoint_id);
 
   void RemoveOutgoingShareTargetWithEndpointId(absl::string_view endpoint_id);
+
+  void OnOutgoingDecryptedCertificate(
+      absl::string_view endpoint_id, absl::Span<const uint8_t> endpoint_info,
+      std::unique_ptr<Advertisement> advertisement);
+
+  std::optional<ShareTarget> CreateShareTarget(
+      absl::string_view endpoint_id,
+      std::unique_ptr<Advertisement> advertisement,
+      bool is_incoming);
 
 
 

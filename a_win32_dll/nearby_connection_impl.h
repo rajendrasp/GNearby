@@ -21,9 +21,9 @@
 #include <string>
 #include <vector>
 
-#include "dll_config.h"
 #include "absl/base/thread_annotations.h"
 #include "absl/strings/string_view.h"
+//#include "internal/platform/device_info.h"
 #include "internal/platform/mutex.h"
 #include "nearby_connection.h"
 
@@ -32,14 +32,13 @@ namespace sharing {
 
 class NearbyConnectionsManager;
 
-class DLL_API NearbyConnectionImpl : public NearbyConnection {
+class NearbyConnectionImpl : public NearbyConnection {
  public:
-  NearbyConnectionImpl(std::string endpoint_id);
+  NearbyConnectionImpl(NearbyConnectionsManager* nearby_connections_manager,
+                       absl::string_view endpoint_id);
   ~NearbyConnectionImpl() override;
 
   // NearbyConnection:
-  void ReceiveIntroduction();
-  void OnReceivedIntroduction();
   void Read(ReadCallback callback) override;
   void Write(std::vector<uint8_t> bytes) override;
   void Close() override;
@@ -49,6 +48,8 @@ class DLL_API NearbyConnectionImpl : public NearbyConnection {
   void WriteMessage(std::vector<uint8_t> bytes);
 
  private:
+  //nearby::DeviceInfo& device_info_;
+  NearbyConnectionsManager* const nearby_connections_manager_;
   std::string endpoint_id_;
 
   RecursiveMutex mutex_;

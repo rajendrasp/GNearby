@@ -130,7 +130,7 @@ void NearbyConnectionsManagerImpl::OnConnectionAccepted(
         }
 
         auto result = connections_.emplace(std::string(endpoint_id),
-            std::make_unique<NearbyConnectionImpl>(std::string(endpoint_id)));
+            std::make_unique<NearbyConnectionImpl>(this, std::string(endpoint_id)));
         NL_DCHECK(result.second);
         incoming_connection_listener_->OnIncomingConnection(
             endpoint_id, it->second.endpoint_info, result.first->second.get());
@@ -143,7 +143,7 @@ void NearbyConnectionsManagerImpl::OnConnectionAccepted(
         }
 
         auto result = connections_.emplace(
-            endpoint_id, std::make_unique<NearbyConnectionImpl>(std::string(endpoint_id)));
+            endpoint_id, std::make_unique<NearbyConnectionImpl>(this, std::string(endpoint_id)));
         NL_DCHECK(result.second);
         std::move(it->second)(result.first->second.get(), Status::kSuccess);
         pending_outgoing_connections_.erase(it);
@@ -212,7 +212,7 @@ void NearbyConnectionsManagerImpl::OnPayloadReceived(
     absl::string_view endpoint_id, Payload& payload)
 {
     MutexLock lock(&mutex_);
-    NL_LOG(INFO) << "Received payload id=" << payload.id;
+    NL_LOG(INFO) << "LOGINFO Received payload id=" << payload.id;
 
     [[maybe_unused]] auto result =
         incoming_payloads_.emplace(payload.id, std::move(payload));
@@ -223,7 +223,7 @@ void NearbyConnectionsManagerImpl::OnPayloadReceived(
 void NearbyConnectionsManagerImpl::OnPayloadTransferUpdate(
     absl::string_view endpoint_id, const PayloadTransferUpdate& update) {
     MutexLock lock(&mutex_);
-    NL_LOG(INFO) << "Received payload transfer update id=" << update.payload_id
+    NL_LOG(INFO) << "LOGINFO Received payload transfer update id=" << update.payload_id
         << ",status=" << update.status << ",total=" << update.total_bytes
         << ",bytes_transferred=" << update.bytes_transferred
         << std::endl;
@@ -257,7 +257,11 @@ void NearbyConnectionsManagerImpl::OnPayloadTransferUpdate(
     // we'll treat it as a control frame (e.g. IntroductionFrame) and
     // forward it to the associated NearbyConnection.
     auto payload_it = incoming_payloads_.find(update.payload_id);
-    if (payload_it == incoming_payloads_.end()) return;
+    if (payload_it == incoming_payloads_.end())
+    {
+        NL_LOG(INFO) << "LOGINFO payload not found in incoming_payloads_ payload id =" << update.payload_id;
+        return;
+    }
 
     if (payload_it->second.content.type != PayloadContent::Type::kBytes) {
         NL_LOG(WARNING) << "Received unknown payload of file type. Cancelling.";
@@ -266,7 +270,11 @@ void NearbyConnectionsManagerImpl::OnPayloadTransferUpdate(
         return;
     }
 
-    if (update.status != PayloadStatus::kSuccess) return;
+    if (update.status != PayloadStatus::kSuccess)
+    {
+        NL_LOG(INFO) << "LOGINFO payload status is not success payload id =" << update.payload_id;
+        return;
+    }
 
     auto connections_it = connections_.find(endpoint_id);
     if (connections_it == connections_.end()) return;
@@ -329,9 +337,9 @@ void NearbyConnectionsManagerImpl::Connect(
              << ", allowed_mediums="
              << MediumSelectionToString(allowed_mediums);
   
-  /*[[maybe_unused]] auto result =
+  [[maybe_unused]] auto result =
       pending_outgoing_connections_.emplace(endpoint_id, std::move(callback));
-  NL_DCHECK(result.second);*/
+  NL_DCHECK(result.second);
 
   /*auto timeout_timer = context_->CreateTimer();
   timeout_timer->Start(
@@ -650,7 +658,7 @@ void NearbyConnectionsManagerImpl::StartAdvertising(
         };
 
     // Check if BLE hardware supports Extended Advertising
-    bool extended_advertising_supported = IsExtendedAdvertisingSupported();
+    bool extended_advertising_supported = hardcoded::IsExtendedAdvertisingSupported();
 
     Uuid fast_advertisement_service_uuid;
 
