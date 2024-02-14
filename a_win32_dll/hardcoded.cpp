@@ -1,6 +1,7 @@
 
 #include "hardcoded.h"
 
+#include "absl/random/random.h"
 #include "absl/strings/ascii.h"
 #include "advertisement.h"
 #include "winrt/Windows.Devices.Bluetooth.h"
@@ -184,5 +185,17 @@ namespace hardcoded
         }
 
         return bluetooth_mac_address;
+    }
+
+    ::nearby::api::DeviceInfo::OsType GetDeviceInfoOsType()
+    {
+        return ::nearby::api::DeviceInfo::OsType::kWindows;
+    }
+
+    std::vector<uint8_t> GenerateRandomBytes(size_t num_bytes)
+    {
+        std::vector<uint8_t> bytes(num_bytes);
+        crypto::RandBytes(absl::Span<uint8_t>(bytes));
+        return bytes;
     }
 }

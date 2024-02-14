@@ -1631,9 +1631,10 @@ void NearbySharingServiceImpl::OnOutgoingConnection(
     RunPairedKeyVerification(
         share_target, *info->endpoint_id(),
         [&, share_target, four_digit_token = std::move(four_digit_token)](
+            PairedKeyVerificationRunner::PairedKeyVerificationResult result,
             OSType remote_os_type) {
                 OnOutgoingConnectionKeyVerificationDone(share_target, four_digit_token,
-                remote_os_type);
+                result, remote_os_type);
         });
 }
 
@@ -1652,20 +1653,20 @@ void NearbySharingServiceImpl::OnOutgoingConnectionDisconnected(
 
 void NearbySharingServiceImpl::RunPairedKeyVerification(
     const ShareTarget& share_target, absl::string_view endpoint_id,
-    std::function<void(OSType)>
-    callback)
-{
+    std::function<void(PairedKeyVerificationRunner::PairedKeyVerificationResult,
+        OSType)>
+    callback) {
     std::optional<std::vector<uint8_t>> token =
         nearby_connections_manager_->GetRawAuthenticationToken(endpoint_id);
-    //if (!token) {
-    //    NL_VLOG(1) << __func__
-    //        << ": Failed to read authentication token from endpoint - "
-    //        << endpoint_id;
-    //    std::move(callback)(
-    //        PairedKeyVerificationRunner::PairedKeyVerificationResult::kFail,
-    //        OSType::UNKNOWN_OS_TYPE);
-    //    return;
-    //}
+    if (!token) {
+        NL_VLOG(1) << __func__
+            << ":LOGINFO Failed to read authentication token from endpoint - "
+            << endpoint_id;
+        std::move(callback)(
+            PairedKeyVerificationRunner::PairedKeyVerificationResult::kFail,
+            OSType::UNKNOWN_OS_TYPE);
+        return;
+    }
 
     ShareTargetInfo* share_target_info = GetShareTargetInfo(share_target);
     NL_DCHECK(share_target_info);
@@ -1673,27 +1674,20 @@ void NearbySharingServiceImpl::RunPairedKeyVerification(
     share_target_info->set_frames_reader(std::make_shared<IncomingFramesReader>(
         decoder_, share_target_info->connection()));
 
-    /*bool restrict_to_contacts = share_target.is_incoming &&
-        settings_->GetVisibility() !=
-        DeviceVisibility::DEVICE_VISIBILITY_EVERYONE;
-    bool self_share_feature_enabled = NearbyFlags::GetInstance().GetBoolFlag(
-        config_package_nearby::nearby_sharing_feature::kEnableSelfShare);
+    bool restrict_to_contacts = false;
+    bool self_share_feature_enabled = false;
     share_target_info->set_key_verification_runner(
         std::make_shared<PairedKeyVerificationRunner>(
-            context_->GetClock(), device_info_, GetSettings(),
             self_share_feature_enabled, share_target, endpoint_id, *token,
-            share_target_info->connection(), share_target_info->certificate(),
-            GetCertificateManager(), restrict_to_contacts,
+            share_target_info->connection(), restrict_to_contacts,
             share_target_info->frames_reader(), kReadFramesTimeout));
-    share_target_info->key_verification_runner()->Run(std::move(callback));*/
-
-    // my simple verification
-    hardcoded::RunVerification(callback);
+    share_target_info->key_verification_runner()->Run(std::move(callback));
 }
 
 void NearbySharingServiceImpl::OnOutgoingConnectionKeyVerificationDone(
     const ShareTarget& share_target,
     std::optional<std::string> four_digit_token,
+    PairedKeyVerificationRunner::PairedKeyVerificationResult result,
     OSType share_target_os_type) {
     ShareTargetInfo* info = GetShareTargetInfo(share_target);
     if (!info || !info->connection()) {
@@ -1701,7 +1695,7 @@ void NearbySharingServiceImpl::OnOutgoingConnectionKeyVerificationDone(
     }
 
     if (!info->transfer_update_callback()) {
-        //NL_VLOG(1) << __func__ << ": No transfer update callback. Disconnecting.";
+        NL_VLOG(1) << __func__ << ": No transfer update callback. Disconnecting.";
         AbortAndCloseConnectionIfNecessary(
             TransferMetadata::Status::kMissingTransferUpdateCallback, share_target);
         return;
@@ -1709,58 +1703,54 @@ void NearbySharingServiceImpl::OnOutgoingConnectionKeyVerificationDone(
 
     info->set_os_type(share_target_os_type);
 
-    SendIntroduction(share_target, /*four_digit_token=*/std::nullopt);
-    SendPayloads(share_target);
+    switch (result) {
+    case PairedKeyVerificationRunner::PairedKeyVerificationResult::kFail:
+        NL_VLOG(1) << __func__ << ":LOGINFO Paired key handshake failed for target "
+            << share_target.id << ". Disconnecting.";
+        AbortAndCloseConnectionIfNecessary(
+            TransferMetadata::Status::kPairedKeyVerificationFailed, share_target);
+        return;
 
-    //switch (result) {
-    //case PairedKeyVerificationRunner::PairedKeyVerificationResult::kFail:
-    //    NL_VLOG(1) << __func__ << ": Paired key handshake failed for target "
-    //        << share_target.id << ". Disconnecting.";
-    //    AbortAndCloseConnectionIfNecessary(
-    //        TransferMetadata::Status::kPairedKeyVerificationFailed, share_target);
-    //    return;
+    case PairedKeyVerificationRunner::PairedKeyVerificationResult::kSuccess:
+        NL_VLOG(1) << __func__ << ":LOGINFO Paired key handshake succeeded for target - "
+            << share_target.id;
+        SendIntroduction(share_target, /*four_digit_token=*/std::nullopt);
+        SendPayloads(share_target);
+        return;
 
-    //case PairedKeyVerificationRunner::PairedKeyVerificationResult::kSuccess:
-    //    NL_VLOG(1) << __func__ << ": Paired key handshake succeeded for target - "
-    //        << share_target.id;
-    //    SendIntroduction(share_target, /*four_digit_token=*/std::nullopt);
-    //    SendPayloads(share_target);
-    //    return;
+    case PairedKeyVerificationRunner::PairedKeyVerificationResult::kUnable:
+        NL_VLOG(1) << __func__
+            << ":LOGINFO Unable to verify paired key encryption when "
+            "initiating connection to target - "
+            << share_target.id;
 
-    //case PairedKeyVerificationRunner::PairedKeyVerificationResult::kUnable:
-    //    NL_VLOG(1) << __func__
-    //        << ": Unable to verify paired key encryption when "
-    //        "initiating connection to target - "
-    //        << share_target.id;
+        if (four_digit_token) {
+            info->set_token(*four_digit_token);
+        }
 
-    //    if (four_digit_token) {
-    //        info->set_token(*four_digit_token);
-    //    }
+        if (true/*NearbyFlags::GetInstance().GetBoolFlag(
+            config_package_nearby::nearby_sharing_feature::
+            kSenderSkipsConfirmation)*/) {
+            NL_VLOG(1) << __func__
+                << ":LOGINFO Sender-side verification is disabled. Skipping "
+                "token comparison with "
+                << share_target.id;
+            SendIntroduction(share_target, /*four_digit_token=*/std::nullopt);
+            SendPayloads(share_target);
+        }
+        else {
+            SendIntroduction(share_target, std::move(four_digit_token));
+        }
+        return;
 
-    //    if (NearbyFlags::GetInstance().GetBoolFlag(
-    //        config_package_nearby::nearby_sharing_feature::
-    //        kSenderSkipsConfirmation)) {
-    //        NL_VLOG(1) << __func__
-    //            << ": Sender-side verification is disabled. Skipping "
-    //            "token comparison with "
-    //            << share_target.id;
-    //        SendIntroduction(share_target, /*four_digit_token=*/std::nullopt);
-    //        SendPayloads(share_target);
-    //    }
-    //    else {
-    //        SendIntroduction(share_target, std::move(four_digit_token));
-    //    }
-    //    return;
-
-    //case PairedKeyVerificationRunner::PairedKeyVerificationResult::kUnknown:
-    //    NL_VLOG(1) << __func__
-    //        << ": Unknown PairedKeyVerificationResult for target "
-    //        << share_target.id << ". Disconnecting.";
-    //    AbortAndCloseConnectionIfNecessary(
-    //        TransferMetadata::Status::kPairedKeyVerificationFailed, share_target);
-    //    break;
-    //}
-
+    case PairedKeyVerificationRunner::PairedKeyVerificationResult::kUnknown:
+        NL_VLOG(1) << __func__
+            << ": Unknown PairedKeyVerificationResult for target "
+            << share_target.id << ". Disconnecting.";
+        AbortAndCloseConnectionIfNecessary(
+            TransferMetadata::Status::kPairedKeyVerificationFailed, share_target);
+        break;
+    }
 }
 
 void NearbySharingServiceImpl::SendIntroduction(

@@ -27,7 +27,7 @@
 
 // Public APIs
 // The stream statement must come last, or it won't compile.
-#define NL_VLOG(level) VLOG(level)
+#define NL_VLOG(level) NL_LOG(INFO)
 #define NL_LOG(severity) LOG(severity)
 
 #define NL_DLOG(severity) DLOG(severity)
