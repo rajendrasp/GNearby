@@ -620,8 +620,8 @@ NearbySharingService::StatusCodes NearbySharingServiceImpl::SendPayloads(
         return StatusCodes::kOutOfOrderApiCall;
     }
 
-    //ReceiveConnectionResponse(share_target);
-    OnReceiveConnectionResponse(share_target);
+    ReceiveConnectionResponse(share_target);
+    //OnReceiveConnectionResponse(share_target);
     return StatusCodes::kOk;
 }
 
@@ -884,10 +884,9 @@ void NearbySharingServiceImpl::AbortAndCloseConnectionIfNecessary(
 
 void NearbySharingServiceImpl::ReceiveConnectionResponse(
     ShareTarget share_target) {
-    //NL_VLOG(1) << __func__ << ": Receiving response frame from "
-    //    << share_target.id;
-    
-    /*ShareTargetInfo* info = GetShareTargetInfo(share_target);
+    NL_VLOG(1) << __func__ << ": Receiving response frame from "
+        << share_target.id;
+    ShareTargetInfo* info = GetShareTargetInfo(share_target);
     NL_DCHECK(info && info->connection());
 
     info->frames_reader()->ReadFrame(
@@ -896,7 +895,7 @@ void NearbySharingServiceImpl::ReceiveConnectionResponse(
             std::optional<nearby::sharing::service::proto::V1Frame> frame) {
                 OnReceiveConnectionResponse(share_target, std::move(frame));
         },
-        kReadResponseFrameTimeout);*/
+        kReadResponseFrameTimeout);
 }
 
 void NearbySharingServiceImpl::SetAttachmentPayloadId(
@@ -1099,59 +1098,50 @@ void NearbySharingServiceImpl::UnregisterShareTarget(
 }
 
 void NearbySharingServiceImpl::OnReceiveConnectionResponse(
-    ShareTarget share_target)
-{
-    NL_LOG(INFO) <<__func__ << ": LOGINFO NearbySharingServiceImpl::OnReceiveConnectionResponse called ";
-
-    OutgoingShareTargetInfo *info = GetOutgoingShareTargetInfo(share_target);
-    if (!info || !info->connection())
-    {
+    ShareTarget share_target,
+    std::optional<nearby::sharing::service::proto::V1Frame> frame) {
+    OutgoingShareTargetInfo* info = GetOutgoingShareTargetInfo(share_target);
+    if (!info || !info->connection()) {
         NL_LOG(WARNING) << __func__
-                        << ": LOGINFO Ignore received connection response, due to no "
-                           "connection established.";
+            << ": Ignore received connection response, due to no "
+            "connection established.";
         return;
     }
 
-    if (!info->transfer_update_callback())
-    {
+    if (!info->transfer_update_callback()) {
         NL_LOG(WARNING) << __func__
-                        << ": LOGINFO No transfer update callback. Disconnecting.";
+            << ": No transfer update callback. Disconnecting.";
         AbortAndCloseConnectionIfNecessary(
             TransferMetadata::Status::kMissingTransferUpdateCallback, share_target);
         return;
     }
 
-    //if (!frame)
-    //{
-    //    NL_LOG(WARNING)
-    //        << __func__
-    //        << ": LOGINFO Failed to read a response from the remote device. Disconnecting.";
-    //    AbortAndCloseConnectionIfNecessary(
-    //        TransferMetadata::Status::kFailedToReadOutgoingConnectionResponse,
-    //        share_target);
-    //    return;
-    //}
+    if (!frame) {
+        NL_LOG(WARNING)
+            << __func__
+            << ": Failed to read a response from the remote device. Disconnecting.";
+        AbortAndCloseConnectionIfNecessary(
+            TransferMetadata::Status::kFailedToReadOutgoingConnectionResponse,
+            share_target);
+        return;
+    }
 
-    // mutual_acceptance_timeout_alarm_->Stop();
+    //mutual_acceptance_timeout_alarm_->Stop();
 
-    NL_LOG(INFO) << __func__
-        << ": LOGINFO Successfully read the connection response frame.";
+    NL_VLOG(1) << __func__
+        << ": Successfully read the connection response frame.";
 
-    /*nearby::sharing::service::proto::ConnectionResponseFrame response =
-        std::move(frame->connection_response());*/
-
-    {
-        NL_LOG(INFO) << __func__
-            << ": LOGINGO Got Accept response from remote device.";
-
+    nearby::sharing::service::proto::ConnectionResponseFrame response =
+        std::move(frame->connection_response());
+    switch (response.status()) {
+    case nearby::sharing::service::proto::ConnectionResponseFrame::ACCEPT: {
         // Write progress update frame to remote machine.
         WriteProgressUpdateFrame(*info->connection(), true, std::nullopt);
 
         info->frames_reader()->ReadFrame(
             [&, share_target](
-                std::optional<nearby::sharing::service::proto::V1Frame> frame)
-            {
-                OnFrameRead(share_target, std::move(frame));
+                std::optional<nearby::sharing::service::proto::V1Frame> frame) {
+                    OnFrameRead(share_target, std::move(frame));
             });
 
         info->transfer_update_callback()->OnTransferUpdate(
@@ -1161,48 +1151,80 @@ void NearbySharingServiceImpl::OnReceiveConnectionResponse(
 
         info->set_payload_tracker(std::make_unique<PayloadTracker>(
             share_target, attachment_info_map_,
-            [&](ShareTarget share_target, TransferMetadata transfer_metadata)
-            {
+            [&](ShareTarget share_target, TransferMetadata transfer_metadata) {
                 OnPayloadTransferUpdate(share_target, transfer_metadata);
             }));
 
-        if (true /*NearbyFlags::GetInstance().GetBoolFlag(
-             config_package_nearby::nearby_sharing_feature::
-             kEnableTransferCancellationOptimization)*/
-            )
-        {
+        if (false/*NearbyFlags::GetInstance().GetBoolFlag(
+            config_package_nearby::nearby_sharing_feature::
+            kEnableTransferCancellationOptimization)*/) {
             std::optional<Payload> payload = info->ExtractNextPayload();
-            if (payload.has_value())
-            {
+            if (payload.has_value()) {
                 NL_LOG(INFO) << __func__ << ": Send  payload " << payload->id;
 
                 nearby_connections_manager_->Send(*info->endpoint_id(),
                     std::make_unique<Payload>(*payload),
                     info->payload_tracker());
             }
-            else
-            {
+            else {
                 NL_LOG(WARNING) << __func__ << ": There is no payloads to send.";
             }
         }
-        else
-        {
-            for (auto& payload : info->ExtractTextPayloads())
-            {
+        else {
+            for (auto& payload : info->ExtractTextPayloads()) {
                 nearby_connections_manager_->Send(*info->endpoint_id(),
                     std::make_unique<Payload>(payload),
                     info->payload_tracker());
             }
-            for (auto& payload : info->ExtractFilePayloads())
-            {
+            for (auto& payload : info->ExtractFilePayloads()) {
                 nearby_connections_manager_->Send(*info->endpoint_id(),
                     std::make_unique<Payload>(payload),
                     info->payload_tracker());
             }
         }
-        // NL_VLOG(1)
-        //     << __func__
-        //     << ": The connection was accepted. Payloads are now being sent.";
+        NL_VLOG(1)
+            << __func__
+            << ": The connection was accepted. Payloads are now being sent.";
+        break;
+    }
+    case nearby::sharing::service::proto::ConnectionResponseFrame::REJECT:
+        AbortAndCloseConnectionIfNecessary(TransferMetadata::Status::kRejected,
+            share_target);
+        NL_VLOG(1)
+            << __func__
+            << ": The connection was rejected. The connection has been closed.";
+        break;
+        case nearby::sharing::service::proto::ConnectionResponseFrame::
+        NOT_ENOUGH_SPACE:
+            AbortAndCloseConnectionIfNecessary(
+                TransferMetadata::Status::kNotEnoughSpace, share_target);
+            NL_VLOG(1) << __func__
+                << ": The connection was rejected because the remote device "
+                "does not have enough space for our attachments. The "
+                "connection has been closed.";
+            break;
+            case nearby::sharing::service::proto::ConnectionResponseFrame::
+            UNSUPPORTED_ATTACHMENT_TYPE:
+                AbortAndCloseConnectionIfNecessary(
+                    TransferMetadata::Status::kUnsupportedAttachmentType, share_target);
+                NL_VLOG(1) << __func__
+                    << ": The connection was rejected because the remote device "
+                    "does not support the attachments we were sending. The "
+                    "connection has been closed.";
+                break;
+            case nearby::sharing::service::proto::ConnectionResponseFrame::TIMED_OUT:
+                AbortAndCloseConnectionIfNecessary(TransferMetadata::Status::kTimedOut,
+                    share_target);
+                NL_VLOG(1) << __func__
+                    << ": The connection was rejected because the remote device "
+                    "timed out. The connection has been closed.";
+                break;
+            default:
+                AbortAndCloseConnectionIfNecessary(TransferMetadata::Status::kFailed,
+                    share_target);
+                NL_VLOG(1) << __func__
+                    << ": The connection failed. The connection has been closed.";
+                break;
     }
 }
 
