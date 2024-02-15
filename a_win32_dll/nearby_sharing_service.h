@@ -26,6 +26,8 @@
 #include "share_target.h"
 #include "attachment.h"
 
+using DeviceAddedCallback = std::function<void(std::string device_name, std::string endpoint_id)>;
+
 namespace nearby {
 
 class AccountManager;
@@ -114,6 +116,7 @@ class NearbySharingService {
   virtual ~NearbySharingService() = default;
 
   virtual void StartScanning() = 0;
+  virtual void StartScanning(DeviceAddedCallback callback) = 0;
 
   // Sends |attachments| to the remote |share_target|.
   virtual void SendAttachments(

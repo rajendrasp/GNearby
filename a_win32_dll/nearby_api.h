@@ -1,9 +1,17 @@
 #pragma once
 
 #include "dll_config.h"
-#include "nearby_sharing_service.h"
+#include <memory>
+#include <string>
+#include <functional>
 
-using namespace nearby::sharing;
+namespace nearby {
+	namespace sharing {
+		class NearbySharingService;
+	}
+}
+
+using DeviceAddedCallback = std::function<void(std::string device_name, std::string endpoint_id)>;
 
 namespace nearby::windows {
 
@@ -14,10 +22,11 @@ namespace nearby::windows {
 			void __stdcall InitializeNearby();
 
 			void StartScanning();
+			void StartScanning2(DeviceAddedCallback deviceAddedCallback);
 			void StartAdvertising();
 
 
-			std::unique_ptr<NearbySharingService> nearby_sharing_service_;
+			nearby::sharing::NearbySharingService* nearby_sharing_service_;
 		};
 	}
 }
