@@ -145,7 +145,8 @@ class NearbySharingServiceImpl
   void UnregisterShareTarget(const ShareTarget& share_target);
 
   void OnReceiveConnectionResponse(
-      ShareTarget share_target);
+      ShareTarget share_target,
+      std::optional<nearby::sharing::service::proto::V1Frame> frame);
 
   // Update file path for the file attachment.
   //void UpdateFilePath(ShareTarget& share_target);

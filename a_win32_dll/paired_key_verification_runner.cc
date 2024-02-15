@@ -160,6 +160,9 @@ void PairedKeyVerificationRunner::Run(
   callback_ = std::move(callback);
 
   SendPairedKeyEncryptionFrame();
+
+  NL_LOG(INFO) << "LOGGER Reading frame PAIRED_KEY_ENCRYPTION";
+
   frames_reader_->ReadFrame(
       V1Frame::PAIRED_KEY_ENCRYPTION,
       [&, runner = GetWeakPtr()](std::optional<V1Frame> frame) {
@@ -223,6 +226,8 @@ void PairedKeyVerificationRunner::OnReadPairedKeyEncryptionFrame(
              << local_result;
 
   SendPairedKeyResultFrame(local_result);
+
+  NL_LOG(INFO) << "LOGGER Reading PAIRED_KEY_RESULT";
 
   frames_reader_->ReadFrame(
       V1Frame::PAIRED_KEY_RESULT,

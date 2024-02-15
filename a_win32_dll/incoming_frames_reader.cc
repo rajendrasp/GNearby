@@ -115,6 +115,8 @@ void IncomingFramesReader::ReadFrame(
     return;
   }
 
+  NL_LOG(INFO) << "LOGGER Reading frame of type " << frame_type;
+
   ReadFrameInfo read_fame_info{frame_type, std::move(callback), timeout};
   read_frame_info_queue_.push(std::move(read_fame_info));
 
