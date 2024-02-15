@@ -1910,6 +1910,13 @@ void NearbySharingServiceImpl::SendIntroduction(
         .build());
 }
 
+void NearbySharingServiceImpl::StartScanning(DeviceAddedCallback callback)
+{
+    deviceAddedCallback_ = callback;
+
+    StartScanning();
+}
+
 void NearbySharingServiceImpl::StartScanning()
 {
     is_scanning_ = true;
@@ -1994,6 +2001,9 @@ void NearbySharingServiceImpl::HandleEndpointDiscovered(
 
     std::unique_ptr<Advertisement> advertisement =
         decoder_->DecodeAdvertisement(endpoint_info);
+
+    deviceAddedCallback_(advertisement->device_name().value(), std::string(endpoint_id));
+
     OnOutgoingAdvertisementDecoded(endpoint_id, endpoint_info,
         std::move(advertisement));
 }

@@ -39,6 +39,9 @@
 #include "nearby_file_handler.h"
 #include "attachment_info.h"
 
+//using DeviceAddedCallback = void(std::string device_name, std::string endpoint_id);
+//using DeviceAddedCallback = std::function<void(std::string device_name, std::string endpoint_id)>;
+
 namespace nearby {
 namespace sharing {
 
@@ -56,6 +59,7 @@ class NearbySharingServiceImpl
   ~NearbySharingServiceImpl() override;
 
   void StartScanning() override;
+  void StartScanning(DeviceAddedCallback callback) override;
 
   void SendAttachments(absl::string_view endpoint_id);
 
@@ -313,6 +317,8 @@ class NearbySharingServiceImpl
   // other events in the queue, or as soon as the previous event processing
   // finishes. When processing finishes, the event is removed from the queue.
   std::queue<std::function<void()>> endpoint_discovery_events_;
+
+  DeviceAddedCallback deviceAddedCallback_;
 
   HANDLE  hThreadArray[MAX_THREADS] = {};
   DWORD   dwThreadIdArray[MAX_THREADS];
