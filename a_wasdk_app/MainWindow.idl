@@ -6,4 +6,17 @@ namespace a_wasdk_app
         MainWindow();
         Int32 MyProperty;
     }
+
+    runtimeclass PhoneDevice : Microsoft.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        PhoneDevice();
+        PhoneDevice(String name);
+        String DeviceName;
+    }
+
+    runtimeclass DevicesPage : Microsoft.UI.Xaml.Controls.Page, Microsoft.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        DevicesPage();
+        Windows.Foundation.Collections.IVector<IInspectable> Devices{ get; };
+    }
 }

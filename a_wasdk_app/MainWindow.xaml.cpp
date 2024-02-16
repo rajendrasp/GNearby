@@ -21,7 +21,7 @@ HANDLE  hThreadArray[MAX_THREADS] = {};
 void DeviceAdded(std::string device_name, std::string endpoint_id)
 {
 	OutputDebugStringA(device_name.c_str());
-	OutputDebugStringA(endpoint_id.c_str());
+	//OutputDebugStringA(endpoint_id.c_str());
 }
 
 namespace winrt::a_wasdk_app::implementation
