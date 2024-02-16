@@ -2002,8 +2002,11 @@ void NearbySharingServiceImpl::HandleEndpointDiscovered(
     std::unique_ptr<Advertisement> advertisement =
         decoder_->DecodeAdvertisement(endpoint_info);
 
-    deviceAddedCallback_(advertisement->device_name().value(), std::string(endpoint_id));
-
+    if (deviceAddedCallback_)
+    {
+        deviceAddedCallback_(advertisement->device_name().value(), std::string(endpoint_id));
+    }
+    
     OnOutgoingAdvertisementDecoded(endpoint_id, endpoint_info,
         std::move(advertisement));
 }
