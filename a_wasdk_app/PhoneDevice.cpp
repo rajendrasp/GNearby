@@ -26,4 +26,10 @@ namespace winrt::a_wasdk_app::implementation
             RaisePropertyChanged(L"DeviceName");
         }
     }
+
+    void PhoneDevice::TransferProgress(int progress)
+    {
+        m_TransferProgress = progress;
+        RaisePropertyChanged(L"TransferProgress");
+    }
 }

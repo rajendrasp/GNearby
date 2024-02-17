@@ -61,7 +61,7 @@ class NearbySharingServiceImpl
   void StartScanning() override;
   void StartScanning(DeviceAddedCallback callback) override;
 
-  void SendAttachments(absl::string_view endpoint_id);
+  void SendAttachments(std::string endpoint_id, std::string filePathIn) override;
 
   void OnSendAttachments(StatusCodes status);
 

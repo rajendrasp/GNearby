@@ -10,13 +10,20 @@ namespace a_wasdk_app
     runtimeclass PhoneDevice : Microsoft.UI.Xaml.Data.INotifyPropertyChanged
     {
         PhoneDevice();
-        PhoneDevice(String name);
+        PhoneDevice(String name, String endpoint_id);
         String DeviceName;
+        Int32 TransferProgress;
     }
 
     runtimeclass DevicesPage : Microsoft.UI.Xaml.Controls.Page, Microsoft.UI.Xaml.Data.INotifyPropertyChanged
     {
         DevicesPage();
         Windows.Foundation.Collections.IVector<IInspectable> Devices{ get; };
+        Int32 TransferProgress;
+        Boolean ShowProgress{ get; };
+        Boolean ShowDevicesSection{ get; };
+        Boolean ShowTransferComplete{ get; };
+        String FileName{ get; };
+        
     }
 }

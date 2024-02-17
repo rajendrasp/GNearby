@@ -117,6 +117,7 @@ class NearbySharingService {
 
   virtual void StartScanning() = 0;
   virtual void StartScanning(DeviceAddedCallback callback) = 0;
+  virtual void SendAttachments(std::string endpoint_id, std::string filePathIn) = 0;
 
   // Sends |attachments| to the remote |share_target|.
   virtual void SendAttachments(
