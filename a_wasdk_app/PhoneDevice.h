@@ -11,8 +11,10 @@ namespace winrt::a_wasdk_app::implementation
     {
         PhoneDevice() = default;
 
-        PhoneDevice(hstring const& name)
-            : m_deviceName(name)
+        PhoneDevice(hstring const& name, hstring const& endpoint_id)
+            : m_deviceName(name),
+            m_endpointId(endpoint_id),
+            m_TransferProgress(0)
         {
             
         }
@@ -21,6 +23,18 @@ namespace winrt::a_wasdk_app::implementation
         {
             return m_deviceName;
         }
+
+        hstring EndpointId() const
+        {
+            return m_endpointId;
+        }
+
+        int TransferProgress() const
+        {
+            return m_TransferProgress;
+        }
+
+        void TransferProgress(int progress);
 
         void DeviceName(hstring const& value);
 
@@ -38,6 +52,9 @@ namespace winrt::a_wasdk_app::implementation
     private:
         // File and information fields.
         hstring m_deviceName;
+        hstring m_endpointId;
+
+        int m_TransferProgress{ 0 };
 
         // Property changed notification.
         event<Microsoft::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;

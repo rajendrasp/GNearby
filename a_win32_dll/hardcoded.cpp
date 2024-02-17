@@ -110,18 +110,13 @@ namespace hardcoded
         return attachments;
     }
 
-    std::vector<std::unique_ptr<Attachment>> CreateFileAttachments()
+    std::vector<std::unique_ptr<Attachment>> CreateFileAttachments(std::string filePathIn)
     {
         std::vector<std::filesystem::path> file_paths;
         std::vector<std::unique_ptr<Attachment>> attachments;
-        std::optional<std::filesystem::path> folder = GetPicturesPath();
-        if (folder.has_value())
-        {
-            auto path = folder.value() / "sample.png";
-            file_paths.push_back(path);
-            return CreateFileAttachments(file_paths);
-        }
-        return attachments;
+        std::filesystem::path filePath(filePathIn);
+        file_paths.push_back(filePath);
+        return CreateFileAttachments(file_paths);
     }
 
     std::string uint64_to_mac_address_string(uint64_t bluetoothAddress) {

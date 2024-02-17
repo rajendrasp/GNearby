@@ -40,7 +40,7 @@ namespace hardcoded
 	//	currently, it is kept simple
 	std::string GetDeviceId(absl::string_view endpoint_id);
 
-	std::vector<std::unique_ptr<Attachment>> CreateFileAttachments();
+	std::vector<std::unique_ptr<Attachment>> CreateFileAttachments(std::string filePathIn);
 	std::vector<std::unique_ptr<Attachment>> CreateFileAttachments(
 		std::vector<std::filesystem::path> file_paths);
 

@@ -24,6 +24,7 @@ namespace nearby::windows {
 			void StartScanning();
 			void StartScanning2(DeviceAddedCallback deviceAddedCallback);
 			void StartAdvertising();
+			void SendAttachments(std::string endpoint_id, std::string filePath);
 
 
 			nearby::sharing::NearbySharingService* nearby_sharing_service_;

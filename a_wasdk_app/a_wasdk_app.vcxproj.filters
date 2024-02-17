@@ -14,10 +14,12 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="PhoneDevice.cpp" />
+    <ClCompile Include="globals.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhoneDevice.h" />
+    <ClInclude Include="globals.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
@@ -39,6 +41,9 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Phone.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>

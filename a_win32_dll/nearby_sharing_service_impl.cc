@@ -2256,7 +2256,7 @@ void NearbySharingServiceImpl::OnOutgoingDecryptedCertificate(
 
     FinishEndpointDiscoveryEvent();
 
-    SendAttachments(endpoint_id);
+    //SendAttachments(endpoint_id);
 }
 
 std::optional<ShareTarget> NearbySharingServiceImpl::CreateShareTarget(
@@ -2315,8 +2315,9 @@ std::optional<ShareTarget> NearbySharingServiceImpl::CreateShareTarget(
     return target;
 }
 
-void NearbySharingServiceImpl::SendAttachments(absl::string_view endpoint_id)
+void NearbySharingServiceImpl::SendAttachments(std::string endpoint, std::string filePathIn)
 {
+    absl::string_view endpoint_id(endpoint);
     auto it = outgoing_share_target_map_.find(endpoint_id);
     if (it == outgoing_share_target_map_.end()) {
         return;
@@ -2324,7 +2325,7 @@ void NearbySharingServiceImpl::SendAttachments(absl::string_view endpoint_id)
 
     const ShareTarget& target = it->second;
 
-    SendAttachments(target, hardcoded::CreateFileAttachments(),
+    SendAttachments(target, hardcoded::CreateFileAttachments(filePathIn),
         [&](StatusCodes status) {
             OnSendAttachments(status);
         });
