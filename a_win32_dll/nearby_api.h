@@ -12,6 +12,8 @@ namespace nearby {
 }
 
 using DeviceAddedCallback = std::function<void(std::string device_name, std::string endpoint_id)>;
+using ProgressUpdateCallback = std::function<void(float progress, bool isComplete)>;
+using AuthTokenCallback = std::function<void(std::string token)>;
 
 namespace nearby::windows {
 
@@ -24,7 +26,8 @@ namespace nearby::windows {
 			void StartScanning();
 			void StartScanning2(DeviceAddedCallback deviceAddedCallback);
 			void StartAdvertising();
-			void SendAttachments(std::string endpoint_id, std::string filePath);
+			void SendAttachments(std::string endpoint_id, std::string filePath,
+				ProgressUpdateCallback progressCallback, AuthTokenCallback authCallback);
 
 
 			nearby::sharing::NearbySharingService* nearby_sharing_service_;

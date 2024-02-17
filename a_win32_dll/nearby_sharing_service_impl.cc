@@ -378,11 +378,20 @@ void NearbySharingServiceImpl::OnOutgoingTransferUpdate(
     const ShareTarget& share_target, const TransferMetadata& metadata)
 {
     // kInProgress status is logged extensively elsewhere so avoid the spam.
-    if (metadata.status() != TransferMetadata::Status::kInProgress) {
+    if (metadata.status() != TransferMetadata::Status::kInProgress)
+    {
         //NL_VLOG(1) << __func__ << ": Nearby Share service: "
         //    << "Outgoing transfer update for share target with ID "
         //    << share_target.id << ": "
         //    << TransferMetadata::StatusToString(metadata.status());
+    }
+
+    if (metadata.status() == TransferMetadata::Status::kInProgress || metadata.is_final_status())
+    {
+        if (progressUpdatecallback_)
+        {
+            progressUpdatecallback_(metadata.progress(), metadata.is_final_status());
+        }
     }
 
     OutgoingShareTargetInfo* info = GetOutgoingShareTargetInfo(share_target);
@@ -1650,6 +1659,11 @@ void NearbySharingServiceImpl::OnOutgoingConnection(
         nearby_connections_manager_->GetRawAuthenticationToken(
             *info->endpoint_id()));
 
+    if (authCallback_ && four_digit_token.has_value())
+    {
+        authCallback_(four_digit_token.value());
+    }
+
     RunPairedKeyVerification(
         share_target, *info->endpoint_id(),
         [&, share_target, four_digit_token = std::move(four_digit_token)](
@@ -2315,13 +2329,17 @@ std::optional<ShareTarget> NearbySharingServiceImpl::CreateShareTarget(
     return target;
 }
 
-void NearbySharingServiceImpl::SendAttachments(std::string endpoint, std::string filePathIn)
+void NearbySharingServiceImpl::SendAttachments(std::string endpoint, std::string filePathIn,
+    ProgressUpdateCallback progressCallback, AuthTokenCallback authCallback)
 {
     absl::string_view endpoint_id(endpoint);
     auto it = outgoing_share_target_map_.find(endpoint_id);
     if (it == outgoing_share_target_map_.end()) {
         return;
     }
+
+    progressUpdatecallback_ = progressCallback;
+    authCallback_ = authCallback;
 
     const ShareTarget& target = it->second;
 

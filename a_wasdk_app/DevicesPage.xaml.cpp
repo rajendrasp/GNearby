@@ -31,27 +31,43 @@ namespace winrt
     using namespace Microsoft::UI::Xaml::Media::Animation;
     using namespace Microsoft::UI::Xaml::Media::Imaging;
     using namespace Microsoft::UI::Xaml::Navigation;
-    //using namespace Windows::Foundation;
     using namespace Windows::Foundation::Collections;
     using namespace Windows::Storage;
     using namespace Windows::Storage::Search;
 }
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 winrt::a_wasdk_app::implementation::DevicesPage* g_page = nullptr;
 NearbyShareAPI* g_nearby = nullptr;
 
 void PhoneDeviceAdded(std::string device_name, std::string endpoint_id)
 {
-    OutputDebugStringA(device_name.c_str());
-    //OutputDebugStringA(endpoint_id.c_str());
-
     std::wstring stemp = std::wstring(device_name.begin(), device_name.end());
     std::wstring endpoint(endpoint_id.begin(), endpoint_id.end());
 
     g_page->PopulateDevice(stemp.c_str(), endpoint.c_str());
+}
+
+void ProgressUpdate(float progress, bool isComplete)
+{
+    if (!g_page->TransferStarted())
+    {
+        g_page->TransferStarted(true);
+        g_page->OnTransferStarted();
+    }
+
+    if (isComplete)
+    {
+        g_page->OnTransferComplete();
+    }
+    else
+    {
+        g_page->UpdateProgress(static_cast<int>(progress));
+    }
+}
+
+void OnAuthToken(std::string token)
+{
+    g_page->UpdateAuthToken(token);
 }
 
 
@@ -63,20 +79,14 @@ namespace winrt::a_wasdk_app::implementation
         g_page = this;
 
         m_dispatcher = Microsoft::UI::Dispatching::DispatcherQueue::GetForCurrentThread();
-        //auto dispatcherQueue = DispatcherQueue::GetForCurrentThread();
 
         // Xaml objects should not call InitializeComponent during construction.
         // See https://github.com/microsoft/cppwinrt/tree/master/nuget#initializecomponent
     }
 
-    int32_t DevicesPage::MyProperty()
+    bool DevicesPage::EnableDeviceScan()
     {
-        throw hresult_not_implemented();
-    }
-
-    void DevicesPage::MyProperty(int32_t /* value */)
-    {
-        throw hresult_not_implemented();
+        return !m_fileName.empty();
     }
 
     void DevicesPage::TransferProgress(int progress)
@@ -85,16 +95,8 @@ namespace winrt::a_wasdk_app::implementation
         RaisePropertyChanged(L"TransferProgress");
     }
 
-    // Loads collection of Photos from users Pictures library.
     void DevicesPage::OnNavigatedTo(NavigationEventArgs e)
     {
-        // Load photos if they haven't previously been loaded.
-        auto info1 = winrt::make<PhoneDevice>(L"Rajendra", L"LDKF");
-        auto info2 = winrt::make<PhoneDevice>(L"Aditya", L"JHFG");
-        auto info3 = winrt::make<PhoneDevice>(L"Pandu", L"IUTT");
-        Devices().Append(info1);
-        Devices().Append(info2);
-        Devices().Append(info3);
     }
 
     // Registers property changed event handler.
@@ -146,6 +148,25 @@ namespace winrt::a_wasdk_app::implementation
         co_return;
     }
 
+    void DevicesPage::OnTransferStarted()
+    {
+        const auto strongThis{ get_strong() };
+
+        m_dispatcher.TryEnqueue([this]()
+            {
+                m_showProgress = true;
+                m_ShowDevicesSection = false;
+                m_ShowTransferComplete = false;
+                m_showAuthSection = false;
+
+                RaisePropertyChanged(L"ShowProgress");
+                RaisePropertyChanged(L"ShowDevicesSection");
+                RaisePropertyChanged(L"ShowTransferComplete");
+                RaisePropertyChanged(L"ShowAuthSection");
+
+            });
+    }
+
     void DevicesPage::OnTransferComplete()
     {
         const auto strongThis{ get_strong() };
@@ -155,38 +176,46 @@ namespace winrt::a_wasdk_app::implementation
                 m_showProgress = false;
                 m_ShowDevicesSection = false;
                 m_ShowTransferComplete = true;
+                m_showAuthSection = false;
 
                 RaisePropertyChanged(L"ShowProgress");
                 RaisePropertyChanged(L"ShowDevicesSection");
                 RaisePropertyChanged(L"ShowTransferComplete");
+                RaisePropertyChanged(L"ShowAuthSection");
 
             });
     }
 
-    /*Windows::Foundation::IInspectable DevicesPage::GetPhoneDevice(hstring name)
+    void DevicesPage::UpdateAuthToken(std::string token)
     {
-        for (auto& device : Devices())
-        {
-            auto phone = device.as<PhoneDevice>();
-            if (phone->DeviceName() == name)
+        const auto strongThis{ get_strong() };
+
+        m_dispatcher.TryEnqueue([this, token]()
             {
-                return device;
-            }
-        }
-        return nullptr;
-    }*/
+                std::string pin = "PIN: " + token;
+                std::wstring wtoken(pin.begin(), pin.end());
+                m_authToken = wtoken;
+                m_showPinSpinner = false;
 
-    void DevicesPage::StartWatcher()
+                RaisePropertyChanged(L"AuthToken");
+                RaisePropertyChanged(L"ShowPinSpinner");
+
+            });
+    }
+
+    void DevicesPage::UpdateFileToShare(winrt::Windows::Storage::StorageFile file)
     {
-        auto work = []() {
-            Sleep(5000);
+        const auto strongThis{ get_strong() };
 
-            g_page->PopulateDevice(L"Rajendra", L"DFLK");
+        m_dispatcher.TryEnqueue([this, file]()
+            {
+                m_filePath = file.Path();
+                m_fileName = file.Name();
 
-            };
-        std::thread([work]() {
-            work();
-            }).detach();
+                RaisePropertyChanged(L"FileName");
+                RaisePropertyChanged(L"EnableDeviceScan");
+
+            });
     }
 
     void StartPhoneWatcher()
@@ -211,19 +240,7 @@ namespace winrt::a_wasdk_app::implementation
             std::string file = winrt::to_string(filePath);
             std::string endpoint = winrt::to_string(endpointId);
 
-            g_nearby->SendAttachments(endpoint, file);
-
-
-            while (true) {
-                Sleep(1000);
-                if (g_page->TransferProgress() > 100)
-                {
-                    break;
-                }
-                g_page->UpdateProgress(g_page->TransferProgress() + 5);
-            }
-
-            g_page->OnTransferComplete();
+            g_nearby->SendAttachments(endpoint, file, ProgressUpdate, OnAuthToken);
 
             };
         std::thread([work]() {
@@ -231,7 +248,7 @@ namespace winrt::a_wasdk_app::implementation
             }).detach();
     }
 
-    void DevicesPage::myButton_Click(IInspectable const&, RoutedEventArgs const&)
+    void DevicesPage::ScanButton_Click(IInspectable const&, RoutedEventArgs const&)
     {
         StartPhoneWatcher();
     }
@@ -248,20 +265,20 @@ namespace winrt::a_wasdk_app::implementation
 
         StartTransfer(endpointId, m_filePath.c_str());
 
-        m_showProgress = true;
+        m_showProgress = false;
+        m_showAuthSection = true;
         m_ShowDevicesSection = false;
+        m_showPinSpinner = true;
         RaisePropertyChanged(L"ShowProgress");
         RaisePropertyChanged(L"ShowDevicesSection");
+        RaisePropertyChanged(L"ShowAuthSection");
+        RaisePropertyChanged(L"ShowPinSpinner");
     }
-
 
     fire_and_forget DevicesPage::OpenFileButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e)
     {
-        auto file = co_await g_mainWindow->BrowseFileAsync();
-        m_filePath = file.Path();
-        m_fileName = file.Name();
-
-        RaisePropertyChanged(L"FileName");
+        winrt::Windows::Storage::StorageFile file = co_await g_mainWindow->BrowseFileAsync();
+        UpdateFileToShare(file);
         co_return;
     }
 }
