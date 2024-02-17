@@ -37,7 +37,7 @@
                 VerticalAlignment="Top"
                 Width="676"
                 Height="800"
-                Margin="0 300 0 0">
+                Margin="0 200 0 0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -79,11 +79,12 @@
                 </Grid>
                 <Button Grid.Row="1"
                         x:Name="ScanButton"
+                        IsEnabled="{x:Bind EnableDeviceScan, Mode=OneWay}"
                         Width="656"
                         Margin="10 10 10 10"
                         Height="80"
                         HorizontalAlignment="Center"
-                        Click="myButton_Click">
+                        Click="ScanButton_Click">
                     Start Devices Scan
                 </Button>
                 <GridView Grid.Row="2" x:Name="ImageGridView"
@@ -108,11 +109,36 @@
                     </GridView.ItemsPanel>
                 </GridView>
             </Grid>
+            <Grid x:Name="AuthSection"
+                  Grid.Row="1"
+                  Visibility="{x:Bind ShowAuthSection, Mode=OneWay}"
+                  Margin="0 100 0 0"
+                  Width="676"
+                  Height="400">
+                <ProgressRing Height="100"
+                              Width="100"
+                              Visibility="{x:Bind ShowPinSpinner, Mode=OneWay}"
+                              VerticalAlignment="Top"
+                              Margin="0 50 0 0">
+                </ProgressRing>
+                <TextBlock HorizontalAlignment="Center"
+                           Text="{x:Bind AuthToken, Mode=OneWay}"
+                           Padding="0 100 0 0"
+                           FontSize="22"
+                           VerticalAlignment="Top">
+                </TextBlock>
+                <Button HorizontalAlignment="Center">
+                    Cancel
+                </Button>
+            </Grid>
             <Grid x:Name="ProgressSection"
-                Grid.Row="1"
-                Visibility="{x:Bind ShowProgress, Mode=OneWay}">
+                  Grid.Row="1"
+                  HorizontalAlignment="Center"
+                  Width="676"
+                  Visibility="{x:Bind ShowProgress, Mode=OneWay}">
                 <ProgressRing
-                    Margin="300 200 100 100"
+                    Margin="0 200 0 0"
+                    HorizontalAlignment="Center"
                     Height="100"
                     Width="100"
                     IsIndeterminate="false"
@@ -121,14 +147,21 @@
             </Grid>
             <Grid x:Name="TransferCompleteSection"
                   Grid.Row="1"
+                  Width="676"
                   Visibility="{x:Bind ShowTransferComplete, Mode=OneWay}">
-                
+
                 <TextBlock HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Margin="250 100 100 100"
+                           VerticalAlignment="Top"
+                           Margin="0 200 0 0"
                            Text="Transfer Complete"
                            FontSize="22">
                 </TextBlock>
+                <Image HorizontalAlignment="Center"
+                       Width="100"
+                       Margin="0 250 0 0"
+                       Source="Assets\tick.png">
+                    
+                </Image>
             </Grid>
         </Grid>
     </StackPanel>

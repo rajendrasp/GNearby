@@ -27,6 +27,8 @@
 #include "attachment.h"
 
 using DeviceAddedCallback = std::function<void(std::string device_name, std::string endpoint_id)>;
+using ProgressUpdateCallback = std::function<void(float progress, bool isComplete)>;
+using AuthTokenCallback = std::function<void(std::string token)>;
 
 namespace nearby {
 
@@ -117,7 +119,8 @@ class NearbySharingService {
 
   virtual void StartScanning() = 0;
   virtual void StartScanning(DeviceAddedCallback callback) = 0;
-  virtual void SendAttachments(std::string endpoint_id, std::string filePathIn) = 0;
+  virtual void SendAttachments(std::string endpoint_id, std::string filePathIn,
+      ProgressUpdateCallback progressCallback, AuthTokenCallback authCallback) = 0;
 
   // Sends |attachments| to the remote |share_target|.
   virtual void SendAttachments(

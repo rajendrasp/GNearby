@@ -39,9 +39,6 @@
 #include "nearby_file_handler.h"
 #include "attachment_info.h"
 
-//using DeviceAddedCallback = void(std::string device_name, std::string endpoint_id);
-//using DeviceAddedCallback = std::function<void(std::string device_name, std::string endpoint_id)>;
-
 namespace nearby {
 namespace sharing {
 
@@ -61,7 +58,8 @@ class NearbySharingServiceImpl
   void StartScanning() override;
   void StartScanning(DeviceAddedCallback callback) override;
 
-  void SendAttachments(std::string endpoint_id, std::string filePathIn) override;
+  void SendAttachments(std::string endpoint_id, std::string filePathIn,
+      ProgressUpdateCallback progressCallback, AuthTokenCallback authCallback) override;
 
   void OnSendAttachments(StatusCodes status);
 
@@ -319,6 +317,8 @@ class NearbySharingServiceImpl
   std::queue<std::function<void()>> endpoint_discovery_events_;
 
   DeviceAddedCallback deviceAddedCallback_;
+  ProgressUpdateCallback progressUpdatecallback_;
+  AuthTokenCallback authCallback_;
 
   HANDLE  hThreadArray[MAX_THREADS] = {};
   DWORD   dwThreadIdArray[MAX_THREADS];

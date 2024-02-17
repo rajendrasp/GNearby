@@ -46,6 +46,9 @@
     <Image Include="Assets\Phone.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\tick.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Assets">

@@ -4,7 +4,6 @@ namespace a_wasdk_app
     runtimeclass MainWindow : Microsoft.UI.Xaml.Window
     {
         MainWindow();
-        Int32 MyProperty;
     }
 
     runtimeclass PhoneDevice : Microsoft.UI.Xaml.Data.INotifyPropertyChanged
@@ -23,7 +22,10 @@ namespace a_wasdk_app
         Boolean ShowProgress{ get; };
         Boolean ShowDevicesSection{ get; };
         Boolean ShowTransferComplete{ get; };
+        Boolean ShowAuthSection{ get; };
+        Boolean ShowPinSpinner{ get; };
+        Boolean EnableDeviceScan{ get; };
         String FileName{ get; };
-        
+        String AuthToken{ get; };
     }
 }
