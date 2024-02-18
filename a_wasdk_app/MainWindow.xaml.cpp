@@ -81,15 +81,13 @@ namespace winrt::a_wasdk_app::implementation
         HWND hWnd{ 0 };
         windowNative->get_WindowHandle(&hWnd);
 
-        //::InitializeWithWindow.Initialize(filePicker, hwnd);
-
         openPicker.as<::IInitializeWithWindow>()->Initialize(hWnd);
-
-        //var hwnd = WinRT::Interop::WindowNative::GetWindowHandle(this);
 
         openPicker.ViewMode(PickerViewMode::Thumbnail);
         openPicker.SuggestedStartLocation(PickerLocationId::PicturesLibrary);
-        openPicker.FileTypeFilter().ReplaceAll({ L".jpg", L".jpeg", L".png" });
+        //openPicker.FileTypeFilter().ReplaceAll({ L".jpg", L".jpeg", L".png" });
+        openPicker.FileTypeFilter().ReplaceAll({ L"*"});
+        //openPicker.FileTypeFilter.Add("*");
         StorageFile file = co_await openPicker.PickSingleFileAsync();
         if (file != nullptr)
         {
@@ -106,33 +104,6 @@ namespace winrt::a_wasdk_app::implementation
         myButton().Content(box_value(L"Clicked"));
 
 		//StartWatcher();
-
-        auto lifetime = get_strong();
-
-
-        FileOpenPicker openPicker;
-        auto windowNative{ this->m_inner.as<::IWindowNative>() };
-        HWND hWnd{ 0 };
-        windowNative->get_WindowHandle(&hWnd);
-
-        //::InitializeWithWindow.Initialize(filePicker, hwnd);
-
-        openPicker.as<::IInitializeWithWindow>()->Initialize(hWnd);
-
-        //var hwnd = WinRT::Interop::WindowNative::GetWindowHandle(this);
-
-        openPicker.ViewMode(PickerViewMode::Thumbnail);
-        openPicker.SuggestedStartLocation(PickerLocationId::PicturesLibrary);
-        openPicker.FileTypeFilter().ReplaceAll({ L".jpg", L".jpeg", L".png" });
-        StorageFile file = co_await openPicker.PickSingleFileAsync();
-        if (file != nullptr)
-        {
-            //m_filePath = file.Path();
-            Sleep(200);
-        }
-        else
-        {
-            //m_filePath = L"";
-        }
+        co_return;
     }
 }

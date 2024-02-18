@@ -320,6 +320,9 @@ void NearbyConnectionsManagerImpl::Connect(
     DataUsage data_usage, TransportType transport_type,
     NearbyConnectionCallback callback)
 {
+
+    NL_VLOG(1) << "Starting connection";
+
   MutexLock lock(&mutex_);
   if (!nearby_connections_service_) {
     callback(nullptr, Status::kError);
@@ -333,9 +336,9 @@ void NearbyConnectionsManagerImpl::Connect(
   MediumSelection allowed_mediums = MediumSelection(
       /*bluetooth=*/true,
       /*ble=*/true,
-      false,
-      /*wifi_lan=*/false,
-      /*wifi_hotspot=*/false);
+      false /*webrtc*/,
+      /*wifi_lan=*/true,
+      /*wifi_hotspot=*/true);
   NL_VLOG(1) << __func__ << ": "
              << "data_usage=" << static_cast<int>(data_usage)
              << ", allowed_mediums="
@@ -533,7 +536,7 @@ void NearbyConnectionsManagerImpl::StartDiscovery(
         /*web_rtc=*/
         false,
         /*wifi_lan=*/
-        false,
+        true,
         /*wifi_hotspot=*/true);
     NL_VLOG(1) << __func__ << ": "
         << "data_usage=" << static_cast<int>(data_usage)
@@ -624,7 +627,7 @@ void NearbyConnectionsManagerImpl::StartAdvertising(
         // upgrades from this advertisement.
         false,
         /*wifi_lan=*/
-        false,
+        true,
         /*wifi_hotspot=*/true);
     //NL_VLOG(1) << __func__ << ": "
     //    << "is_high_power=" << (is_high_power ? "yes" : "no")
