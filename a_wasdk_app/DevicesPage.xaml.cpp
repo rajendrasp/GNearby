@@ -278,9 +278,12 @@ namespace winrt::a_wasdk_app::implementation
     fire_and_forget DevicesPage::OpenFileButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e)
     {
         winrt::Windows::Storage::StorageFile file = co_await g_mainWindow->BrowseFileAsync();
-        UpdateFileToShare(file);
+        if (file)
+        {
+            UpdateFileToShare(file);
+        }
+        
         co_return;
     }
 }
-
 
