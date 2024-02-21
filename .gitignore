@@ -67,3 +67,4 @@ Debug
 internal/platform/implementation/out/build/x64-Debug
 Generated Files
 build/packages
+build/output
