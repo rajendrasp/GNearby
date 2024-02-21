@@ -191,7 +191,6 @@
     <ClInclude Include="params_w.h" />
     <ClInclude Include="payload_tracker.h" />
     <ClInclude Include="payload_w.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="sending_payload.h" />
     <ClInclude Include="share_target.h" />
     <ClInclude Include="share_target_discovered_callback.h" />
@@ -238,12 +237,6 @@
     <ClCompile Include="paired_key_verification_runner.cc" />
     <ClCompile Include="payload_tracker.cc" />
     <ClCompile Include="payload_w.cc" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="sending_payload.cpp" />
     <ClCompile Include="share_target.cc" />
     <ClCompile Include="share_target_info.cc" />
