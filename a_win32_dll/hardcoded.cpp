@@ -16,14 +16,14 @@ namespace hardcoded
     std::optional<std::vector<uint8_t>> GetBluetoothMacAddressForShareTarget(ShareTarget share_target)
     {
         return std::nullopt;
-        std::string mac_address =
-            //certificate.unencrypted_metadata().bluetooth_mac_address();
-            "sixlen";
-        if (mac_address.size() != 6) {
-            return std::nullopt;
-        }
+        //std::string mac_address =
+        //    //certificate.unencrypted_metadata().bluetooth_mac_address();
+        //    "sixlen";
+        //if (mac_address.size() != 6) {
+        //    return std::nullopt;
+        //}
 
-        return std::vector<uint8_t>(mac_address.begin(), mac_address.end());
+        //return std::vector<uint8_t>(mac_address.begin(), mac_address.end());
     }
 
     std::string GetDeviceName()

@@ -60,7 +60,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Code\GNearby\GNearbyCmake\GNearby\build\_deps\absl-build\absl\log\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Code\GNearby\GNearbyCmake\GNearby\build\output\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">log_internal_log_sink_set.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">absl_log_internal_log_sink_set</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>

@@ -70,6 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>D:\Code\GNearby\GNearbyCmake\GNearby\build\output</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -121,8 +124,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>libssl.lib;libcrypto.lib;dnsapi.lib;Wlanapi.lib;Ws2_32.lib;Wininet.lib;Wtsapi32.lib;Setupapi.lib;Cfgmgr32.lib;shlwapi.lib;connections_core.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\Code\GNearby\GNearbyCmake\GNearby\build\connections\Debug\;D:\Code\vcpkg\vcpkg\installed\x64-windows\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>absl_bad_optional_access.lib;absl_bad_variant_access.lib;absl_base.lib;absl_city.lib;absl_civil_time.lib;absl_cord_internal.lib;absl_cord.lib;absl_cordz_functions.lib;absl_cordz_handle.lib;absl_cordz_info.lib;absl_crc_cord_state.lib;absl_crc_cpu_detect.lib;absl_crc_internal.lib;absl_crc32c.lib;absl_debugging_internal.lib;absl_demangle_internal.lib;absl_die_if_null.lib;absl_examine_stack.lib;absl_exponential_biased.lib;absl_flags_commandlineflag_internal.lib;absl_flags_commandlineflag.lib;absl_flags_config.lib;absl_flags_internal.lib;absl_flags_marshalling.lib;absl_flags_private_handle_accessor.lib;absl_flags_program_name.lib;absl_flags_reflection.lib;absl_flags.lib;absl_graphcycles_internal.lib;absl_hash.lib;absl_hashtablez_sampler.lib;absl_int128.lib;absl_kernel_timeout_internal.lib;absl_leak_check.lib;absl_log_entry.lib;absl_log_globals.lib;absl_log_initialize.lib;absl_log_internal_check_op.lib;absl_log_internal_conditions.lib;absl_log_internal_format.lib;absl_log_internal_globals.lib;absl_log_internal_log_sink_set.lib;absl_log_internal_message.lib;absl_log_internal_nullguard.lib;absl_log_internal_proto.lib;absl_log_severity.lib;absl_log_sink.lib;absl_low_level_hash.lib;absl_malloc_internal.lib;absl_random_internal_platform.lib;absl_random_internal_pool_urbg.lib;absl_random_internal_randen_hwaes_impl.lib;absl_random_internal_randen_hwaes.lib;absl_random_internal_randen_slow.lib;absl_random_internal_randen.lib;absl_random_internal_seed_material.lib;absl_random_seed_gen_exception.lib;absl_raw_hash_set.lib;absl_raw_logging_internal.lib;absl_spinlock_wait.lib;absl_stacktrace.lib;absl_status.lib;absl_statusor.lib;absl_str_format_internal.lib;absl_strerror.lib;absl_string_view.lib;absl_strings_internal.lib;absl_strings.lib;absl_symbolize.lib;absl_synchronization.lib;absl_throw_delegate.lib;absl_time_zone.lib;absl_time.lib;ble_frames_cc_proto.lib;connections_core_types.lib;connections_core.lib;connections_enums_cc_proto.lib;connections_implementation_analytics_analytics.lib;connections_implementation_internal.lib;connections_implementation_mediums_ble_v2_ble_v2.lib;connections_implementation_mediums_mediums.lib;connections_implementation_mediums_utils.lib;connections_implementation_mediums_webrtc_data_types.lib;connections_implementation_mediums_webrtc_webrtc.lib;connections_log_cc_proto.lib;connections_v3_v3_types.lib;credential_cc_proto.lib;crypto.lib;error_code_enums_cc_proto.lib;fipsmodule.lib;glogd.lib;internal_base_bluetooth_address.lib;internal_crypto_cros.lib;internal_crypto.lib;internal_flags_nearby_flags.lib;internal_network_types.lib;internal_platform_base.lib;internal_platform_cancellation_flag.lib;internal_platform_comm.lib;internal_platform_connection_info.lib;internal_platform_error_code_recorder.lib;internal_platform_implementation_shared_count_down_latch.lib;internal_platform_implementation_shared_file.lib;internal_platform_implementation_windows_comm.lib;internal_platform_implementation_windows_crypto.lib;internal_platform_implementation_windows_types.lib;internal_platform_implementation_windows.lib;internal_platform_types.lib;internal_platform_util.lib;internal_platform_uuid.lib;libprotobufd.lib;libprotocd.lib;local_credential_cc_proto.lib;offline_wire_formats_cc_proto.lib;proto_device_to_device_messages_cc_proto.lib;proto_securegcm_cc_proto.lib;proto_securemessage_cc_proto.lib;proto_ukey_cc_proto.lib;securemessage.lib;share_cc_proto.lib;sharing_enums_cc_proto.lib;SMHasherSupport.lib;ukey2.lib;utf8_validity.lib;web_rtc_signaling_frames_cc_proto.lib;libssl.lib;libcrypto.lib;dnsapi.lib;Wlanapi.lib;Ws2_32.lib;Wininet.lib;Wtsapi32.lib;Setupapi.lib;Cfgmgr32.lib;shlwapi.lib;connections_core.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Code\GNearby\GNearbyCmake\GNearby\build\output;D:\Code\GNearby\GNearbyCmake\GNearby\build\connections\Debug\;D:\Code\vcpkg\vcpkg\installed\x64-windows\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -246,35 +249,6 @@
     <ClCompile Include="transfer_metadata.cc" />
     <ClCompile Include="transfer_metadata_builder.cc" />
     <ClCompile Include="wifi_credentials_attachment.cc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\build\connections\connections_core.vcxproj">
-      <Project>{a1074f4d-6117-3e64-ac59-1713430310fc}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\build\internal\network\internal_network_types.vcxproj">
-      <Project>{6b021a84-ec8a-3e4a-974a-6532799abc0a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\build\internal\platform\implementation\windows\internal_platform_implementation_windows.vcxproj">
-      <Project>{e0f94455-8b63-33ba-9811-d54cef912b58}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\build\proto\sharing_enums_cc_proto.vcxproj">
-      <Project>{23a914da-deb8-3a3c-ad70-c62bf6b63f08}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\build\sharing\proto\share_cc_proto.vcxproj">
-      <Project>{6f74bf1b-2a08-35e3-b8b0-a5e36b12e2e9}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\build\_deps\absl-build\absl\random\random_internal_pool_urbg.vcxproj">
-      <Project>{9d4ce449-4550-368d-aae8-6667f6ba710a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\build\_deps\absl-build\absl\random\random_internal_randen_hwaes_impl.vcxproj">
-      <Project>{b227f07b-fe6c-3fc7-8640-23dbe085e2bd}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\build\_deps\absl-build\absl\random\random_internal_randen_slow.vcxproj">
-      <Project>{04420b96-3a71-3953-a8b8-a3547f9ff97e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\build\_deps\securemessage-build\cpp\src\securemessage\securemessage.vcxproj">
-      <Project>{a7956129-08a9-3ab2-a0a7-4b013ba63aad}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
