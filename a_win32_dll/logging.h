@@ -49,4 +49,6 @@
 #define NL_DCHECK_LE(a, b) DCHECK_LE((a), (b))
 #define NL_DCHECK_LT(a, b) DCHECK_LT((a), (b))
 
+#define BLUETOOTH_LOG(severity) NL_LOG(INFO)
+
 #endif  // THIRD_PARTY_NEARBY_SHARING_INTERNAL_PUBLIC_LOGGING_H_

@@ -186,6 +186,15 @@
     <ClInclude Include="paired_key_verification_runner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="fast_initiation_advertiser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fast_init.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fast_init_constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -313,6 +322,12 @@
     </ClCompile>
     <ClCompile Include="paired_key_verification_runner.cc">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fast_initiation_advertiser.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fast_init.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
