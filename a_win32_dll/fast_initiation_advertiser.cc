@@ -36,7 +36,7 @@ FastInitiationAdvertiser::Factory::factory_instance_ = nullptr;
 // static
 std::unique_ptr<FastInitiationAdvertiser>
 FastInitiationAdvertiser::Factory::Create(
-    std::shared_ptr<device::BluetoothAdapter> adapter) {
+    device::BluetoothAdapter* adapter) {
     if (factory_instance_)
         return factory_instance_->CreateInstance(adapter);
     return std::make_unique<FastInitiationAdvertiser>(adapter);
@@ -47,7 +47,7 @@ void FastInitiationAdvertiser::Factory::SetFactoryForTesting(
     factory_instance_ = factory;
 }
 FastInitiationAdvertiser::FastInitiationAdvertiser(
-    std::shared_ptr<device::BluetoothAdapter> adapter)
+    device::BluetoothAdapter* adapter)
 {
     //DCHECK(adapter && adapter->IsPresent() && adapter->IsPowered());
     adapter_ = adapter;

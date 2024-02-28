@@ -34,5 +34,8 @@ namespace nearby::windows
 
 	}
 
-
+	void NearbyShareAPI::StartFastInitiationAdvertising()
+	{
+		nearby_sharing_service_->StartFastInitiationAdvertising();
+	}
 }

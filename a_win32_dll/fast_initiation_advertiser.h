@@ -31,17 +31,17 @@ public:
         Factory(const Factory&) = delete;
         Factory& operator=(const Factory&) = delete;
         static std::unique_ptr<FastInitiationAdvertiser> Create(
-            std::shared_ptr<device::BluetoothAdapter> adapter);
+            device::BluetoothAdapter* adapter);
         static void SetFactoryForTesting(Factory* factory);
     protected:
         virtual ~Factory() = default;
         virtual std::unique_ptr<FastInitiationAdvertiser> CreateInstance(
-            std::shared_ptr<device::BluetoothAdapter> adapter) = 0;
+            device::BluetoothAdapter* adapter) = 0;
     private:
         static Factory* factory_instance_;
     };
     explicit FastInitiationAdvertiser(
-        std::shared_ptr<device::BluetoothAdapter> adapter);
+        device::BluetoothAdapter* adapter);
     ~FastInitiationAdvertiser() override;
     FastInitiationAdvertiser(const FastInitiationAdvertiser&) = delete;
     FastInitiationAdvertiser& operator=(const FastInitiationAdvertiser&) = delete;
@@ -72,7 +72,7 @@ private:
     // [ version (3 bits) | type (3 bits) | uwb_enable (1 bit) | reserved (1 bit),
     // adjusted_tx_power (1 byte) ].
     std::vector<uint8_t> GenerateFastInitV1Metadata(FastInitType type);
-    std::shared_ptr<device::BluetoothAdapter> adapter_;
+    device::BluetoothAdapter* adapter_;
     device::BluetoothAdvertisement* advertisement_ = nullptr;
     OnceClosure stop_callback_;
     //base::WeakPtrFactory<FastInitiationAdvertiser> weak_ptr_factory_{ this };

@@ -29,6 +29,8 @@ namespace nearby::windows {
 			void SendAttachments(std::string endpoint_id, std::string filePath,
 				ProgressUpdateCallback progressCallback, AuthTokenCallback authCallback);
 
+			void StartFastInitiationAdvertising();
+
 
 			nearby::sharing::NearbySharingService* nearby_sharing_service_;
 		};
