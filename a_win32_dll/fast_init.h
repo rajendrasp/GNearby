@@ -193,8 +193,8 @@ namespace device
 			publisher_;
 	};
 
-	class BluetoothAdapter
-	{
+    class BluetoothAdapter
+    {
     public:
         using OnceClosure = std::function<void()>;
         using ErrorCallback = OnceClosure;
@@ -202,6 +202,10 @@ namespace device
         using CreateAdvertisementCallback =
             std::function<void(BluetoothAdvertisement*)>;
         using AdvertisementErrorCallback = BluetoothAdvertisement::ErrorCallback;
+
+        static BluetoothAdapter* CreateAdapter();
+
+        virtual void Initialize(OnceClosure callback) = 0;
 
         // The address of this adapter. The address format is "XX:XX:XX:XX:XX:XX",
   // where each XX is a hexadecimal number.
@@ -212,7 +216,7 @@ namespace device
 
         // The Bluetooth system name. Implementations may return an informational name
         // "BlueZ 5.54" on Chrome OS.
-        virtual std::string GetSystemName() const;
+        //virtual std::string GetSystemName() const;
 
         // Set the human-readable name of the adapter to |name|. On success,
         // |callback| will be called. On failure, |error_callback| will be called.
@@ -233,7 +237,7 @@ namespace device
         // Indicates whether the adapter radio can be powered. Defaults to
         // IsPresent(). Currently only overridden on Windows, where the adapter can be
         // present, but we might fail to get access to the underlying radio.
-        virtual bool CanPower() const;
+        //virtual bool CanPower() const;
 
         // Indicates whether the adapter radio is powered.
         virtual bool IsPowered() const = 0;
@@ -257,12 +261,12 @@ namespace device
         // Due to an issue with non-native APIs on Windows 10, both IsPowered() and
         // SetPowered() don't work correctly when run from a x86 Chrome on a x64 CPU.
         // See https://github.com/Microsoft/cppwinrt/issues/47 for more details.
-        virtual void SetPowered(bool powered,
+        /*virtual void SetPowered(bool powered,
             OnceClosure callback,
-            ErrorCallback error_callback);
+            ErrorCallback error_callback);*/
 
         // Indicates whether the adapter support the LowEnergy peripheral role.
-        virtual bool IsPeripheralRoleSupported() const;
+        //virtual bool IsPeripheralRoleSupported() const;
 
         // Indicates whether the adapter radio is discoverable.
         virtual bool IsDiscoverable() const = 0;
@@ -275,7 +279,58 @@ namespace device
             std::unique_ptr<BluetoothAdvertisement::Data> advertisement_data,
             CreateAdvertisementCallback callback,
             AdvertisementErrorCallback error_callback) = 0;
-	};
+    };
+
+    class BluetoothAdapterFactory {
+    public:
+        using AdapterCallback =
+            std::function<void(BluetoothAdapter* adapter)>;
+
+        BluetoothAdapterFactory();
+        ~BluetoothAdapterFactory();
+
+        static BluetoothAdapterFactory* Get();
+
+        void AdapterInitialized();
+
+        // Returns the shared instance of the default adapter, creating and
+        // initializing it if necessary. |callback| is called with the adapter
+        // instance passed only once the adapter is fully initialized and ready to
+        // use.
+        void GetAdapter(AdapterCallback callback);
+
+        BluetoothAdapter* adapter_;
+        std::vector<AdapterCallback> adapter_callbacks_;
+    };
+
+    class ScopedClosureRunner {
+    public:
+        using OnceClosure = std::function<void()>;
+
+        ScopedClosureRunner();
+        explicit ScopedClosureRunner(OnceClosure closure);
+        ScopedClosureRunner(ScopedClosureRunner&& other);
+        // Runs the current closure if it's set, then replaces it with the closure
+        // from |other|. This is akin to how unique_ptr frees the contained pointer in
+        // its move assignment operator. If you need to explicitly avoid running any
+        // current closure, use ReplaceClosure().
+        ScopedClosureRunner& operator=(ScopedClosureRunner&& other);
+        ~ScopedClosureRunner();
+
+        explicit operator bool() const { return !!closure_; }
+
+        // Calls the current closure and resets it, so it wont be called again.
+        void RunAndReset();
+
+        // Replaces closure with the new one releasing the old one without calling it.
+        void ReplaceClosure(OnceClosure closure);
+
+        // Releases the Closure without calling.
+        OnceClosure Release();
+
+    private:
+        OnceClosure closure_;
+    };
 
     class BluetoothAdapterWinrt : public BluetoothAdapter
     {
@@ -287,10 +342,12 @@ namespace device
             ErrorCallback error_callback) override;
         bool IsInitialized() const override;
         bool IsPresent() const override;
-        bool CanPower() const override;
+        bool CanPower() const;
         bool IsPowered() const override;
-        bool IsPeripheralRoleSupported() const override;
+        //bool IsPeripheralRoleSupported() const override;
         bool IsDiscoverable() const override;
+
+        void Initialize(OnceClosure init_callback) override;
 
         void RegisterAdvertisement(
             std::unique_ptr<BluetoothAdvertisement::Data> advertisement_data,
@@ -308,15 +365,107 @@ namespace device
             AdvertisementErrorCallback error_callback,
             BluetoothAdvertisement::ErrorCode error_code);
 
+        struct StaticsInterfaces {
+            StaticsInterfaces(
+                Microsoft::WRL::ComPtr<IAgileReference>,   // IBluetoothStatics
+                Microsoft::WRL::ComPtr<IAgileReference>,   // IDeviceInformationStatics
+                Microsoft::WRL::ComPtr<IAgileReference>);  // IRadioStatics
+            StaticsInterfaces();
+            StaticsInterfaces(const StaticsInterfaces&);
+            ~StaticsInterfaces();
+
+            Microsoft::WRL::ComPtr<IAgileReference> adapter_statics;
+            Microsoft::WRL::ComPtr<IAgileReference> device_information_statics;
+            Microsoft::WRL::ComPtr<IAgileReference> radio_statics;
+        };
+
+        static StaticsInterfaces PerformSlowInitTasks();
+
+        static StaticsInterfaces GetAgileReferencesForStatics(
+            Microsoft::WRL::ComPtr<
+            ABI::Windows::Devices::Bluetooth::IBluetoothAdapterStatics>
+            adapter_statics,
+            Microsoft::WRL::ComPtr<
+            ABI::Windows::Devices::Enumeration::IDeviceInformationStatics>
+            device_information_statics,
+            Microsoft::WRL::ComPtr<ABI::Windows::Devices::Radios::IRadioStatics>
+            radio_statics);
+
+        void CompleteInitAgile(OnceClosure init_callback,
+            StaticsInterfaces statics);
+        void CompleteInit(
+            OnceClosure init_callback,
+            Microsoft::WRL::ComPtr<
+            ABI::Windows::Devices::Bluetooth::IBluetoothAdapterStatics>
+            bluetooth_adapter_statics,
+            Microsoft::WRL::ComPtr<
+            ABI::Windows::Devices::Enumeration::IDeviceInformationStatics>
+            device_information_statics,
+            Microsoft::WRL::ComPtr<ABI::Windows::Devices::Radios::IRadioStatics>
+            radio_statics);
+
+        void OnGetDefaultAdapter(
+            ScopedClosureRunner on_init,
+            Microsoft::WRL::ComPtr<
+            ABI::Windows::Devices::Bluetooth::IBluetoothAdapter> adapter);
+
+        void OnCreateFromIdAsync(
+            ScopedClosureRunner on_init,
+            Microsoft::WRL::ComPtr<
+            ABI::Windows::Devices::Enumeration::IDeviceInformation>
+            device_information);
+
+        void OnRequestRadioAccess(
+            ScopedClosureRunner on_init,
+            ABI::Windows::Devices::Radios::RadioAccessStatus access_status);
+
+        void OnGetRadio(
+            ScopedClosureRunner on_init,
+            Microsoft::WRL::ComPtr<ABI::Windows::Devices::Radios::IRadio> radio);
+
+        void OnRadioStateChanged(ABI::Windows::Devices::Radios::IRadio* radio,
+            IInspectable* object);
+
+        void OnPoweredRadioAdded(
+            ABI::Windows::Devices::Enumeration::IDeviceWatcher* watcher,
+            ABI::Windows::Devices::Enumeration::IDeviceInformation* info);
+
+        void OnPoweredRadioRemoved(
+            ABI::Windows::Devices::Enumeration::IDeviceWatcher* watcher,
+            ABI::Windows::Devices::Enumeration::IDeviceInformationUpdate* update);
+
+        void OnPoweredRadiosEnumerated(
+            ABI::Windows::Devices::Enumeration::IDeviceWatcher* watcher,
+            IInspectable* object);
+
         std::string address_;
         std::string name_;
         bool is_initialized_ = false;
         bool radio_access_allowed_ = false;
+        bool radio_was_powered_ = false;
         size_t num_powered_radios_ = 0;
         Microsoft::WRL::ComPtr<ABI::Windows::Devices::Bluetooth::IBluetoothAdapter>
             adapter_;
         Microsoft::WRL::ComPtr<ABI::Windows::Devices::Radios::IRadio> radio_;
 
+        Microsoft::WRL::ComPtr<
+            ABI::Windows::Devices::Bluetooth::IBluetoothAdapterStatics>
+            bluetooth_adapter_statics_;
+        Microsoft::WRL::ComPtr<
+            ABI::Windows::Devices::Enumeration::IDeviceInformationStatics>
+            device_information_statics_;
+        Microsoft::WRL::ComPtr<ABI::Windows::Devices::Radios::IRadioStatics>
+            radio_statics_;
+
+        Microsoft::WRL::ComPtr<ABI::Windows::Devices::Enumeration::IDeviceWatcher>
+            powered_radio_watcher_;
+
         std::vector<std::shared_ptr<BluetoothAdvertisement>> pending_advertisements_;
+
+        std::optional<EventRegistrationToken> powered_radio_added_token_;
+        std::optional<EventRegistrationToken> powered_radio_removed_token_;
+        std::optional<EventRegistrationToken> powered_radios_enumerated_token_;
+
+        std::unique_ptr<ScopedClosureRunner> on_init_;
     };
 }

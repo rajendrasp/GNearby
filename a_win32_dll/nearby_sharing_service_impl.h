@@ -38,6 +38,7 @@
 #include "outgoing_share_target_info.h"
 #include "nearby_file_handler.h"
 #include "attachment_info.h"
+#include "fast_initiation_advertiser.h"
 
 namespace nearby {
 namespace sharing {
@@ -51,6 +52,10 @@ class NearbySharingServiceImpl
       public NearbyConnectionsManager::DiscoveryListener
 {
  public:
+
+     using AdapterCallback =
+         std::function<void(device::BluetoothAdapter*)>;
+
   NearbySharingServiceImpl(NearbySharingDecoder* decoder,
       std::unique_ptr<NearbyConnectionsManager> nearby_connections_manager);
   ~NearbySharingServiceImpl() override;
@@ -233,13 +238,23 @@ class NearbySharingServiceImpl
       std::unique_ptr<Advertisement> advertisement,
       bool is_incoming);
 
+  void StartFastInitiationAdvertising() override;
+  void OnStartFastInitiationAdvertising();
+  void OnStartFastInitiationAdvertisingError();
 
+  void GetBluetoothAdapter();
 
 
   NearbySharingDecoder* const decoder_;
 
   std::unique_ptr<NearbyConnectionsManager> nearby_connections_manager_;
   NearbyFileHandler file_handler_;
+
+  // Advertiser which is non-null when we are attempting to share and
+  // broadcasting Fast Initiation advertisements.
+  std::unique_ptr<FastInitiationAdvertiser> fast_initiation_advertiser_;
+
+  std::unique_ptr<device::BluetoothAdapter> bluetooth_adapter_;
 
   // A map of ShareTarget id to IncomingShareTargetInfo. This lets us know which
   // Nearby Connections endpoint and public certificate are related to the

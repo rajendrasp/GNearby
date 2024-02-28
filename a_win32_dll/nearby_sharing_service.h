@@ -132,6 +132,8 @@ class NearbySharingService {
   virtual void Accept(
       const ShareTarget& share_target,
       std::function<void(StatusCodes status_codes)> status_codes_callback) = 0;
+
+  virtual void StartFastInitiationAdvertising() = 0;
 };
 
 }  // namespace sharing

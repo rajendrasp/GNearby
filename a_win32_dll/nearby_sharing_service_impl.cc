@@ -128,6 +128,8 @@ NearbySharingServiceImpl::NearbySharingServiceImpl(NearbySharingDecoder* decoder
 {
   NL_DCHECK(decoder_);
   NL_DCHECK(nearby_connections_manager_);
+
+  GetBluetoothAdapter();
 }
 
 NearbySharingServiceImpl::~NearbySharingServiceImpl() = default;
@@ -154,6 +156,46 @@ void NearbySharingServiceImpl::RunOnNearbySharingServiceThread(
     //    &task,          // argument to thread function 
     //    0,                      // use default creation flags 
     //    &dwThreadIdArray[0]);   // returns the thread identifier 
+}
+
+void NearbySharingServiceImpl::GetBluetoothAdapter()
+{
+    auto* adapter_factory = device::BluetoothAdapterFactory::Get();
+    
+    // Because this will be called from the constructor, GetAdapter() may call
+    // OnGetBluetoothAdapter() immediately which can cause problems during tests
+    // since the class is not fully constructed yet.
+
+    adapter_factory->GetAdapter([this](device::BluetoothAdapter* adapter) {
+        OnGetBluetoothAdapter(adapter);
+        });
+
+    base::SequencedTaskRunner::GetCurrentDefault()->PostTask(
+        FROM_HERE,
+        base::BindOnce(
+            &device::BluetoothAdapterFactory::GetAdapter,
+            base::Unretained(adapter_factory),
+            base::BindOnce(&NearbySharingServiceImpl::OnGetBluetoothAdapter,
+                weak_ptr_factory_.GetWeakPtr())));
+}
+
+void NearbySharingServiceImpl::OnGetBluetoothAdapter(
+    device::BluetoothAdapter* adapter)
+{
+    bluetooth_adapter_ = nullptr;
+    bluetooth_adapter_ = std::unique_ptr<device::BluetoothAdapter>(adapter);
+    bluetooth_adapter_->AddObserver(this);
+    fast_initiation_scanning_metrics_->SetBluetoothAdapter(adapter);
+
+    // TODO(crbug/1147652): The call to update the advertising interval is
+    // removed to prevent a Bluez crash. We need to either reduce the global
+    // advertising interval asynchronously and wait for the result or use the
+    // updated API referenced in the bug which allows setting a per-advertisement
+    // interval.
+
+    // TODO(crbug.com/1132469): This was added to fix an issue where advertising
+    // was not starting on sign-in. Add a unit test to cover this case.
+    //InvalidateSurfaceState();
 }
 
 ShareTargetInfo* NearbySharingServiceImpl::GetShareTargetInfo(
@@ -2059,6 +2101,46 @@ void GetDecryptedPublicCertificate(
     std::function<void(void)> callback)
 {
     callback();
+}
+
+void NearbySharingServiceImpl::StartFastInitiationAdvertising()
+{
+    fast_initiation_advertiser_ =
+        FastInitiationAdvertiser::Factory::Create(bluetooth_adapter_.get());
+
+    // TODO(crbug/1147652): The call to update the advertising interval is
+    // removed to prevent a Bluez crash. We need to either reduce the global
+    // advertising interval asynchronously and wait for the result or use the
+    // updated API referenced in the bug which allows setting a per-advertisement
+    // interval.
+
+    // TODO(crbug.com/1100686): Determine whether to call StartAdvertising() with
+    // kNotify or kSilent.
+    fast_initiation_advertiser_->StartAdvertising(
+        FastInitiationAdvertiser::FastInitType::kNotify,
+        [this]() {
+            OnStartFastInitiationAdvertising();
+        },
+        [this]() {
+            OnStartFastInitiationAdvertisingError();
+        });
+}
+
+void NearbySharingServiceImpl::OnStartFastInitiationAdvertising() {
+    // TODO(hansenmichael): Do not invoke
+    // |register_send_surface_callback_| until Nearby Connections
+    // scanning is kicked off.
+    //CD_LOG(VERBOSE, Feature::NS)
+    //    << __func__ << ": Started advertising FastInitiation.";
+}
+
+void NearbySharingServiceImpl::OnStartFastInitiationAdvertisingError()
+{
+    //fast_initiation_advertiser_.reset();
+    //RecordNearbyShareError(
+    //    NearbyShareError::kStartFastInitiationAdvertisingFailed);
+    //CD_LOG(ERROR, Feature::NS)
+    //    << __func__ << ": Failed to start FastInitiation advertising.";
 }
 
 void NearbySharingServiceImpl::OnOutgoingAdvertisementDecoded(
