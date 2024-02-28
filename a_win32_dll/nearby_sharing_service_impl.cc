@@ -170,22 +170,21 @@ void NearbySharingServiceImpl::GetBluetoothAdapter()
         OnGetBluetoothAdapter(adapter);
         });
 
-    base::SequencedTaskRunner::GetCurrentDefault()->PostTask(
+    /*base::SequencedTaskRunner::GetCurrentDefault()->PostTask(
         FROM_HERE,
         base::BindOnce(
             &device::BluetoothAdapterFactory::GetAdapter,
             base::Unretained(adapter_factory),
             base::BindOnce(&NearbySharingServiceImpl::OnGetBluetoothAdapter,
-                weak_ptr_factory_.GetWeakPtr())));
+                weak_ptr_factory_.GetWeakPtr())));*/
 }
 
 void NearbySharingServiceImpl::OnGetBluetoothAdapter(
     device::BluetoothAdapter* adapter)
 {
-    bluetooth_adapter_ = nullptr;
     bluetooth_adapter_ = std::unique_ptr<device::BluetoothAdapter>(adapter);
-    bluetooth_adapter_->AddObserver(this);
-    fast_initiation_scanning_metrics_->SetBluetoothAdapter(adapter);
+    //bluetooth_adapter_->AddObserver(this);
+    //fast_initiation_scanning_metrics_->SetBluetoothAdapter(adapter);
 
     // TODO(crbug/1147652): The call to update the advertising interval is
     // removed to prevent a Bluez crash. We need to either reduce the global

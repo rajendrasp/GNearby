@@ -243,6 +243,7 @@ class NearbySharingServiceImpl
   void OnStartFastInitiationAdvertisingError();
 
   void GetBluetoothAdapter();
+  void OnGetBluetoothAdapter(device::BluetoothAdapter* adapter);
 
 
   NearbySharingDecoder* const decoder_;
