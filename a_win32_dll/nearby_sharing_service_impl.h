@@ -244,6 +244,8 @@ class NearbySharingServiceImpl
 
   void GetBluetoothAdapter();
 
+  void OnGetBluetoothAdapter(device::BluetoothAdapter* adapter);
+
 
   NearbySharingDecoder* const decoder_;
 

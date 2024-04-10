@@ -64,10 +64,10 @@ void FastInitiationAdvertiser::StartAdvertising(
     FastInitType type,
     OnceClosure callback,
     OnceClosure error_callback) {
-    if (!(adapter_->IsPresent() && adapter_->IsPowered()))
+    /*if (!(adapter_->IsPresent() && adapter_->IsPowered()))
     {
         return;
-    }
+    }*/
     //DCHECK(!advertisement_);
     RegisterAdvertisement(type, std::move(callback), std::move(error_callback));
 }
@@ -99,6 +99,21 @@ void FastInitiationAdvertiser::RegisterAdvertisement(
     service_data.insert(std::pair<std::string, std::vector<uint8_t>>(
         kFastInitiationServiceUuid, payload));
     advertisement_data->set_service_data(std::move(service_data));
+
+    // Construct Manufacturer data
+    device::BluetoothAdvertisement::ManufacturerData manufacturer_data;
+    uint16_t manufacturerId = 0x0006; // Placeholder value for manufacturer ID
+
+    auto payload1 = std::vector<uint8_t>(std::begin(kFastInitiationServiceId),
+        std::end(kFastInitiationServiceId));
+    payload1.insert(std::end(payload1), std::begin(kFastInitiationModelId), std::end(kFastInitiationModelId));
+    auto metadata1 = GenerateFastInitV1Metadata(type);
+    payload1.insert(std::end(payload1), std::begin(metadata1), std::end(metadata1));
+
+    manufacturer_data.insert(std::pair<uint16_t, std::vector<uint8_t>>(
+        manufacturerId, payload1));
+
+    advertisement_data->set_manufacturer_data(manufacturer_data);
 
     adapter_->RegisterAdvertisement(
         std::move(advertisement_data),
