@@ -223,7 +223,7 @@ namespace winrt::a_wasdk_app::implementation
         auto work = []() {
             g_nearby = new NearbyShareAPI();
             g_nearby->InitializeNearby();
-            //g_nearby->StartFastInitiationAdvertising();
+            g_nearby->StartFastInitiationAdvertising();
             g_nearby->StartScanning2(PhoneDeviceAdded);
             
             while (true) {
