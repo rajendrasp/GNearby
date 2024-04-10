@@ -209,7 +209,7 @@ namespace device {
 
     bool BluetoothAdvertisementWinrt::Initialize(
         std::unique_ptr<BluetoothAdvertisement::Data> advertisement_data) {
-        if (advertisement_data->service_uuids()) {
+        /*if (advertisement_data->service_uuids()) {
             BLUETOOTH_LOG(ERROR)
                 << "Windows does not support advertising Service UUIDs.";
             return false;
@@ -225,7 +225,7 @@ namespace device {
             BLUETOOTH_LOG(ERROR)
                 << "Windows does not support advertising Service Data.";
             return false;
-        }
+        }*/
 
         auto manufacturer_data = advertisement_data->manufacturer_data();
         if (!manufacturer_data) {
@@ -251,7 +251,7 @@ namespace device {
             return false;
         }
 
-        for (const auto& pair : *manufacturer_data) {
+       for (const auto& pair : *manufacturer_data) {
             uint16_t manufacturer = pair.first;
             const std::vector<uint8_t>& data = pair.second;
 
@@ -442,6 +442,12 @@ namespace device {
             adapter_->Initialize([this]() {
                 AdapterInitialized();
                 });
+
+            BluetoothAdapter* adapter =
+                std::move(adapter_);
+            std::vector<AdapterCallback> callbacks = std::move(adapter_callbacks_);
+            for (auto& callback : callbacks)
+                std::move(callback)(adapter);
             return;
         }
 
